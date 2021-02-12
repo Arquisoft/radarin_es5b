@@ -43,3 +43,4 @@ You should be able to access the application in [http://localhost:3000](http://l
 - Eric Almeda Tomás
 - Álex Caso Díaz
 - Ignacio González Sánchez
+- Daniel Pérez Prádanos
