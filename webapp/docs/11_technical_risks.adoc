@@ -1,17 +1,12 @@
 [[section-technical-risks]]
 == Risks and Technical Debts
 
+El principal problema al que nos vamos a enfrentar es trabajar en equipo. Coordinarnos para conseguir una velocidad de desarrollo y calidad del software a la altura de las posibilidades del equipo.
 
-[role="arc42help"]
-****
-.Contents
-A list of identified technical risks or technical debts, ordered by priority
-
-.Motivation
-“Risk management is project management for grown-ups” (Tim Lister, Atlantic Systems Guild.) 
-
-This should be your motto for systematic detection and evaluation of risks and technical debts in the architecture, which will be needed by management stakeholders (e.g. project managers, product owners) as part of the overall risk analysis and measurement planning.
-
-.Form
-List of risks and/or technical debts, probably including suggested measures to minimize, mitigate or avoid risks or reduce technical debts.
-****
+|===
+| *Riesgo* | *Posible solución*
+| Usar tecnologías desconocidas para todo el equipo como React, nodejs y SOLD, y acabar perdiendo el tiempo intentando desarrollar la aplicación con tecnologías que no sabemos utilizar. | Aprender las bases de las tecnologías que no conozcamos antes de usarlas en la aplicación.
+| Pérdida de uno o varios miembros clave del equipo. Esto complicaría mucho continuar desarrollando su parte. | Evitar que los elementos clave de la aplicación dependan de una sola persona, haciendo que varias personas estén al tanto del funcionamiento de esas partes.
+| Falta de coordinación en el equipo, que provoque que la aplicación final no sea un "todo", si no un conjunto de bloques pegados, tanto en la interfáz como en el servidor. | Comunicarnos en equipo para desarrollar una aplicación cohesionada.
+| Trabajos fuera de la asignatura que puedan surgir a los desarrolladores y que les impidan continuar con el desarrollo. | Intentar prever esos trabajos que puedan surgir y planificar el desarrollo teniendo en cuenta esos retrasos.
+|===
