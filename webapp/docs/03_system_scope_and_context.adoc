@@ -6,7 +6,7 @@
 .Contents
 Nuestro proyecto consistirá en realizar una aplicación web mediante la cual podremos geolocalizar a nuestros amigos cercanos.
 
-Las tecnologías que utilizaremos seran principalmente: SOLID como estrategia para el desarrollo de la aplicación y REACT para el desarrollo de las interfaces de usuario.
+Las tecnologías que utilizaremos seran principalmente: SOLID como estrategia para el manejo de datos y REACT para el desarrollo de las interfaces de usuario.
 
 .Motivation
 
