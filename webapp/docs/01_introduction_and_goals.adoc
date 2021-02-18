@@ -14,7 +14,7 @@ El objetivo de este proyecto es la creación de una aplicación en la que poder 
 * Existirá un modo invisible que se podrá activar para no ser mostrado.
 * El radio de aparición de los amigos podrá ser modificado por cada usuario.
 * El historial de localizaciones de cada usuario se almacenará en su pod y podrá ser visto por el propio usuario.
-* Se podrán dejar comentarios, imágenes o videos de las localizaciones.
+* _Se podrán dejar comentarios, imágenes o videos de las localizaciones._
 ****
 
 === Quality Goals
