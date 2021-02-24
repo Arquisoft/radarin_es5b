@@ -1,6 +1,32 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
+.Decisiones tecnológicas
+A la hora de crear la aplicación, la primera decisión que se tomó fue la de usar el lenguaje JavaScript, ya que es un lenguaje con una sintáxis fácil de entender
+para todos los integrantes del grupo y para así aprovechar el Framework React.js, lo que nos permitiría crear la apliación web de una manera muy sencilla. Además,
+es una plataforma de código abierto con muchos tutoriales y facilidad para desarrollar el front-end de una app web.
+
+Otro punto a destacar es el uso de la tecnología SOLID, ya que permite dividir el dominio de datos para un usuario solo pueda acceder a los propios.
+
+De cara a otros elementos menos orientados a la app, usaremos Gir como sistema de control de versiones y el modelo Arc42 para documentar.
+
+.Descomposición del sistema
+El sistema estará dividido en varios apartados que son los siguientes:
+- Aplicación Web 
+- Documentación
+
+La aplicación Web es la parte a la que accederán clientes de manera habitual, donde habrá un mapa donde ver su localización y la de sus amigos. Además, contará con un chat en vivo para contactar con otras personas
+dentro del radio de basúsqueda de la app.
+
+La documentación servirá para apuntar el funcionamiento de la app y las tecnologías que usa. No será visitada por el cliente en la mayoría de los casos.
+
+.Estándares de calidad
+Usaremos el framework de React para evolucionar nuestra app con el objetivo de que sea fácil de utilizar tanto por usuarios expertos como para gente que no está 
+acostumbrada al uso de estas apps.
+
+.Organización
+
+Todavía no hemos divido el trabajo debido a que no hemos empezado la implementación (completar)
 
 [role="arc42help"]
 ****
