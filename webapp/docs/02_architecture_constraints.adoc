@@ -27,7 +27,7 @@
 ..Restricciones de Organización
 [options="header",cols="1,2"]
 |===
-|Restricción                         Explicación
+|Restricción            |             Explicación
 |Documentación de la App incremental. |   Ya que la aplicación puede cambiar durante el desarrollo, la documentación debe adaptarse a ella.
 |Entregar Implementación de manera periódica. | Ya que la aplicación irá añadiendo funcionalidades a lo largo de su desarrollo, estas pueden tener un coste de rendimiento que no se puede permitir, por lo que hay que controlarlo.
 |Redacción de actas semanales.     |      Esta práctica permite llevar la pista a los cambios que se han decidido respecto al desarrollo.
