@@ -28,7 +28,7 @@ La funcionalidad de la aplicacion será similar a un radar, en este radar nosotr
 .Form
 En la siguiente diagrama podemos observar de forma simplificada el uso de la aplicación.
 
-https://github.com/Arquisoft/radarin_es5b/blob/master/webapp/docs/images/Esquema_documentacion_apartado3.png
+https://github.com/Arquisoft/radarin_es5b/blob/feature-RE1/webapp/docs/images/Esquema_documentacion_apartado3.jpg
 ****
 
 
