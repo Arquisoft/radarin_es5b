@@ -28,7 +28,7 @@ La funcionalidad de la aplicacion será similar a un radar, en este radar nosotr
 .Form
 En la siguiente diagrama podemos observar de forma simplificada el uso de la aplicación.
 
-image::Esquema_documentacion_apartado3.jpg[title = "Diagrama uso aplicación"]
+= image:Diagrama_documentacion.png[Error al cargar] Diagrama de uso de la aplicación.
 ****
 
 
