@@ -36,15 +36,8 @@ El objetivo de este proyecto es la creación de una aplicación en la que poder 
 
 [options="header",cols="1,2,2"]
 |===
-<<<<<<< HEAD
-|Role/Name|Contact|Expectations
-| _Alejandro_ | _<Contact-1>_ | _<Expectation-1>_
-| _<Role-2>_ | _<Contact-2>_ | _<Expectation-2>_
-=======
 |Role/Name|Descripción|Expectativas
 | Desarrolladores | Equipo de desarrollo que hará el proyecto. | Encargados de realizar la totalidad del sistema intentando cumplir los requisitos, importante la comunicación y el compromiso con el proyecto.
 | Profesorado| Profesores de la asignatura ASW| Encargados de supervisar el desarrollo y prestar asistencia si es necesaria.
 |Usuarios |Los usuarios finales de la aplicación| Usarán nuestra aplicación y deben poder hacer todo aquello que se les ha prometido o dicho, es importante que no necesiten hacer un esfuerzo para poder usar bien nuestra aplicación.
->>>>>>> feature-RE1
 |===
-
