@@ -1,63 +1,31 @@
-[[section-quality-scenarios]]
-== Quality Requirements
+= 10. Requisitos de calidad
 
+== Árbol de calidad
 
-[role="arc42help"]
-****
+image::images/atributos_de_calidad.png[arbol de calidad]
 
-.Content
-This section contains all quality requirements as quality tree with scenarios. The most important ones have already been described in section 1.2. (quality goals)
+== Escenarios de calidad
 
-Here you can also capture quality requirements with lesser priority,
-which will not create high risks when they are not fully achieved.
+|===
+| *Objetivo de calidad* | *Descripción* | *Solución*
 
-.Motivation
-Since quality requirements will have a lot of influence on architectural
-decisions you should know for every stakeholder what is really important to them,
-concrete and measurable.
-****
+| Descentralización
+| Es el objetivo principal de la aplicación. La aplicación no será la que guarde los datos del usuario, sino que lo hará él mismo.
+| Uso de los PODs de SOLID para acceder a la aplicación y guardar sus datos.
 
-=== Quality Tree
+| Seguridad
+| Para proteger los datos de los usuarios de la aplicación.
+| Sistema de login y utilización de los PODs.
 
-[role="arc42help"]
-****
-.Content
-The quality tree (as defined in ATAM – Architecture Tradeoff Analysis Method) with quality/evaluation scenarios as leafs.
+| Mantenibilidad
+| La aplicación es fácil de modificar en cualquier momento, así como de arreglar errores que vayan surgiendo rápidamente.
+| Seguir una buena organización de clases y paquetes, que permitan acceder rápido a la parte del código que se necesite, uso de interfaces, etc.
 
-.Motivation
-The tree structure with priorities provides an overview for a sometimes large number of quality requirements.
+| Eficiencia
+| La forma en la que funciona la aplicación. Los tiempos de carga deben ser cortos y el usuario debe saber si en la aplicación está ocurriendo algo o no.
+| Realizar pruebas para comprobar la eficiencia de la aplicación e indicar al usuario de lo que está sucediendo en cada momento.
 
-.Form
-The quality tree is a high-level overview of the quality goals and requirements:
+| Usabilidad
+| La aplicación debe ser fácil de utilizar para cualquier usuario (nuevos usuarios, usuarios con discapacidades,...)
+| Interfaces intuitivas y hechas pensando en cualquier usuario.
 
-* tree-like refinement of the term "quality". Use "quality" or "usefulness" as a root
-* a mind map with quality categories as main branches
-
-In any case the tree should include links to the scenarios of the following section.
-****
-
-=== Quality Scenarios
-
-[role="arc42help"]
-****
-.Contents
-Concretization of (sometimes vague or implicit) quality requirements using (quality) scenarios.
-
-These scenarios describe what should happen when a stimulus arrives at the system.
-
-For architects, two kinds of scenarios are important:
-
-* Usage scenarios (also called application scenarios or use case scenarios) describe the system’s runtime reaction to a certain stimulus. This also includes scenarios that describe the system’s efficiency or performance. Example: The system reacts to a user’s request within one second.
-* Change scenarios describe a modification of the system or of its immediate environment. Example: Additional functionality is implemented or requirements for a quality attribute change.
-
-.Motivation
-Scenarios make quality requirements concrete and allow to
-more easily measure or decide whether they are fulfilled.
-
-Especially when you want to assess your architecture using methods like
-ATAM you need to describe your quality goals (from section 1.2)
-more precisely down to a level of scenarios that can be discussed and evaluated.
-
-.Form
-Tabular or free form text.
-****
