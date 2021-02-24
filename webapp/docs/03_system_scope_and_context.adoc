@@ -1,23 +1,17 @@
 [[section-system-scope-and-context]]
-== System Scope and Context
-
+== Alcance y contexto del sistema
 
 [role="arc42help"]
 ****
 .Contents
-System scope and context - as the name suggests - delimits your system (i.e. your scope) from all its communication partners
-(neighboring systems and users, i.e. the context of your system). It thereby specifies the external interfaces.
+Nuestro proyecto consistirá en realizar una aplicación web mediante la cual podremos geolocalizar a nuestros amigos cercanos.
 
-If necessary, differentiate the business context (domain specific inputs and outputs) from the technical context (channels, protocols, hardware).
+Las tecnologías que utilizaremos seran principalmente SOLID para la gestión de datos, haciendo así que los datos de los usuarios no se encuentren almacenados de forma centralizada, y REACT para el desarrollo de las interfaces de usuario de nuestra aplicación.
 
 .Motivation
-The domain interfaces and technical interfaces to communication partners are among your system's most critical aspects. Make sure that you completely understand them.
 
 .Form
-Various options:
 
-* Context diagrams
-* Lists of communication partners and their interfaces.
 ****
 
 
@@ -26,41 +20,31 @@ Various options:
 [role="arc42help"]
 ****
 .Contents
-Specification of *all* communication partners (users, IT-systems, ...) with explanations of domain specific inputs and outputs or interfaces.
-Optionally you can add domain specific formats or communication protocols.
+Nuestra aplicación se basará en una aplicación web, esta aplicación tendrá la funcionalidad de un radar, el cual mostrará a los amigos cercanos de dicho usuario, la distancia hasta la cual podremos detectar amigos sera definida por el propio usuario. Dichos amigos apareceran en un mapa pudiendo ver claramente su posicion respecto a donde nos encontramos.
 
 .Motivation
-All stakeholders should understand which data are exchanged with the environment of the system.
+La funcionalidad de la aplicacion será similar a un radar, en este radar nosotros podremos observar a nuestros amigos y a la gente que nos haya compartido su ubicación.
 
 .Form
-All kinds of diagrams that show the system as a black box and specify the domain interfaces to communication partners.
+En la siguiente diagrama podemos observar de forma simplificada el uso de la aplicación.
 
-Alternatively (or additionally) you can use a table.
-The title of the table is the name of your system, the three columns contain the name of the communication partner, the inputs, and the outputs.
+image::Esquema_documentacion_apartado3.jpg[title = "Diagrama uso aplicación"]
 ****
 
-**<Diagram or Table>**
-
-**<optionally: Explanation of external domain interfaces>**
 
 === Technical Context
 
 [role="arc42help"]
 ****
 .Contents
-Technical interfaces (channels and transmission media) linking your system to its environment. In addition a mapping of domain specific input/output to the channels, i.e. an explanation with I/O uses which channel.
+Esta aplicación se basara en diversas tecnologías, las más importantes son SOLID y REACT.
+
+Mediante SOLID nuestra aplicacion será descentralizada lo que nos permitirá obtener información sin tener que realizar peticiones a un servidor centralizado, esto es gracias a los PODS que ejercen el papel de base de datos individual de cada usuario.
+
+REACT es una biblioteca Javascript de código abierto con la cual podremos realizar las interfaces de usuario para nuestra aplicación de forma sencilla.
 
 .Motivation
-Many stakeholders make architectural decision based on the technical interfaces between the system and its context. Especially infrastructure or hardware designers decide these technical interfaces.
 
 .Form
-E.g. UML deployment diagram describing channels to neighboring systems,
-together with a mapping table showing the relationships between channels and input/output.
 
 ****
-
-**<Diagram or Table>**
-
-**<optionally: Explanation of technical interfaces>**
-
-**<Mapping Input/Output to Channels>**
