@@ -1,15 +1,79 @@
 [[section-architecture-constraints]]
 == Architecture Constraints
 
+..Restricciones de Software.
+[options="header",cols="1,2"]
+|===
+|Restricción           |          Explicación
+|Uso del lenguaje JavaScript.  |   Para el desarrollo se ha limitado el lenguaje de programación a JavaScript
+|Uso del framework React.js.   |  Para la interfaz de usuario usaremos el framework conocido como React.js, ya que tiene una función de vista previa lo cual resulta muy útil.
+|Uso de la tecnología SOLID.   |  Con la ayuda de la tecnología SOLID se puede crear un sistema de persistencia cuyos servidores estén descentralizados.
+|Uso de GIT para el control de versiones.  |  La plataforma GIT resulta muy útil a la hora de evolucionar un proyecto en grupo debido a su simmplicidad para controlar las versiones y el desarrollo del proyecto.
+|Uso de Arc42 para la documentación. | Usando la plantilla AsciiDoc junto al modelo Arc42 se creará la documentación del proyceto.
+|===
+
+
+..Restricciones de Implementación
+[options="header",cols="1,2"]
+|===
+|Restricción  |     Explicación
+|Descentralización del sistema.  |    Al ser una red social, lo óptimo es que cada usuario poseea un servidor en el que almacenar sus datos de usuario.
+|Separación de datos.       |         Todos los datos de todos los usuarios tienen que estar separados de los datos de la propia apliacación.
+|Unión de Interfaz de Usuario y de Lógica.  | A través de los componentes de React es posible gestionar a la vez las interacciones de cada usuario con los componentes de la web.
+|Integración del FrontEnd con BackEnd.|   Gracias a la integración de React con Solid es posible que los datos de los usuarios y de la apliación sean persistentes.
+|Desarrollo de una apliación web. |   La aplicación deberá ser mantenida por un servidor y tiene que permitir conectarse a un usuario independientemente de su plataforma (PC, Móvil...).
+|===
+
+..Restricciones de Organización
+[options="header",cols="1,2"]
+|===
+|Restricción                         Explicación
+|Documentación de la App incremental. |   Ya que la aplicación puede cambiar durante el desarrollo, la documentación debe adaptarse a ella.
+|Entregar Implementación de manera periódica. | Ya que la aplicación irá añadiendo funcionalidades a lo largo de su desarrollo, estas pueden tener un coste de rendimiento que no se puede permitir, por lo que hay que controlarlo.
+|Redacción de actas semanales.     |      Esta práctica permite llevar la pista a los cambios que se han decidido respecto al desarrollo.
+|Uso de ramas individuales.      |        Dividir las características de la aplicación en ramas para así evitar conflictos en partes del proyecto que no están relacionadas.
+|===
+
+..Restricciones de Diseño
+[options="header",cols="1,2"]
+|===
+|Restricción           |              Explicación
+|Uso de componentes propios de React. |Gracias a esto se pueden incluir nuevos elementos de manera simple y sin perder tiempo en crearlos desde cero.
+|Uso de Solid         |               Con el uso de Solid, conseguimos persistencia desacoplada, lo que permite que cada usuario almacene sus datos y no depender de una única base de datos.
+|División del proyecto de forma interna.| Estructuración del proyecto en base a sus funcionalidades en directorios, para así conseguir que la apliación de divida en módulos que se modifiquen o reemplaces fácilmente.
+|AsciiDoctor| La usaremos como herramienta de documentación debido a sus diversos formatos, lo cual permite trabajar facilmente.
+|===
+
+..Restricciones de Estándares
+[options="header",cols="1,2"]
+|===
+|Restricción          |               Explicación
+|Separación en capas    | Separaremos en capas el código para que su comprensión sea más fácil.
+|Agrupación de componentes en distintos paquetes    | Agrupando los elementos del programa en distintos paquetes, conseguimos la separación de capas previamente propuesta.
+|===
+
+
 
 [role="arc42help"]
 ****
-.Contents
-Any requirement that constrains software architects in their freedom of design and implementation decisions or decision about the development process. These constraints sometimes go beyond individual systems and are valid for whole organizations and companies.
+.Contenidos
+En este apartado, el objetivo es explicar de manera exhaustiva todas aquellas restricciones propuestas para el desarrollo de la apliación Radarin. Dichas limitaciones se pueden dividir en distintos tipos en base a la parte de la Arquitectura a la que afectan, siendo estas las siguientes:
+-Restricciones de Software.
+-Restricciones de Implementación.
+-Restricciones de Organización.
+-Restricciones de Diseño.
+-Restricciones de Estándares.
+El objetivo de estas restricciones es el de conseguir que el equipo de desarrollo pueda tomar decisiones en base a convenciones previamente establecidas por todos.
 
-.Motivation
-Architects should know exactly where they are free in their design decisions and where they must adhere to constraints.
-Constraints must always be dealt with; they may be negotiable, though.
+.Motivacion
+Este proyecto tiene el objetivo de crear una red social que permita a un usuario compartir su localización a sus amigos para que estos puedan ver dónde está y hacer una quedada.
+
+Cada usuario puede añadir a personas como amigos para que solo personas a las que tú permitas puedan ver dónde estás.
+Además, se puede decidir a cuánto rango se puede ver su localización con el objetivo de que solo amigos cercanos se puedan percatar del lugar en el que se está.
+Por último, la apliación tendrá un chat para facilitar encuentros entre personas que se han encontrado en el mapa.
+
+.Restricciones
+Para visualizar los diferentes tipos de restricciones, se han dividido en tablas en base a su categoría:
 
 .Form
 Simple tables of constraints with explanations.
