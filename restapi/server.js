@@ -2,34 +2,29 @@ const express = require("express")
 //const promBundle = require("express-prom-bundle");
 const cors = require('cors');
 //const mongoose = require("mongoose")
-api = require("./api")
+const serverRequires = ["./api"]
 
-function connect() {
-	const app = express()
-
-	//Monitoring middleware
-	//const metricsMiddleware = promBundle({includeMethod: true});
-	//app.use(metricsMiddleware);
-	app.use(cors());
-	app.options('*', cors());
-	app.use(express.json())
-	app.use("/api", api.router)
+class Server {
+	constructor(addr) {
+		this.addr = addr
+	}
 	
-	api.init(app)
-	
-	app.get("/update", (req, res) => {
-		delete require.cache['./api.js'];
-		api = require("./api")
-		api.init(app)
-		res.send("Updated");
-	})
-	
-	//router.get("/prueba1", a)
-	let addr = [5000, "127.0.0.1"]
-	app.listen(...addr, () => {
-		console.log("Server has started! port: " + addr[1] + ":" + addr[0]/*Using db in " + mongo_uri*/)
-	})
+	start() {
+		this.app = express()
+		
+		this.app.use(cors());
+		this.app.options('*', cors());
+		this.app.use(express.json())
+		//this.app.use("/api", require("./api").router)
+		
+		for (let curRequire of serverRequires)
+			require(curRequire).init(this.app)
+		
+		this.server = this.app.listen(...this.addr, () => {
+			console.log("Server has started! port: " + this.addr[1] + ":" + this.addr[0])
+		})
+	}
 }
 
-// Connect to MongoDB database, the wait is for giving time to mongodb to finish loading
-setTimeout(connect, 5000)
+server = new Server([5000, "127.0.0.1"])
+server.start()
