@@ -1,66 +1,36 @@
-[[section-concepts]]
-== Cross-cutting Concepts
+= 8. Conceptos
+
+== Modelo de dominio
+
+Se implementará más adelante.
 
 
-[role="arc42help"]
+== Conceptos transversales
+
+=== 8.1 Seguridad
 ****
-.Content
-This section describes overall, principal regulations and solution ideas that are
-relevant in multiple parts (= cross-cutting) of your system.
-Such concepts are often related to multiple building blocks.
-They can include many different topics, such as
-
-* domain models
-* architecture patterns or design patterns
-* rules for using specific technology
-* principal, often technical decisions of overall decisions
-* implementation rules
-
-.Motivation
-Concepts form the basis for _conceptual integrity_ (consistency, homogeneity)
-of the architecture. Thus, they are an important contribution to achieve inner qualities of your system.
-
-Some of these concepts cannot be assigned to individual building blocks
-(e.g. security or safety). This is the place in the template that we provided for a
-cohesive specification of such concepts.
-
-.Form
-The form can be varied:
-
-* concept papers with any kind of structure
-* cross-cutting model excerpts or scenarios using notations of the architecture views
-* sample implementations, especially for technical concepts
-* reference to typical usage of standard frameworks (e.g. using Hibernate for object/relational mapping)
-
-.Structure
-A potential (but not mandatory) structure for this section could be:
-
-* Domain concepts
-* User Experience concepts (UX)
-* Safety and security concepts
-* Architecture and design patterns
-* "Under-the-hood"
-* development concepts
-* operational concepts
-
-Note: it might be difficult to assign individual concepts to one specific topic
-on this list.
-
-image:08-Crosscutting-Concepts-Structure-EN.png["Possible topics for crosscutting concepts"]
+_La seguridad en nuestra aplicación se basará en el uso de SOLID, por lo que cada usuario tendrá su propio POD y será él el que otorgue los permisos a las aplicaciones que él quiera._
 ****
 
+=== 8.2 Persistencia
+****
+_Debido a la utilización de SOLID, no será necesario contar con una base de datos, sino que será el mismo usuario el que almacene sus datos._
+****
 
-=== Domain model
+=== 8.3 Interfaz de usuario
+****
+_La aplicación contará con una interfaz de usuario para que el usuario sea capaz de utilizar toda la implementación de la misma. Dicha interfaz se desarrollará con React como complementación a JavaScript._
+****
 
-image:UmlDiagram.png["Example UML Diagram"]
+=== 8.4 Manejo de errores
+****
+_La aplicación informará al usuario de los errores que vayan ocurriendo._
+****
 
-
-
-=== _<Concept 2>_
-
-_<explanation>_
-
-...
+=== 8.5 Pruebas
+****
+_La aplicación será sometida a casos de prueba para comprobar la eficiencia de la misma._
+****
 
 === _<Concept n>_
 
