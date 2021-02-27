@@ -5,8 +5,8 @@ import { Button } from "react-native-paper";
 const App = () => {
     return (
         <View style={StyleSheet.container}>
-            <Button mode="contained" style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }} onPress={() => alert('Lgeandose')}> Login</Button>
-            <Button mode="contained" style={{ flex: 1, alignContent: 'center', justifyContent: 'center' }} onPress={() => Alert.alert('Registrandose')}> Registro</Button>
+            <Button mode="contained"  onPress={() => alert('Lgeandose')}> Login</Button>
+            <Button mode="contained"  onPress={() => alert('Registrandose')}> Registro</Button>
         </View>
     );
 };
