@@ -1,29 +1,15 @@
 const express = require("express")
-const User = require("./models/users")
-const router = express.Router()
+const users = require("./UsersManager")
 
-// Get all users
-router.get("/users/list", async (req, res) => {
-	const users = await User.find({}).sort('-_id') //Inverse order
-	res.send(users)
+const coordsRouter = express.Router()
+
+coordsRouter.get("/friends/list", async (req, res) => {
+	res.send(users.getUser(req.headers.user).getFriendsCoords())
 })
 
-//register a new user
-router.post("/users/add", async (req, res) => {
-	let name = req.body.name;
-	let email = req.body.email;
-	//Check if the device is already in the db
-	let user = await User.findOne({ email: email })
-	if (user)
-		res.send({error:"Error: This user is already registered"})
-	else{
-		user = new User({
-			name: name,
-			email: email,
-		})
-		await user.save()
-		res.send(user)
-	}
+coordsRouter.post("/update", async (req, res) => {
+	users.getUser(req.body.user).updateCoords(req.body.coords)
+	res.send("OK")
 })
 
 function getPlaintext(req, res) {
@@ -63,7 +49,4 @@ function init(app) {
 	app.post("/getObject", postObject)
 }
 
-module.exports = {
-	router: router,
-	init: init
-}
+module.exports = {coordsRouter}
