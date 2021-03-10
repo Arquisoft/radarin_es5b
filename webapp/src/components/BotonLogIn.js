@@ -1,16 +1,69 @@
-import React from "react";
-import { SessionProvider, LoginButton } from "@inrupt/solid-ui-react";
+import { useState, useEffect } from "react";
 
-function BotonLogIn() {
+import {
+  useSession,
+  CombinedDataProvider,
+  Image,
+  LogoutButton,
+  LoginButton,
+  Text,
+  Value,
+  SessionProvider,
+} from "@inrupt/solid-ui-react";
+
+import { Button, TextField, FormGroup, Container } from "@material-ui/core";
+
+export default function LoginForm() {
+  const [idp, setIdp] = useState("https://inrupt.net");
+  const [currentUrl, setCurrentUrl] = useState("https://localhost:3000");
+  const { session } = useSession();
+
+  
+  useEffect(() => {
+    setCurrentUrl(window.location.href);
+  }, [setCurrentUrl]);
+
+  if (session.info.isLoggedIn){
+    return (<div><h1>Logeado</h1>
+    <LogoutButton onLogout={{}} onError={{}}>
+       
+      </LogoutButton></div>);
+  
+  }
+   
+    return(<LoginButton oidcIssuer={idp} redirectUrl={currentUrl}>
+
+
+    </LoginButton>);
+
+/*
   return (
-    <SessionProvider sessionId="log-in-example">
-      <LoginButton
-        oidcIssuer="https://inrupt.net"
-        onError={function noRefCheck() {}}
-        redirectUrl="https://solid-ui-react.docs.inrupt.com/iframe.html?id=authentication-login-button--with-children&viewMode=docs"
-      ></LoginButton>
-    </SessionProvider>
-  );
-}
+    
+    <Container fixed>
+      <FormGroup>
+        <TextField
+          label="Identity Provider"
+          placeholder="Identity Provider"
+          type="url"
+          value={idp}
+          onChange={(e) => setIdp(e.target.value)}
+          InputProps={{
+            endAdornment: (
 
-export default BotonLogIn;
+              <LoginButton oidcIssuer={idp} redirectUrl={currentUrl}>
+
+                <Button variant="contained" color="primary">
+
+                  Log&nbsp;in
+
+                </Button>
+
+              </LoginButton>
+
+            ),
+          }}
+        />
+      </FormGroup>
+    </Container>
+  );*/
+}

@@ -4,6 +4,9 @@ import logo from './logo.svg';
 import EmailForm from "./components/EmailForm";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import BotonLogIn from './components/BotonLogIn';
+import { SessionProvider} from "@inrupt/solid-ui-react";
+
+
 
 class App extends React.Component{
   constructor(){
@@ -16,7 +19,11 @@ class App extends React.Component{
   }
 
   render(){
-    return(
+    /*return(
+      
+
+      
+    
       <div className="App">
 
         <header className="App-header">
@@ -30,7 +37,10 @@ class App extends React.Component{
         </div>
 
       </div>
-    )
+     
+    )*/
+
+    return (<SessionProvider sessionId="example"><div className="App">    <div className="App-content"><BotonLogIn /></div>      </div></SessionProvider> );
   }
 }
 
