@@ -1,4 +1,5 @@
 const getDistance = require("./coordinates").getDistance
+const db = require("./database")
 
 class User {
 	constructor(adviseDist) {
@@ -10,6 +11,7 @@ class User {
 	
 	updateCoords(coords) {
 		this.coords = coords
+		console.log(this.coords)
 		let inAdviseDistance = []
 		
 		for (let friend of this.friends) {
@@ -30,7 +32,7 @@ class User {
 	}
 	
 	getFriendsCoords() {
-		return this.friend.map(friend => friend.coords)
+		return this.friends.map(friend => friend.coords)
 	}
 }
 
@@ -40,8 +42,14 @@ class UsersManager {
 		this.users = []
 	}
 	
-	addUser(user) {
-		
+	async loginUser(user) {
+		let internalUser = await db.getUserById(user.webId)
+		if (internalUser.id == user.id) {
+			this.users.push(new User())
+			return this.users.length - 1
+		}
+		else
+			return -1
 	}
 	
 	getUser(userId) {
@@ -49,5 +57,9 @@ class UsersManager {
 	}
 }
 
-usersManager = new UsersManager()
+usersManager = new UsersManager();
+(async () => console.log(await usersManager.loginUser({webId: "usuario1", id: 111})))();
+(async () => console.log(await usersManager.loginUser({webId: "usuario2", id: 222})))();
+
+setTimeout(() => usersManager.users[0].friends.push(usersManager.users[1]), 500)
 module.exports = usersManager
