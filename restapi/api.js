@@ -4,12 +4,12 @@ const users = require("./UsersManager")
 const coordsRouter = express.Router()
 
 coordsRouter.get("/friends/list", async (req, res) => {
-	let user = users.getUser(req.headers.user)
+	let user = users.getUser(req.headers.webid, req.headers.usersessionid)
 	res.send(user.getFriendsCoords())
 })
 
 coordsRouter.post("/update", async (req, res) => {
-	users.getUser(req.body.userSessionId).updateCoords(req.body.coords)
+	users.getUser(req.body.webId, req.body.userSessionId).updateCoords(req.body.coords)
 	res.send("OK")
 })
 
