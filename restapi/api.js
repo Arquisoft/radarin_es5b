@@ -50,4 +50,4 @@ function init(app) {
 	app.post("/getObject", postObject)
 }
 
-module.exports = {coordsRouter}
+module.exports = {coordsRouter, init}

@@ -1,12 +1,17 @@
 const express = require("express")
+
+const http = require("http")
+const https = require("https")
+const fs = require("fs")
 //const promBundle = require("express-prom-bundle");
 const cors = require('cors');
 //const mongoose = require("mongoose")
 const api = require("./api")
 
 class Server {
-	constructor(addr) {
-		this.addr = addr
+	constructor(addrHttp, addrHttps) {
+		this.addrHttp = addrHttp
+		this.addrHttps = addrHttps
 	}
 	
 	start() {
@@ -16,12 +21,22 @@ class Server {
 		this.app.options('*', cors());
 		this.app.use(express.json())
 		this.app.use("/coords", api.coordsRouter)
+		api.init(this.app)
 		
-		this.server = this.app.listen(...this.addr, () => {
-			console.log("Server has started! port: " + this.addr[1] + ":" + this.addr[0])
-		})
+		let credentials = {
+			key: fs.readFileSync("httpsCert/key.pem", "utf-8"),
+			cert: fs.readFileSync("httpsCert/cert.pem", "utf-8"),
+			passphrase: "test123..."
+		}
+		this.server = http.createServer(this.app).listen(...this.addrHttp, () => this.serverStarted(this.addrHttp))
+		this.serverHttps = https.createServer(credentials, this.app).listen(...this.addrHttps, () => this.serverStarted(this.addrHttps))
+		/*this.server = this.app.listen(...this.addr, () => )*/
+	}
+	
+	serverStarted(addr) {
+		console.log("Server has started! port: " + addr[1] + ":" + addr[0])
 	}
 }
 
-server = new Server([5000, "127.0.0.1"])
+server = new Server([5000, "127.0.0.1"], [5001, "127.0.0.1"])
 server.start()

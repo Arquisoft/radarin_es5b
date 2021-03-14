@@ -17,5 +17,6 @@ yarn-error.log*
 
 restapi/node_modules
 restapi/data
+restapi/httpsCert/key.pem
 
 .eslintcache
