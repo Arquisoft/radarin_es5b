@@ -1,18 +1,26 @@
-import * as React from "react";
-import { AppRegistry } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
-import { name as appName } from './app.json';
-import App from './components/App';
+import React from 'react';
+    import { StyleSheet, Text, View } from 'react-native';
+    import { createAppContainer, createSwitchNavigator } from 'react-navigation'
+    import { createBottomTabNavigator } from 'react-navigation-tabs'
+    import MapScreen from './src/screens/MapScreen'
+    import MapListScreen from './src/screens/MapListScreen'
+    import { setNavigator } from './src/navigationRef'
 
+    const switchNavigator = createSwitchNavigator({
+      mainFlow: createBottomTabNavigator({
+        MapView: MapScreen,
+        MapList: MapListScreen
+      })
+    })
 
-export default function Main() {
-  return (
-    <PaperProvider>
-      <App />
-    </PaperProvider>
-  );
-}
+    const App = createAppContainer(switchNavigator)
 
-
-
-AppRegistry.registerComponent(appName, () => Main);
+    export default () => {
+      return (
+        <App 
+          ref={navigator => {
+            setNavigator(navigator)
+          }}
+        />
+      );
+    }
