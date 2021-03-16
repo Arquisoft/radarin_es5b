@@ -3,6 +3,7 @@ import "./App.css";
 import logo from "./logo.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { SessionProvider, LoginButton } from "@inrupt/solid-ui-react";
+import Mapa from "./components/Mapa";
 
 class App extends React.Component {
   constructor() {
@@ -23,13 +24,21 @@ class App extends React.Component {
         </header>
 
         <div className="App-content">
-          <SessionProvider sessionId="log-in-example">
-            <LoginButton
-              oidcIssuer="https://inrupt.net"
-              onError={function noRefCheck() {}}
-              redirectUrl="http://localhost:3000/"
-            ></LoginButton>
-          </SessionProvider>
+          <div class="opciones">
+            
+                <SessionProvider sessionId="log-in-example">
+                  <LoginButton
+                    oidcIssuer="https://inrupt.net"
+                    onError={function noRefCheck() {}}
+                    redirectUrl="http://localhost:3000/"
+                  ></LoginButton>
+                </SessionProvider>
+              
+          </div>
+
+          <div class="mapa">
+            <Mapa />
+          </div>
         </div>
       </div>
     );
