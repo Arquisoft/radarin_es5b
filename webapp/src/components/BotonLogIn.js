@@ -38,6 +38,7 @@ export default function LoginForm() {
 
 /*
   return (
+<<<<<<< HEAD
     
     <Container fixed>
       <FormGroup>
@@ -67,3 +68,16 @@ export default function LoginForm() {
     </Container>
   );*/
 }
+=======
+    <SessionProvider sessionId="log-in-example">
+      <LoginButton
+        oidcIssuer="https://inrupt.net"
+        onError={function noRefCheck() {}}
+        redirectUrl="http://localhost:3000/"
+      ></LoginButton>
+    </SessionProvider>
+  );
+}
+
+export default BotonLogIn;
+>>>>>>> nacho
