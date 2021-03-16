@@ -7,7 +7,7 @@ function BotonLogIn() {
       <LoginButton
         oidcIssuer="https://inrupt.net"
         onError={function noRefCheck() {}}
-        redirectUrl="https://solid-ui-react.docs.inrupt.com/iframe.html?id=authentication-login-button--with-children&viewMode=docs"
+        redirectUrl="http://localhost:3000/"
       ></LoginButton>
     </SessionProvider>
   );
