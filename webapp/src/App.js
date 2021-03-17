@@ -66,8 +66,6 @@ class App extends React.Component {
             <nav class="Menu">
               <h5>Welcome back, <Value src="user.name"/>.</h5>
               <p>Amigos:</p>
-              {console.log("aqui")}
-              {console.log(this.state)}
               <UserList data={this.state} />
             </nav>          
           </LoggedIn>
