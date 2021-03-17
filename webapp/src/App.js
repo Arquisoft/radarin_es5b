@@ -1,21 +1,11 @@
-<<<<<<< HEAD
-import React from 'react';
-import './App.css';
-import logo from './logo.svg';
-import EmailForm from "./components/EmailForm";
-import 'bootstrap/dist/css/bootstrap.min.css';
-import BotonLogIn from './components/BotonLogIn';
-import { SessionProvider} from "@inrupt/solid-ui-react";
-
-
-=======
 import React from "react";
 import "./App.css";
 import logo from "./logo.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { SessionProvider, LoginButton } from "@inrupt/solid-ui-react";
 import Mapa from "./components/Mapa";
->>>>>>> nacho
+import Prueba from "./components/Prueba";
+import { AuthButton,Like, LoggedIn, Value,List,Follow} from "@solid/react";
 
 class App extends React.Component {
   constructor() {
@@ -27,17 +17,12 @@ class App extends React.Component {
     this.setState({ users: users });
   }
 
-<<<<<<< HEAD
   render(){
     /*return(
       
 
       
     
-=======
-  render() {
-    return (
->>>>>>> nacho
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
@@ -62,14 +47,30 @@ class App extends React.Component {
           </div>
         </div>
       </div>
-<<<<<<< HEAD
      
     )*/
+      /*
+    return (<SessionProvider sessionId="example"><div className="App">  
+      <div className="App-content"><BotonLogIn /></div>      </div>
+      
+      </SessionProvider> );*/
+      return <div>
+        
+        
+        <AuthButton popup="https://solid.github.io/solid-auth-client/dist/popup.html"
+      login="Entrar" logout="Salir"/>
 
-    return (<SessionProvider sessionId="example"><div className="App">    <div className="App-content"><BotonLogIn /></div>      </div></SessionProvider> );
-=======
-    );
->>>>>>> nacho
+      <LoggedIn>
+        <Mapa/>
+        <p>Welcome back, <Value src="user.name"/>.</p>
+        <p>Amigos:</p>
+        <List src="user.friends.firstName"/>
+        <Like object="https://github.com/">GitHub</Like>
+        <Follow object="https://ruben.verborgh.org/profile/#me">Ruben</Follow>
+        <Prueba></Prueba>
+      </LoggedIn>
+
+  </div>
   }
 }
 
