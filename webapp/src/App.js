@@ -1,105 +1,78 @@
 import React from "react";
 import "./App.css";
 import logo from "./logo.svg";
-/*import Welcome from "./components/Welcome";
-import EmailForm from "./components/EmailForm";
-import UserList from "./components/UserList";*/
 import "bootstrap/dist/css/bootstrap.min.css";
-import {
-  GoogleMap,
-  withScriptjs,
-  withGoogleMap,
-  useLoadScript,
-  InfoWindow,
-  Marker,
-} from "react-google-maps";
-import credentials from "./credentials";
-//import { getFriendsCoords } from "api/api";
-
+import { SessionProvider, LoginButton } from "@inrupt/solid-ui-react";
+import Mapa from "./components/Mapa";
+import Prueba from "./components/Prueba";
+import { AuthButton,Like, LoggedIn, Value,List,Follow} from "@solid/react";
+import UserList from "./components/UserList";
 
 class App extends React.Component {
   constructor() {
     super();
-    this.state = {
-      users: [],
-      latitude: null,
-      longitude: null,
-      userAddress: null,
-    };
-    this.getLocation = this.getLocation.bind(this);
-    this.getCoordinates = this.getCoordinates.bind(this);
-    this.getLocation();
-    /*(async () => {
-      let a = await updateCoords()
-      console.log(a[0].webId)
-    })()*/
+    this.state = { users: [] };
   }
 
-  getLocation() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        this.getCoordinates,
-        this.handleLocationError
-      );
-    } else {
-      alert("Geolocation is not supported by this browser.");
-    }
+  refreshUsers(users) {
+    this.setState({ users: users });
   }
 
-  getCoordinates(position) {
-    this.setState({
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
-    });
-  }
+  render(){
+    /*return(
+    
+      <div className="App">
+        <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1>Radarin</h1>
+        </header>
 
-  handleLocationError(error) {
-    switch (error.code) {
-      case error.PERMISSION_DENIED:
-        alert("User denied the request for Geolocation.");
-        break;
-      case error.POSITION_UNAVAILABLE:
-        alert("Location information is unavailable.");
-        break;
-      case error.TIMEOUT:
-        alert("The request to get user location timed out.");
-        break;
-      case error.UNKNOWN_ERROR:
-        alert("An unknown error occurred.");
-        break;
-    }
-  }
+        <div className="App-content">
+          <div class="opciones">
+            
+                <SessionProvider sessionId="log-in-example">
+                  <LoginButton
+                    oidcIssuer="https://inrupt.net"
+                    onError={function noRefCheck() {}}
+                    redirectUrl="http://localhost:3000/"
+                  ></LoginButton>
+                </SessionProvider>
+              
+          </div>
 
-  render() {
-    const MyMapComponent = withScriptjs(
-      withGoogleMap((props) => (
-        <GoogleMap
-          defaultZoom={8}
-          defaultCenter={{
-            lat: this.state.latitude,
-            lng: this.state.longitude,
-          }}
-        >
-          <Marker position={{ lat: this.state.latitude, lng: this.state.longitude }} />
-        </GoogleMap>
-      ))
-    );
-
-    const myStyle = {
-      height: "600px",
-    };
-
-    const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
-    return (
-      <div>
-        <MyMapComponent
-          googleMapURL={mapURL}
-          loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `100vh`, width: "80vh" }} />}
-          mapElement={<div style={{ height: `100%` }} />}
-        ></MyMapComponent>
+          <div class="mapa">
+            <Mapa />
+          </div>
+        </div>
       </div>
-    );
+     
+    )*/
+      /*
+    return (<SessionProvider sessionId="example"><div className="App">  
+      <div className="App-content"><BotonLogIn /></div>      </div>
+      
+      </SessionProvider> );*/
+
+      return <div>
+        <header class="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1>Radarin_ES5B</h1>
+          <AuthButton popup="https://solid.github.io/solid-auth-client/dist/popup.html" login="Entrar" logout="Salir"/>
+        </header>
+
+        <div class="layout">
+          <LoggedIn>
+            <Mapa/>
+            <nav class="Menu">
+              <h5>Welcome back, <Value src="user.name"/>.</h5>
+              <p>Amigos:</p>
+              <List src="user.friends.firstName"/>
+            </nav>          
+          </LoggedIn>
+        </div>
+
+  </div>
   }
 }
+
 export default App;

@@ -1,10 +1,10 @@
-= 10. Requisitos de calidad
+== 10. Requisitos de calidad
 
-== Árbol de calidad
+=== Árbol de calidad
 
 image::images/atributos_de_calidad.png[arbol de calidad]
 
-== Escenarios de calidad
+=== Escenarios de calidad
 
 |===
 | *Objetivo de calidad* | *Descripción* | *Solución*
@@ -29,3 +29,4 @@ image::images/atributos_de_calidad.png[arbol de calidad]
 | La aplicación debe ser fácil de utilizar para cualquier usuario (nuevos usuarios, usuarios con discapacidades,...)
 | Interfaces intuitivas y hechas pensando en cualquier usuario.
 
+|===
