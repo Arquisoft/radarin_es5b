@@ -66,8 +66,8 @@ class App extends React.Component {
             <nav class="Menu">
               <h5>Welcome back, <Value src="user.name"/>.</h5>
               <p>Amigos:</p>
-              <UserList data={this.state} />
-            </nav>          
+              <List src="user.friends"/>
+            </nav>
           </LoggedIn>
         </div>
 
