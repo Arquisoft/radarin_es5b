@@ -1,15 +1,52 @@
 const express = require("express")
-const users = require("./UsersManager")
+const {users, registerUser} = require("./UsersManager")
+
+const userRouter = express.Router()
+
+userRouter.post("/login", async (req, res) => {
+	if (req.session.webId == null && await users.loginUser(req.body)) {
+		req.session.webId = req.body.webId
+		res.send("OK")
+	}
+	else
+		res.send("Error")
+})
+
+userRouter.get("/logout", async (req, res) => {
+	if (users.logOutUser(req.session.webId)) {
+		req.session.webId = null
+		res.send("OK")
+	}
+	else
+		res.send("Error")
+})
+
+userRouter.post("/register", async (req, res) => {
+	if (req.body.webId == null)
+		res.send("Error")
+	
+	else {
+		let result = await registerUser(req.body.webId)
+		res.send(result == -1 ? "Error" : result)
+	}
+})
 
 const coordsRouter = express.Router()
+coordsRouter.use(function(req, res, next) {
+	if (req.session.webId == null)
+		res.send("Error: Not logged")
+	
+	else
+		next()
+})
 
 coordsRouter.get("/friends/list", async (req, res) => {
-	let user = users.getUser(req.headers.webid, req.headers.usersessionid)
+	let user = users.getUser(req.session.webId)
 	res.send(user.getFriendsCoords())
 })
 
 coordsRouter.post("/update", async (req, res) => {
-	users.getUser(req.body.webId, req.body.userSessionId).updateCoords(req.body.coords)
+	users.getUser(req.session.webId).updateCoords(req.body.coords)
 	res.send("OK")
 })
 
@@ -50,4 +87,4 @@ function init(app) {
 	app.post("/getObject", postObject)
 }
 
-module.exports = {coordsRouter, init}
+module.exports = {userRouter, coordsRouter, init}

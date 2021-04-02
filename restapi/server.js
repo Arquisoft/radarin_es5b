@@ -1,4 +1,5 @@
 const express = require("express")
+const expressSession = require('express-session')
 
 const http = require("http")
 const https = require("https")
@@ -17,9 +18,16 @@ class Server {
 	start() {
 		this.app = express()
 		
+		this.app.use(expressSession({
+			secret: 'abcdefg',
+			resave: true,
+			saveUninitialized: true
+		}))
+		
 		this.app.use(cors());
 		this.app.options('*', cors());
 		this.app.use(express.json())
+		this.app.use("/user", api.userRouter)
 		this.app.use("/coords", api.coordsRouter)
 		api.init(this.app)
 		
