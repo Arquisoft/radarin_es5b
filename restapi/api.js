@@ -1,10 +1,25 @@
 const express = require("express")
 const {users, registerUser} = require("./UsersManager")
 
+function checkLogged(req, res, next) {
+	if (req.session.webId == null)
+		res.send("Error: Not logged")
+	
+	else
+		next()
+}
+
 const userRouter = express.Router()
+userRouter.use(function(req, res, next) {
+	if (req.path == "/login" || req.path == "/register")
+		next()
+	
+	else
+		checkLogged(req, res, next)
+})
 
 userRouter.post("/login", async (req, res) => {
-	if (req.session.webId == null && await users.loginUser(req.body)) {
+	if (req.session.webId == null && users.getUser(req.body.webId) == null && await users.loginUser(req.body)) {
 		req.session.webId = req.body.webId
 		res.send("OK")
 	}
@@ -31,14 +46,12 @@ userRouter.post("/register", async (req, res) => {
 	}
 })
 
-const coordsRouter = express.Router()
-coordsRouter.use(function(req, res, next) {
-	if (req.session.webId == null)
-		res.send("Error: Not logged")
-	
-	else
-		next()
+userRouter.post("/add_friends", async (req, res) => {
+	res.send(users.getUser(req.session.webId).addFriends(req.body) ? "OK" : "Error")
 })
+
+const coordsRouter = express.Router()
+coordsRouter.use(checkLogged)
 
 coordsRouter.get("/friends/list", async (req, res) => {
 	let user = users.getUser(req.session.webId)

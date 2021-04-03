@@ -39,7 +39,10 @@ class User {
 		this.updateFriendCoords_me(friend, getDistance(this.coords, friendUser.coords))
 	}
 	
-	setFriends(friendsWebIds) {
+	addFriends(friendsWebIds) {
+		if (! (Symbol.iterator in Object(friendsWebIds)))
+			return false
+		
 		for (let friendWebId of friendsWebIds) {
 			let friend = usersManager.users.get(friendWebId)
 			
@@ -49,6 +52,7 @@ class User {
 			else
 				this.loggedOutFriends.add(friendWebId)
 		}
+		return true
 	}
 	
 	friendLogged(friend) {
@@ -155,8 +159,8 @@ usersManager = new UsersManager();
 (async () => console.log(await usersManager.loginUser({webId: "usuario1", pass: 111, coords: {lon: 0, lat: 0, alt: 0}})))();
 (async () => {
 	console.log(await usersManager.loginUser({webId: "usuario2", pass: 222, coords: {lon: 0, lat: 5, alt: 0}}))
-	usersManager.users.get("usuario2").setFriends([usersManager.users.get("usuario1").webId])
-	usersManager.users.get("usuario1").setFriends([usersManager.users.get("usuario2").webId])
+	usersManager.users.get("usuario2").addFriends([usersManager.users.get("usuario1").webId])
+	usersManager.users.get("usuario1").addFriends([usersManager.users.get("usuario2").webId, "usuario3"])
 	console.log(usersManager.users.get("usuario1").getFriendsCoords())
 })();
 
