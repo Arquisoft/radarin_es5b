@@ -1,4 +1,4 @@
-const mongoose = require("mongoose")
+/*const mongoose = require("mongoose")
 
 
 const schema = mongoose.Schema({
@@ -6,4 +6,4 @@ const schema = mongoose.Schema({
     email: String
 })
 
-module.exports = mongoose.model("User", schema)
+module.exports = mongoose.model("User", schema)*/

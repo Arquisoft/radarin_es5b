@@ -1,37 +1,33 @@
-= 8. Conceptos
+== 8. Conceptos
 
-== Modelo de dominio
+=== Modelo de dominio
 
 Se implementará más adelante.
 
 
-== Conceptos transversales
+=== Conceptos transversales
 
-=== 8.1 Seguridad
+==== 8.1 Seguridad
 ****
 _La seguridad en nuestra aplicación se basará en el uso de SOLID, por lo que cada usuario tendrá su propio POD y será él el que otorgue los permisos a las aplicaciones que él quiera._
 ****
 
-=== 8.2 Persistencia
+==== 8.2 Persistencia
 ****
 _Debido a la utilización de SOLID, no será necesario contar con una base de datos, sino que será el mismo usuario el que almacene sus datos._
 ****
 
-=== 8.3 Interfaz de usuario
+==== 8.3 Interfaz de usuario
 ****
 _La aplicación contará con una interfaz de usuario para que el usuario sea capaz de utilizar toda la implementación de la misma. Dicha interfaz se desarrollará con React como complementación a JavaScript._
 ****
 
-=== 8.4 Manejo de errores
+==== 8.4 Manejo de errores
 ****
 _La aplicación informará al usuario de los errores que vayan ocurriendo._
 ****
 
-=== 8.5 Pruebas
+==== 8.5 Pruebas
 ****
 _La aplicación será sometida a casos de prueba para comprobar la eficiencia de la misma._
 ****
-
-=== _<Concept n>_
-
-_<explanation>_

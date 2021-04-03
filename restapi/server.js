@@ -1,30 +1,50 @@
 const express = require("express")
-const promBundle = require("express-prom-bundle");
+const expressSession = require('express-session')
+
+const http = require("http")
+const https = require("https")
+const fs = require("fs")
+//const promBundle = require("express-prom-bundle");
 const cors = require('cors');
-const mongoose = require("mongoose")
-const api = require("./api") 
+//const mongoose = require("mongoose")
+const api = require("./api")
 
-function connect(){
-    //The MONGO_URI variable is the connection string to MongoDB Atlas (for production). This env variable is created in heroku.
-    mongo_uri = process.env.MONGO_URI || "mongodb://localhost:27017"
-    mongoose.connect(mongo_uri, { useNewUrlParser: true,useUnifiedTopology: true }).then(() => {
-        const app = express()
-
-        //Monitoring middleware
-        const metricsMiddleware = promBundle({includeMethod: true});
-        app.use(metricsMiddleware);
-
-        app.use(cors());
-        app.options('*', cors());
-        app.use(express.json())
-        app.use("/api", api)
-
-
-        app.listen(process.env.PORT || 5000, () => {
-            console.log("Server has started! Using db in "+mongo_uri)
-        })
-    })
+class Server {
+	constructor(addrHttp, addrHttps) {
+		this.addrHttp = addrHttp
+		this.addrHttps = addrHttps
+	}
+	
+	start() {
+		this.app = express()
+		
+		this.app.use(expressSession({
+			secret: 'abcdefg',
+			resave: true,
+			saveUninitialized: true
+		}))
+		
+		this.app.use(cors());
+		this.app.options('*', cors());
+		this.app.use(express.json())
+		this.app.use("/user", api.userRouter)
+		this.app.use("/coords", api.coordsRouter)
+		api.init(this.app)
+		
+		let credentials = {
+			key: fs.readFileSync("httpsCert/key.pem", "utf-8"),
+			cert: fs.readFileSync("httpsCert/cert.pem", "utf-8"),
+			passphrase: "test123..."
+		}
+		this.server = http.createServer(this.app).listen(...this.addrHttp, () => this.serverStarted(this.addrHttp))
+		this.serverHttps = https.createServer(credentials, this.app).listen(...this.addrHttps, () => this.serverStarted(this.addrHttps))
+		/*this.server = this.app.listen(...this.addr, () => )*/
+	}
+	
+	serverStarted(addr) {
+		console.log("Server has started! port: " + addr[1] + ":" + addr[0])
+	}
 }
 
-// Connect to MongoDB database, the wait is for giving time to mongodb to finish loading
-setTimeout(connect,5000)
+server = new Server([5000, "127.0.0.1"], [5001, "127.0.0.1"])
+server.start()

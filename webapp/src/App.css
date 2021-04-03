@@ -3,7 +3,7 @@
 }
 
 .App-logo {
-  height: 20vmin;
+  height: 12vmin;
   pointer-events: none;
 }
 
@@ -22,6 +22,13 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+
+  display: grid; /* specificity = 002 */
+  grid-template-areas: 
+      'image text'
+      'btn btn';
+  grid-gap: 5px; /* specificity = 002 */
+  padding: 15px; /* specificity = 002 */
 }
 
 .App-link {
@@ -34,6 +41,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center; 
+  
 }
 
 .UserList{
@@ -47,4 +55,76 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.mapa {
+    float: left;
+    height:100%;
+    width: 95%;
+}
+
+.opciones {
+    float: right;
+    margin-bottom: 1%;
+}
+
+.Menu {
+  grid-area: menu;
+  background-color: #615a5a;
+  color: black;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-style: oblique;
+  padding-left: 10px;
+  padding-top: 10px;
+}
+
+.map {
+  grid-area: map;
+}
+
+.auth {
+  grid-area: btn;
+  background-color: green;
+  color: white;
+  font-weight: bold;
+  border: 0px;
+}
+
+.layout {
+  display: grid; /* specificity = 002 */
+  grid-template-areas: 
+      'menu map map map map map map map';
+  grid-gap: 5px; /* specificity = 002 */
+  padding: 15px; /* specificity = 002 */
+}
+
+#root {
+  background-color: #a7a9ad;
+  color: #282c34;
+}
+
+.activity {
+  background-color: #282c34;
+  color: white;
+  border-radius: 4px;
+  border: 0px;
+}
+
+button {
+  background-color: #282c34;
+  color: white;
+  border-radius: 4px;
+  border: 0px;
+}
+
+input {
+  background-color: #615a5a;
+  color: white;
+  border: 0px;
+}
+
+h5 {
+  text-align: center;
+  text-decoration-line: underline;
 }
