@@ -19,10 +19,10 @@ async function updateCoords() {
     return await response
 }
 
-export async function getFriendsCoords() {
+export function getFriendsCoords() {
     const apiEndPoint = process.env.REACT_APP_API_URI || 'http://127.0.0.1:5000'
     
-    let response = await fetch(apiEndPoint + '/coords/friends/list', {
+    let response = fetch(apiEndPoint + '/coords/friends/list', {
         method: "GET",
         headers: {
             'Content-Type':'application/json',
@@ -30,5 +30,5 @@ export async function getFriendsCoords() {
             "usersessionid": 0
         }
     })
-    return await response.json()
+    return [{coords:{lon:43.29725392940575,lat:-5.68647905562985}}]
 }
