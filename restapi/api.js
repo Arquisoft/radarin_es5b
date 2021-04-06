@@ -19,7 +19,10 @@ userRouter.use(function(req, res, next) {
 })
 
 userRouter.post("/login", async (req, res) => {
-	if (req.session.webId == null && users.getUser(req.body.webId) == null && await users.loginUser(req.body)) {
+	if (req.body.webId != null && req.body.pass != null &&
+			req.session.webId == null && users.getUser(req.body.webId) == null &&
+			await users.loginUser(req.body)) {
+		
 		req.session.webId = req.body.webId
 		res.send("OK")
 	}

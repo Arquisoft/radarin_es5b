@@ -123,9 +123,7 @@ class UsersManager {
 	}
 	
 	async loginUser(user) {
-		let internalUser = await db.getUserById(user.webId)
-		
-		if (internalUser != null && internalUser.pass == user.pass) {
+		if (await db.validateUser(user.webId, user.pass)) {
 			let newUser = new User(user.webId, user.coords)
 			this.users.set(user.webId, newUser)
 			return true
@@ -156,9 +154,9 @@ async function registerUser(webId) {
 }
 
 usersManager = new UsersManager();
-(async () => console.log(await usersManager.loginUser({webId: "usuario1", pass: 111, coords: {lon: 0, lat: 0, alt: 0}})))();
+(async () => console.log(await usersManager.loginUser({webId: "usuario1", pass: "111", coords: {lon: 0, lat: 0, alt: 0}})))();
 (async () => {
-	console.log(await usersManager.loginUser({webId: "usuario2", pass: 222, coords: {lon: 0, lat: 5, alt: 0}}))
+	console.log(await usersManager.loginUser({webId: "usuario2", pass: "222", coords: {lon: 0, lat: 5, alt: 0}}))
 	usersManager.users.get("usuario2").addFriends([usersManager.users.get("usuario1").webId])
 	usersManager.users.get("usuario1").addFriends([usersManager.users.get("usuario2").webId, "usuario3"])
 	console.log(usersManager.users.get("usuario1").getFriendsCoords())
