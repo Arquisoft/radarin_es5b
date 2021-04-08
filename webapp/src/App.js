@@ -64,10 +64,10 @@ class App extends React.Component {
           <LoggedIn>
             <Mapa/>
             <nav class="Menu">
-              <h5>Welcome back, <Value src="user.name"/>.</h5>
+              <h5>Welcome back, <Value src="user.vcard_fn"/>.</h5>
               <p>Amigos:</p>
               <List src="user.friends"/>
-            </nav>
+            </nav>          
           </LoggedIn>
         </div>
 
