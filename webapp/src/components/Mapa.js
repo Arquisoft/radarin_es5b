@@ -9,6 +9,7 @@ import {
   Marker,
 } from "react-google-maps";
 import credentials from "./credentials";
+import {getFriendsCoords} from "../api/api";
 
 class Mapa extends React.Component {
   constructor() {
@@ -22,6 +23,24 @@ class Mapa extends React.Component {
     this.getLocation = this.getLocation.bind(this);
     this.getCoordinates = this.getCoordinates.bind(this);
     this.getLocation();
+    this.componentDidMount();
+  }
+
+
+
+  componentDidMount(){
+    // or you can set markers list somewhere else
+    // please also set your correct lat & lng
+    // you may only use 1 image for all markers, if then, remove the img_src attribute ^^
+    var friends = getFriendsCoords();
+    var result = [];
+    for(var friend of friends){
+      result.push({"lat": friend.coords.lon, "lng": friend.coords.lat});
+    }
+    console.log(result);
+    this.setState({
+      users: result,
+    });
   }
 
   getLocation() {
@@ -69,7 +88,13 @@ class Mapa extends React.Component {
             lng: this.state.longitude,
           }}
         >
-          <Marker position={{ lat: this.state.latitude, lng: this.state.longitude }} />
+          <Marker position={{ lat: this.state.latitude, lng: this.state.longitude }} text="UD está aquí"/>
+          {this.state.users.map((user, i) =>{
+            console.log(user);
+              return(
+                <Marker position={{lat:user.lat, lng:user.lng}} />
+              )
+            })} 
         </GoogleMap>
       ))
     );
