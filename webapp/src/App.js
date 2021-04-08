@@ -6,6 +6,7 @@ import { SessionProvider, LoginButton } from "@inrupt/solid-ui-react";
 import Mapa from "./components/Mapa";
 import Prueba from "./components/Prueba";
 import { AuthButton,Like, LoggedIn, Value,List,Follow} from "@solid/react";
+import UserList from "./components/UserList";
 
 class App extends React.Component {
   constructor() {
@@ -19,9 +20,6 @@ class App extends React.Component {
 
   render(){
     /*return(
-      
-
-      
     
       <div className="App">
         <header className="App-header">
@@ -54,21 +52,24 @@ class App extends React.Component {
       <div className="App-content"><BotonLogIn /></div>      </div>
       
       </SessionProvider> );*/
-      return <div>
-        
-        
-        <AuthButton popup="https://solid.github.io/solid-auth-client/dist/popup.html"
-      login="Entrar" logout="Salir"/>
 
-      <LoggedIn>
-        <Mapa/>
-        <p>Welcome back, <Value src="user.name"/>.</p>
-        <p>Amigos:</p>
-        <List src="user.friends.firstName"/>
-        <Like object="https://github.com/">GitHub</Like>
-        <Follow object="https://ruben.verborgh.org/profile/#me">Ruben</Follow>
-        <Prueba></Prueba>
-      </LoggedIn>
+      return <div>
+        <header class="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <h1>Radarin_ES5B</h1>
+          <AuthButton popup="https://solid.github.io/solid-auth-client/dist/popup.html" login="Entrar" logout="Salir"/>
+        </header>
+
+        <div class="layout">
+          <LoggedIn>
+            <Mapa/>
+            <nav class="Menu">
+              <h5>Welcome back, <Value src="user.vcard_fn"/>.</h5>
+              <p>Amigos:</p>
+              <List src="user.friends"/>
+            </nav>          
+          </LoggedIn>
+        </div>
 
   </div>
   }
