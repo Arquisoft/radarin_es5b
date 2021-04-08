@@ -16,7 +16,7 @@ yarn-debug.log*
 yarn-error.log*
 
 restapi/node_modules
-restapi/data
-restapi/httpsCert/key.pem
+restapi/passwords
+restapi/mongo/data
 
 .eslintcache
