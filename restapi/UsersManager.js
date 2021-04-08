@@ -1,36 +1,58 @@
 const getDistance = require("./coordinates").getDistance
+const DistNotifications = require("./notifications")
 const db = require("./database")
 
 const DEFAULT_ADVISE_DIST = 0.1
-const SESSION_ID_SIZE = 1e20
+
+class Friend {
+	constructor(friend) {
+		this.user = friend
+		this.dist = 0
+		this.inAdviseDist = false
+	}
+}
 
 class User {
 	
-	constructor(webId) {
+	constructor(webId, coords) {
 		this.webId = webId
-		this.sessionId = parseInt(Math.random() * SESSION_ID_SIZE)
 		
-		this.loggedFriends = new Map()
-		this.loggedOutFriends = new Set()
+		this.loggedFriends = new Map() //Hash map con los amigos logeados (webId -> Friend)
+		this.loggedOutFriends = new Set() //Set con los webId de los amigos no logeados
 		
-		this.coords = null
+		this.coords = coords
 		this.adviseDist = DEFAULT_ADVISE_DIST
+		this.distNotifications = new DistNotifications()
+	}
+	
+	logOut() {
+		this.loggedFriends.forEach(friend => friend.user.friendLoggedOut(this))
 	}
 	
 	setCoords(coords) {
 		this.coords = coords
 	}
 	
-	setFriends(friendsWebIds) {
+	addLoggedFriend(friendUser) {
+		let friend = new Friend(friendUser)
+		this.loggedFriends.set(friend.webId, friend)
+		this.updateFriendCoords_me(friend, getDistance(this.coords, friendUser.coords))
+	}
+	
+	addFriends(friendsWebIds) {
+		if (! (Symbol.iterator in Object(friendsWebIds)))
+			return false
+		
 		for (let friendWebId of friendsWebIds) {
 			let friend = usersManager.users.get(friendWebId)
 			
 			if (friend != undefined && friend.friendLogged(this))
-				this.loggedFriends.set(friendWebId, friend)
+				this.addLoggedFriend(friend)
 			
 			else
 				this.loggedOutFriends.add(friendWebId)
 		}
+		return true
 	}
 	
 	friendLogged(friend) {
@@ -38,7 +60,7 @@ class User {
 			return false
 		
 		else {
-			this.loggedFriends.set(friend.webId, friend)
+			this.addLoggedFriend(friend)
 			return true
 		}
 	}
@@ -51,30 +73,45 @@ class User {
 	updateCoords(coords) {
 		this.coords = coords
 		console.log(this.coords)
-		let inAdviseDistance = []
 		
 		for (let friend of this.loggedFriends.values()) {
-			if (this.inAdviseDistance(friend))
-				inAdviseDistance.put(friend)
-			
-			friend.updateFriendCoords(this)
+			let dist = getDistance(this.coords, friend.user.coords)
+			this.updateFriendCoords_me(friend, dist)
+			friend.updateFriendCoords(this, dist)
 		}
-		return inAdviseDistance
 	}
 	
-	updateFriendCoords(friend) {
+	updateFriendCoords_me(friend, dist) {
+		friend.dist = dist
 		
+		if (this.inAdviseDistance(dist) != friend.inAdviseDist) {
+			friend.inAdviseDist = ! friend.inAdviseDist
+			
+			if (friend.inAdviseDist)
+				this.distNotifications.add(friend)
+		}
 	}
 	
-	inAdviseDistance(user) {
-		return getDistance(this.coords, user.coords) < this.adviseDist
+	updateFriendCoords(friendWebId, dist) {
+		this.updateFriendCoords(this.loggedFriends.get(friendWebId, dist))
+	}
+	
+	inAdviseDistance(dist) {
+		return dist < this.adviseDist
 	}
 	
 	getFriendsCoords() {
 		let friendCoords = []
-		for (let friend of this.loggedFriends.values())
-			friendCoords.push({webId: friend.webId, coords: friend.coords})
-		
+		for (let friend of this.loggedFriends.values()) {
+			let friendUser = friend.user
+			
+			friendCoords.push({
+				webId: friendUser.webId,
+				coords: friendUser.coords,
+				dist: friend.dist,
+				inAdviseDist: friend.inAdviseDist
+			})
+		}
 		return friendCoords
 	}
 }
@@ -86,30 +123,43 @@ class UsersManager {
 	}
 	
 	async loginUser(user) {
-		let internalUser = await db.getUserById(user.webId)
-		
-		if (internalUser.id == user.id) {
-			let newUser = new User(user.webId)
+		if (await db.validateUser(user.webId, user.pass)) {
+			let newUser = new User(user.webId, user.coords)
 			this.users.set(user.webId, newUser)
-			return newUser.sessionId
+			return true
 		}
 		else
-			return -1
+			return false
 	}
 	
-	getUser(webId, sessionId) {
+	logOutUser(webId) {
+		let user = this.getUser(webId)
+		if (user != null) {
+			user.logOut()
+			this.users.delete(webId)
+			return true
+		}
+		else
+			return false
+	}
+	
+	getUser(webId) {
 		let user = this.users.get(webId)
-		return user != undefined/* && user.sessionId == sessionId*/ ? user : null
+		return user != undefined ? user : null
 	}
 }
 
+async function registerUser(webId) {
+	return await db.addUser(webId);
+}
+
 usersManager = new UsersManager();
-(async () => console.log(await usersManager.loginUser({webId: "usuario1", id: 111})))();
+(async () => console.log(await usersManager.loginUser({webId: "usuario1", pass: "111", coords: {lon: 0, lat: 0, alt: 0}})))();
 (async () => {
-	console.log(await usersManager.loginUser({webId: "usuario2", id: 222}))
-	usersManager.users.get("usuario2").loggedOutFriends.add("usuario1")
-	usersManager.users.get("usuario1").setCoords({lon: 0, lat: 0, alt: 0})
+	console.log(await usersManager.loginUser({webId: "usuario2", pass: "222", coords: {lon: 0, lat: 5, alt: 0}}))
+	usersManager.users.get("usuario2").addFriends([usersManager.users.get("usuario1").webId])
+	usersManager.users.get("usuario1").addFriends([usersManager.users.get("usuario2").webId, "usuario3"])
+	console.log(usersManager.users.get("usuario1").getFriendsCoords())
 })();
 
-setTimeout(() => usersManager.users.get("usuario1").setFriends([usersManager.users.get("usuario2").webId]), 500)
-module.exports = usersManager
+module.exports = {users: usersManager, registerUser}

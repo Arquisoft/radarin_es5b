@@ -1,4 +1,5 @@
 const express = require("express")
+const expressSession = require('express-session')
 
 const http = require("http")
 const https = require("https")
@@ -17,15 +18,22 @@ class Server {
 	start() {
 		this.app = express()
 		
+		this.app.use(expressSession({
+			secret: 'abcdefg',
+			resave: true,
+			saveUninitialized: true
+		}))
+		
 		this.app.use(cors());
 		this.app.options('*', cors());
 		this.app.use(express.json())
+		this.app.use("/user", api.userRouter)
 		this.app.use("/coords", api.coordsRouter)
 		api.init(this.app)
 		
 		let credentials = {
-			key: fs.readFileSync("httpsCert/key.pem", "utf-8"),
-			cert: fs.readFileSync("httpsCert/cert.pem", "utf-8"),
+			key: fs.readFileSync("passwords/key.pem", "utf-8"),
+			cert: fs.readFileSync("passwords/cert.pem", "utf-8"),
 			passphrase: "test123..."
 		}
 		this.server = http.createServer(this.app).listen(...this.addrHttp, () => this.serverStarted(this.addrHttp))
