@@ -1,11 +1,11 @@
 //REACT_APP_API_URI is an enviroment variable defined in the file .env.development or .env.production
 const apiEndPoint = process.env.REACT_APP_API_URI || "http://127.0.0.1:5000"
 
-async function request(path, method, content={}) {
+async function request(path, method, content=null) {
 	let response = await fetch(apiEndPoint + path, {
 		method: method,
 		headers: {"Content-Type":"application/json"},
-		body: JSON.stringify(content)
+		body: content != null ? JSON.stringify(content) : null
 	})
 	return response
 }
