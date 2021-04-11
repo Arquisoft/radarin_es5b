@@ -32,8 +32,8 @@ class Server {
 		api.init(this.app)
 		
 		let credentials = {
-			key: fs.readFileSync("httpsCert/key.pem", "utf-8"),
-			cert: fs.readFileSync("httpsCert/cert.pem", "utf-8"),
+			key: fs.readFileSync("passwords/key.pem", "utf-8"),
+			cert: fs.readFileSync("passwords/cert.pem", "utf-8"),
 			passphrase: "test123..."
 		}
 		this.server = http.createServer(this.app).listen(...this.addrHttp, () => this.serverStarted(this.addrHttp))

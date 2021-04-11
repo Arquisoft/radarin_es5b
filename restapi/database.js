@@ -1,7 +1,14 @@
+const fs = require("fs")
 const MongoClient = require("mongodb").MongoClient
-const uri = "mongodb://127.0.0.1:5050"
+const crypto = require("crypto")
 
+const HASHING_ALG = "sha256"
 const PASS_SIZE = 128
+
+function getMongoUri() {
+	let credentials = JSON.parse(fs.readFileSync("passwords/mongoCredentials.json", "utf-8"))
+	return `mongodb://${credentials.user}:${credentials.password}@127.0.0.1:5050`
+}
 
 function createRandomPass() {
 	let pass = ""
@@ -11,9 +18,13 @@ function createRandomPass() {
 	return pass
 }
 
+function hashPass(pass) {
+	return crypto.createHash(HASHING_ALG).update(pass).digest("hex")
+}
+
 class Mongo {
 	constructor() {
-		this.client = new MongoClient(uri)
+		this.client = new MongoClient(getMongoUri())
 	}
 	
 	async connect() {
@@ -24,13 +35,13 @@ class Mongo {
 		return await userIdCollection.findOne({webId: userWebId})
 	}
 	
-	async getUserById(userWebId) {
+	async validateUser(userWebId, expectedPass) {
 		await this.connect()
 		let usersCol = this.client.db("users").collection("users")
 		let user = await this.getUser(usersCol, userWebId)
 		
 		await this.client.close()
-		return user
+		return user != null && user.pass == hashPass(expectedPass)
 	}
 	
 	async addUser(userWebId) {
@@ -42,7 +53,7 @@ class Mongo {
 		
 		else {
 			let pass = createRandomPass()
-			await usersCol.insertOne({webId: userWebId, pass: pass})
+			await usersCol.insertOne({webId: userWebId, pass: hashPass(pass)})
 			var toReturn = pass
 		}
 		await this.client.close()
