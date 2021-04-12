@@ -155,11 +155,11 @@ async function registerUser(webId) {
 
 usersManager = new UsersManager();
 (async () => console.log(await usersManager.loginUser({webId: "usuario1", pass: "111", coords: {lon: 0, lat: 0, alt: 0}})))();
-(async () => {
+setTimeout(async () => {
 	console.log(await usersManager.loginUser({webId: "usuario2", pass: "222", coords: {lon: 0, lat: 5, alt: 0}}))
 	usersManager.users.get("usuario2").addFriends([usersManager.users.get("usuario1").webId])
 	usersManager.users.get("usuario1").addFriends([usersManager.users.get("usuario2").webId, "usuario3"])
 	console.log(usersManager.users.get("usuario1").getFriendsCoords())
-})();
+}, 10);
 
 module.exports = {users: usersManager, registerUser}

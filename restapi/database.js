@@ -47,7 +47,7 @@ class Mongo {
 		let usersCol = this.client.db("users").collection("users")
 		
 		if (await this.getUser(usersCol, userWebId) != null)
-			var toReturn = -1
+			var toReturn = null
 		
 		else {
 			let pass = createRandomPass()
