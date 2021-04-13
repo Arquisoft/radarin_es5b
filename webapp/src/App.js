@@ -63,7 +63,9 @@ class App extends React.Component {
         </header>
 
         <div class="layout">
+          <LoggedIn>
           <Principal></Principal>
+          </LoggedIn>
         </div>
 
   </div>

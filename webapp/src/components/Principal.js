@@ -5,11 +5,16 @@ import React from "react";
 import Mapa from "./Mapa";
 
 import api from "../api/userDataManager";
+import { render } from "@testing-library/react";
 
-export default  function Principal() {
+//export default  function Principal() {
 
-    api.connect();
-    
+class Principal extends React.Component{
+    constructor(){
+        super();
+        api.connect();
+    }
+    render(){
     return (
         <LoggedIn>
             
@@ -20,6 +25,8 @@ export default  function Principal() {
                 <List src="user.friends" />
             </nav>
         </LoggedIn>);
-
+    }
 }
+
+export default Principal;
 
