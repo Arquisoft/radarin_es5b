@@ -1,4 +1,3 @@
-const fs = require("fs")
 const MongoClient = require("mongodb").MongoClient
 const crypto = require("crypto")
 
@@ -6,8 +5,7 @@ const HASHING_ALG = "sha256"
 const PASS_SIZE = 128
 
 function getMongoUri() {
-	let credentials = JSON.parse(fs.readFileSync("passwords/mongoCredentials.json", "utf-8"))
-	return `mongodb://${credentials.user}:${credentials.password}@127.0.0.1:5050`
+	return process.env.MONGO_URI == null ? "mongodb://127.0.0.1:5050" : process.env.MONGO_URI
 }
 
 function createRandomPass() {
@@ -49,7 +47,7 @@ class Mongo {
 		let usersCol = this.client.db("users").collection("users")
 		
 		if (await this.getUser(usersCol, userWebId) != null)
-			var toReturn = -1
+			var toReturn = null
 		
 		else {
 			let pass = createRandomPass()

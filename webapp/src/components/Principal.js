@@ -1,18 +1,18 @@
 import { AuthButton, Like, LoggedIn, Value, List, Follow, useWebId, } from "@solid/react";
+import auth from "solid-auth-client"
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import Mapa from "./Mapa";
 
-import restapi from "../api/api";
+import api from "../api/userDataManager";
 import { render } from "@testing-library/react";
 
 //export default  function Principal() {
 
-
 class Principal extends React.Component{
     constructor(){
         super();
-        restapi.connect();
+        api.connect();
     }
     render(){
     return (
@@ -24,8 +24,8 @@ class Principal extends React.Component{
                 <p>Amigos:</p>
                 <List src="user.friends" />
             </nav>
-        </LoggedIn>);}
-
+        </LoggedIn>);
+    }
 }
 
 export default Principal;

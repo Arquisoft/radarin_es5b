@@ -1,14 +1,11 @@
-import {updateFile,getFile} from "./podAccess";
-import auth from "solid-auth-client";
+
 //REACT_APP_API_URI is an enviroment variable defined in the file .env.development or .env.production
 const apiEndPoint = process.env.REACT_APP_API_URI || "http://127.0.0.1:5000"
-
-
 
 async function request(path, method, content=null) {
 	let response = await fetch(apiEndPoint + path, {
 		method: method,
-		headers: {"Content-Type":"application/json"},
+		headers: {"Content-Type": "application/json"},
 		body: content != null ? JSON.stringify(content) : null
 	})
 	return response
@@ -24,69 +21,6 @@ async function login(webid, pass, coords) {
 
 async function logout() {
 	return await request("/user/logout", "GET")
-}
-
-
-async function getPass(webId){
-	if(webId != null){
-	console.log("web id en getpass:"+webId);
-	var url = webId.replace("profile/card#me","");
-	url = url+"radarin/contraseña.txt";
-
-	var pass =await( getFile(url));
-	console.log("Contraseña sacada"+pass);
-	return pass;
-	}
-}
-
-async function connect(){
-	var webId = (await auth.currentSession()).webId;
-	console.log("siiiii"+webId);
-	var response=  await (await register(webId)).text();
-	console.log(response);
-	if(response == 'Error'){ //El usuario ya está registrado
-		console.log("Este es el webid"+webId);
-		var pass = await getPass(webId);
-		console.log("Usuario ya está registrado");
-		await getLocationLogin(webId,pass);
-		update()
-	}
-	else{
-		console.log(response);
-		
-		var url = webId.replace("profile/card#me","");
-	
-	 	url = url+"radarin/contraseña.txt";
-		console.log(url);
-		updateFile(url,response);
-		await getLocationLogin(webId,response);	
-		update();
-	}
-	
-}
-
- 
-
-
-async function update(){
-	setTimeout(update,1000);
-	 navigator.geolocation.getCurrentPosition(async function f(pos){
-		var coords = {"lat":pos.coords.latitude,"lon":pos.coords.longitude,"alt":0}
-		
-		//console.log(coords);
-		let response = await updateCoords(coords);
-		console.log(await response.text());
-	});
-}
-
-async function getLocationLogin(webId,pass){
-	await navigator.geolocation.getCurrentPosition(async function f(pos){
-		var coords = {"lat":pos.coords.latitude,"lon":pos.coords.longitude}
-		
-		console.log("Datos del login: "+webId,pass,coords);
-		let response = await login(webId,pass,coords);
-		console.log("Respuesta del login"+await response.text());
-	});
 }
 
 async function register(webid) {
@@ -113,6 +47,5 @@ export default {
 	register,
 	addFriends,
 	getFriendsCoords,
-	updateCoords,
-	connect
+	updateCoords
 }
