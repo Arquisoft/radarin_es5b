@@ -8,12 +8,6 @@ import Prueba from "./components/Prueba";
 import { AuthButton, Like, LoggedIn, Value, List, Follow } from "@solid/react";
 import UserList from "./components/UserList";
 
-import 'react-notifications/lib/notifications.css';
-import {
-  NotificationContainer,
-  NotificationManager,
-} from "react-notifications";
-
 class App extends React.Component {
   constructor() {
     super();
@@ -24,30 +18,17 @@ class App extends React.Component {
     this.setState({ users: users });
   }
 
-  notificacion = (type) => {
-    return () => {
-      switch (type) {
-        case "info":
-          NotificationManager.info("Info message");
-          break;
-        case "success":
-          NotificationManager.success("Success message", "Title here");
-          break;
-        case "warning":
-          NotificationManager.warning(
-            "Warning message",
-            "Close after 3000ms",
-            3000
-          );
-          break;
-        case "error":
-          NotificationManager.error("Error message", "Click me!", 5000, () => {
-            alert("callback");
-          });
-          break;
-      }
-    };
-  };
+  componentDidMount() {
+    if (!("Notification" in window)) {
+      console.log("This browser does not support desktop notification");
+    } else {
+      Notification.requestPermission();
+    }
+  }
+
+  showNotification() {
+    new Notification("Toma notificacion papa");
+  }
 
   render() {
     return (
@@ -68,12 +49,11 @@ class App extends React.Component {
         <div class="layout">
           <LoggedIn>
             <Mapa />
+            componentDidMount()
             <nav class="Menu">
-              <button
-                className="btn btn-info"
-                onClick={this.notificacion("info")}
-              >
-                Info
+
+              <button onClick={this.showNotification}>
+                Click to show notification
               </button>
 
               <h5>
@@ -82,11 +62,8 @@ class App extends React.Component {
               <p>Amigos:</p>
               <List src="user.friends" />
             </nav>
-            <NotificationContainer/>
           </LoggedIn>
         </div>
-
-        
       </div>
     );
   }
