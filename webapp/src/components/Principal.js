@@ -9,6 +9,15 @@ export default  function Principal() {
 
 
     restapi.connect(useWebId());
+
+    class Prueba {
+        prueba(message) {
+            alert(message);
+            console.log("puslado");
+        }
+    }
+    
+    var p = new Prueba();
     
     return (
         <LoggedIn>
@@ -19,6 +28,9 @@ export default  function Principal() {
                 <p>Amigos:</p>
                 <List src="user.friends" />
             </nav>
+            <footer>
+                <button onclick={p.prueba("ADMINISTRAR")}>ADMINISTRAR USUARIOS</button>
+            </footer>
         </LoggedIn>);
 
 }

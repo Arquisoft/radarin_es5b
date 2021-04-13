@@ -94,7 +94,8 @@
 .layout {
   display: grid; /* specificity = 002 */
   grid-template-areas: 
-      'menu map map map map map map map';
+      'menu map map map map map map map'
+      'foot foot foot foot foot foot foot foot';
   grid-gap: 5px; /* specificity = 002 */
   padding: 15px; /* specificity = 002 */
 }
@@ -127,4 +128,8 @@ input {
 h5 {
   text-align: center;
   text-decoration-line: underline;
+}
+
+footer {
+  grid-area : foot;
 }
