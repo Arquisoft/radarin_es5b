@@ -10,7 +10,7 @@ import {
   Circle
 } from "react-google-maps";
 import credentials from "./credentials";
-import {getFriendsCoords} from "../api/api";
+import { getFriendsCoords } from "../api/api.js";
 
 class Mapa extends React.Component {
   constructor() {
