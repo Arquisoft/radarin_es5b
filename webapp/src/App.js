@@ -6,7 +6,6 @@ import { SessionProvider, LoginButton } from "@inrupt/solid-ui-react";
 
 import Prueba from "./components/Prueba";
 import { AuthButton,Like, LoggedIn, Value,List,Follow, useWebId} from "@solid/react";
-import UserList from "./components/UserList";
 
 import Principal from "./components/Principal";
 
