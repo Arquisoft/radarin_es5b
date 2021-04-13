@@ -1,5 +1,5 @@
 import {updateFile,getFile} from "./podAccess";
-
+import auth from "solid-auth-client";
 //REACT_APP_API_URI is an enviroment variable defined in the file .env.development or .env.production
 const apiEndPoint = process.env.REACT_APP_API_URI || "http://127.0.0.1:5000"
 
@@ -39,7 +39,9 @@ async function getPass(webId){
 	}
 }
 
-async function connect(webId){
+async function connect(){
+	var webId = (await auth.currentSession()).webId;
+	console.log("siiiii"+webId);
 	var response=  await (await register(webId)).text();
 	console.log(response);
 	if(response == 'Error'){ //El usuario ya está registrado
@@ -83,7 +85,7 @@ async function getLocationLogin(webId,pass){
 		
 		console.log("Datos del login: "+webId,pass,coords);
 		let response = await login(webId,pass,coords);
-		console.log("Respuesta del login"+await response.headers);
+		console.log("Respuesta del login"+await response.text());
 	});
 }
 

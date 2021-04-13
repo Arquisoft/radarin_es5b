@@ -26,8 +26,10 @@ userRouter.post("/login", async (req, res) => {
 		req.session.webId = req.body.webId
 		res.send("OK")
 	}
-	else
+	else{
+		console.log("HA DADO ERROR");
 		res.send("Error")
+	}
 })
 
 userRouter.get("/logout", async (req, res) => {

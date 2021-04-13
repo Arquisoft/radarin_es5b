@@ -4,12 +4,17 @@ import React from "react";
 import Mapa from "./Mapa";
 
 import restapi from "../api/api";
+import { render } from "@testing-library/react";
 
-export default  function Principal() {
+//export default  function Principal() {
 
 
-    restapi.connect(useWebId());
-    
+class Principal extends React.Component{
+    constructor(){
+        super();
+        restapi.connect();
+    }
+    render(){
     return (
         <LoggedIn>
             
@@ -19,7 +24,9 @@ export default  function Principal() {
                 <p>Amigos:</p>
                 <List src="user.friends" />
             </nav>
-        </LoggedIn>);
+        </LoggedIn>);}
 
 }
+
+export default Principal;
 
