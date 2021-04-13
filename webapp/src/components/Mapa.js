@@ -10,6 +10,7 @@ import {
 } from "react-google-maps";
 import credentials from "./credentials";
 import restapi from "../api/api";
+import user from "../api/userDataManager";
 
 class Mapa extends React.Component {
   constructor() {
@@ -32,7 +33,7 @@ class Mapa extends React.Component {
     // or you can set markers list somewhere else
     // please also set your correct lat & lng
     // you may only use 1 image for all markers, if then, remove the img_src attribute ^^
-    var friends = await (await restapi.getFriendsCoords()).json();
+    var friends = user.isLogged() && false ? await (await restapi.getFriendsCoords()).json() : [];
     var result = [];
     for(var friend of friends){
       result.push({"lat": friend.coords.lon, "lng": friend.coords.lat});

@@ -1,14 +1,14 @@
 import { AuthButton, Like, LoggedIn, Value, List, Follow, useWebId, } from "@solid/react";
+import auth from "solid-auth-client"
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import Mapa from "./Mapa";
 
-import restapi from "../api/api";
+import api from "../api/userDataManager";
 
 export default  function Principal() {
 
-
-    restapi.connect(useWebId());
+    api.connect();
     
     return (
         <LoggedIn>
