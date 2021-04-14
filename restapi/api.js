@@ -1,4 +1,5 @@
 const express = require("express")
+const sessionManager = require("./SessionManager")
 const {users, registerUser} = require("./UsersManager")
 
 function sendError(res, errorDesc=null) {
@@ -27,8 +28,7 @@ userRouter.post("/login", async (req, res) => {
 	if (req.body.webId != null && req.body.pass != null) {
 		if (req.session.webId == null && users.getUser(req.body.webId) == null && await users.loginUser(req.body)) {
 			
-			req.session.webId = req.body.webId
-			res.send({})
+			res.send({sessionId: sessionManager.newSession({webId: req.body.webId})})
 		}
 		else
 			sendError(res, "Login error")
@@ -39,7 +39,7 @@ userRouter.post("/login", async (req, res) => {
 
 userRouter.get("/logout", async (req, res) => {
 	if (users.logOutUser(req.session.webId)) {
-		req.session.webId = null
+		sessionManager.delete(req)
 		res.send({})
 	}
 	else
