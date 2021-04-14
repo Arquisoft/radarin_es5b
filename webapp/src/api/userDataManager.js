@@ -17,7 +17,7 @@ async function getPass(webId) {
 	}
 }
 
-async function disconnect(){
+async function disconnect() {
 	console.log("Logout");
 	api.logout();
 }
