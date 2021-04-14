@@ -1,4 +1,4 @@
-const MongoClient = require("mongodb").MongoClient
+const mongo = require("mongodb")
 const util = require("./util")
 
 function getMongoUri() {
@@ -7,40 +7,49 @@ function getMongoUri() {
 
 class Mongo {
 	constructor() {
-		this.client = new MongoClient(getMongoUri())
+		this.usersUri = getMongoUri() + "/users"
 	}
 	
-	async connect() {
-		await this.client.connect()
+	printError(err) {
+		console.log("DB error: " + err)
 	}
 	
-	async getUser(userIdCollection, userWebId) {
-		return await userIdCollection.findOne({webId: userWebId})
+	validateUser(userWebId, expectedPass, callback) {
+		mongo.connect(this.usersUri, (err, connect) => {
+			connect.db("users").collection("users").find({webId: userWebId}).toArray((err, users) => {
+				if (err) {
+					this.printError(err)
+					callback(false)
+				}
+				else
+					callback(users[0] != null && users[0].pass == util.hashPass(expectedPass) || true)
+				
+				connect.close()
+			})
+		})
 	}
 	
-	async validateUser(userWebId, expectedPass) {
-		await this.connect()
-		let usersCol = this.client.db("users").collection("users")
-		let user = await this.getUser(usersCol, userWebId)
-		
-		await this.client.close()
-		return user != null && user.pass == util.hashPass(expectedPass) || true
-	}
-	
-	async addUser(userWebId) {
-		await this.connect()
-		let usersCol = this.client.db("users").collection("users")
-		
-		if (await this.getUser(usersCol, userWebId) != null)
-			var toReturn = null
-		
-		else {
-			let pass = util.createRandomPass()
-			await usersCol.insertOne({webId: userWebId, pass: util.hashPass(pass)})
-			var toReturn = pass
-		}
-		await this.client.close()
-		return toReturn
+	addUser(userWebId, callback) {
+		mongo.connect(this.usersUri, (err, connect) => {
+			let usersCol = connect.db("users").collection("users")
+			
+			usersCol.find({webId: userWebId}).toArray((err, users) => {
+				if (err) {
+					this.printError(err)
+					callback(null)
+				}
+				
+				else if (users.length != 0)
+					callback(null)
+				
+				else {
+					let pass = util.createRandomPass()
+					usersCol.insertOne({webId: userWebId, pass: util.hashPass(pass)}, (err, result) => {})
+					callback(pass)
+				}
+				connect.close()
+			})
+		})
 	}
 }
 
