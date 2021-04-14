@@ -3,9 +3,9 @@
 
 ****
 .Contents
-Nuestro proyecto consistirá en realizar una aplicación web mediante la cual podremos geolocalizar a nuestros amigos cercanos.
+Nuestro proyecto consistirá en realizar una aplicación web mediante la cual podremos observar en un mapa a nuestros amigos cercanos.
 
-Las tecnologías que utilizaremos seran principalmente SOLID para la gestión de datos, haciendo así que los datos de los usuarios no se encuentren almacenados de forma centralizada, y REACT para el desarrollo de las interfaces de usuario de nuestra aplicación.
+Las tecnologías que utilizaremos seran principalmente SOLID y MONGO para la gestión de datos, haciendo así que los datos de los usuarios se encuentren almacenados de forma centralizada y la lista de amigos guardada en SOLID controle que usuarios pueden acceder a dichas localizaciones, y REACT para el desarrollo de las interfaces de usuario de nuestra aplicación.
 
 .Motivation
 
@@ -24,9 +24,8 @@ Nuestra aplicación se basará en una aplicación web, esta aplicación tendrá 
 La funcionalidad de la aplicacion será similar a un radar, en este radar nosotros podremos observar a nuestros amigos y a la gente que nos haya compartido su ubicación.
 
 .Form
-En la siguiente diagrama podemos observar de forma simplificada el uso de la aplicación.
+Desde la aplicaion observaremos las localizaciones de nuestros amigos, mediante la restapi podremos acceder a los datos en MONGO asi como enviar las localizaciones de los usuarios cada cierto timepo, para finalizar SOLID se encargará del tratamiento de los amigos de cada usuario, gracias esto podremos mostrar únicamente las localizaciones de sus amigos.
 
-image:Diagrama_documentacion.png[Error al cargar]Diagrama de uso de la aplicación.
 ****
 
 
@@ -34,9 +33,11 @@ image:Diagrama_documentacion.png[Error al cargar]Diagrama de uso de la aplicaci�
 
 ****
 .Contents
-Esta aplicación se basara en diversas tecnologías, las más importantes son SOLID y REACT.
+Esta aplicación se basara en diversas tecnologías, las más importantes son SOLID, MONGO y REACT.
 
 Mediante SOLID nuestra aplicacion será descentralizada lo que nos permitirá obtener información sin tener que realizar peticiones a un servidor centralizado, esto es gracias a los PODS que ejercen el papel de base de datos individual de cada usuario.
+
+Con MONGO guardaremos los datos de los usuarios tales como localizaciones, etc. Estos datos deberian de guardarse en SOLID pero debido a diversos errores al acceder y escribir datos en los PODS se decidió utilizar mongo para los datos y SOLID para gestionar los amigos.
 
 REACT es una biblioteca Javascript de código abierto con la cual podremos realizar las interfaces de usuario para nuestra aplicación de forma sencilla.
 ****
