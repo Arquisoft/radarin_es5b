@@ -61,6 +61,11 @@ async function getLocationLogin(webId, pass) {
 		
 		console.log("Datos del login: "+webId,pass,coords);
 		let response = await restapi.login(webId,pass,coords);
+
+		var friends = await pod.fetchProfile();
+		console.log(friends);
+		restapi.addFriends(friends);
+		
 		logged = true
 		//console.log("Respuesta del login" + await response.text());
 	});

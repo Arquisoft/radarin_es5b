@@ -6,6 +6,7 @@ import Mapa from "./Mapa";
 
 import api from "../api/userDataManager";
 import { render } from "@testing-library/react";
+import { useLDflexValue, useLDflexList } from '@solid/react';
 
 //export default  function Principal() {
 
@@ -14,7 +15,12 @@ class Principal extends React.Component{
         super();
         api.connect();
     }
+
+  
+
     render(){
+
+        
     return (
         <LoggedIn>
             

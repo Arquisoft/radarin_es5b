@@ -1,4 +1,8 @@
-import auth from "solid-auth-client";
+
+//import { VCARD } from "@inrupt/vocab-common-rdf";
+import { foaf } from 'rdf-namespaces';
+import auth from 'solid-auth-client';
+import { fetchDocument } from 'tripledoc'
 
 function runFetch(fetchCall, f=p => p) {
 	return fetchCall.then(p => p.text()).then(f)
@@ -12,6 +16,19 @@ function runFetch(fetchCall, f=p => p) {
  */
 export function getFile(filename, f) {
 	return runFetch(auth.fetch(filename), f)
+}
+
+export async function fetchProfile () {
+	const currentSession = await auth.currentSession();
+    if (!currentSession) {
+      return null;
+    }
+  
+    const webIdDoc = await fetchDocument(currentSession.webId);
+    const profile = webIdDoc.getSubject(currentSession.webId);
+	
+    let friends = await profile.getAllRefs(foaf.knows)
+	return friends;
 }
 
 /**
@@ -52,5 +69,6 @@ export default {
 	getFile,
 	updateFile,
 	addToFile,
-	deleteFile
+	deleteFile,
+	fetchProfile
 }
