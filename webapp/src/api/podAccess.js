@@ -34,7 +34,7 @@ export function updateFile(filename, content, f) {
  * @param {function} f Función callback para llamadas asíncronas
  * @return {string} String con el retorno de la petición http
  */
-export async function addToFile(filename, toAdd, f) {
+ export async function addToFile(filename, toAdd, f) {
 	return updateFile(filename, await getFile(filename) + toAdd, f)
 }
 
@@ -47,3 +47,4 @@ export async function addToFile(filename, toAdd, f) {
 export function deleteFile(filename, f) {
 	return runFetch(auth.fetch(filename, {method: "DELETE"}), f)
 }
+

@@ -3,10 +3,12 @@ import "./App.css";
 import logo from "./logo.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { SessionProvider, LoginButton } from "@inrupt/solid-ui-react";
-import Mapa from "./components/Mapa";
+
 import Prueba from "./components/Prueba";
-import { AuthButton,Like, LoggedIn, Value,List,Follow} from "@solid/react";
+import { AuthButton,Like, LoggedIn, Value,List,Follow, useWebId} from "@solid/react";
 import UserList from "./components/UserList";
+
+import Principal from "./components/Principal";
 
 class App extends React.Component {
   constructor() {
@@ -62,12 +64,7 @@ class App extends React.Component {
 
         <div class="layout">
           <LoggedIn>
-            <Mapa/>
-            <nav class="Menu">
-              <h5>Welcome back, <Value src="user.name"/>.</h5>
-              <p>Amigos:</p>
-              <List src="user.friends"/>
-            </nav>
+          <Principal></Principal>
           </LoggedIn>
         </div>
 
