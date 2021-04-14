@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="b235f5f6-c7b2-495a-85a7-9dd4b734574a" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../webapp/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../webapp/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webapp/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../webapp/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../webapp/src/components/Mapa.js" beforeDir="false" afterPath="$PROJECT_DIR$/../webapp/src/components/Mapa.js" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="ProjectId" id="1r1r3ILpVqTHg9ePlzRgfTjPVAh" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="android.sdk.path" value="$USER_HOME$/AppData/Local/Android/Sdk" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="AndroidSdkUpdater" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b235f5f6-c7b2-495a-85a7-9dd4b734574a" name="Default Changelist" comment="" />
+      <created>1618154236129</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1618154236129</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="734" y="355" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1618154899405">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="734" y="355" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.2560.1400/2560.453.1920.1040@0.0.2560.1400" timestamp="1618154899405" />
+    <state x="92" y="92" width="2376" height="1216" key="AVDManager" timestamp="1618155175428">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="92" y="92" width="2376" height="1216" key="AVDManager/0.0.2560.1400/2560.453.1920.1040@0.0.2560.1400" timestamp="1618155175428" />
+    <state x="1060" y="455" key="FileChooserDialogImpl" timestamp="1618154554549">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1060" y="455" key="FileChooserDialogImpl/0.0.2560.1400/2560.453.1920.1040@0.0.2560.1400" timestamp="1618154554549" />
+    <state width="2517" height="358" key="GridCell.Tab.0.bottom" timestamp="1618155010671">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="358" key="GridCell.Tab.0.bottom/0.0.2560.1400/2560.453.1920.1040@0.0.2560.1400" timestamp="1618155010671" />
+    <state width="2517" height="358" key="GridCell.Tab.0.center" timestamp="1618155010671">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="358" key="GridCell.Tab.0.center/0.0.2560.1400/2560.453.1920.1040@0.0.2560.1400" timestamp="1618155010671" />
+    <state width="2517" height="358" key="GridCell.Tab.0.left" timestamp="1618155010670">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="358" key="GridCell.Tab.0.left/0.0.2560.1400/2560.453.1920.1040@0.0.2560.1400" timestamp="1618155010670" />
+    <state width="2517" height="358" key="GridCell.Tab.0.right" timestamp="1618155010671">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state width="2517" height="358" key="GridCell.Tab.0.right/0.0.2560.1400/2560.453.1920.1040@0.0.2560.1400" timestamp="1618155010671" />
+    <state x="781" y="345" key="SettingsEditor" timestamp="1618155140608">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="781" y="345" key="SettingsEditor/0.0.2560.1400/2560.453.1920.1040@0.0.2560.1400" timestamp="1618155140608" />
+  </component>
+</project>

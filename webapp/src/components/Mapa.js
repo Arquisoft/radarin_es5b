@@ -7,6 +7,7 @@ import {
   useLoadScript,
   InfoWindow,
   Marker,
+  Circle
 } from "react-google-maps";
 import credentials from "./credentials";
 import restapi from "../api/api";
@@ -90,20 +91,23 @@ class Mapa extends React.Component {
           }}
         >
           <Marker position={{ lat: this.state.latitude, lng: this.state.longitude }} text="UD está aquí"/>
+          <Circle
+                  defaultCenter={{
+                    lat: this.state.latitude,
+                    lng: this.state.longitude
+                  }}
+                  radius={5000}
+                />
           {this.state.users.map((user, i) =>{
             console.log(user);
               return(
                 <Marker position={{lat:user.lat, lng:user.lng}} />
+
               )
             })} 
         </GoogleMap>
       ))
     );
-
-    const myStyle = {
-      height: "600px",
-    };
-
     const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
     return (
       <div class="map">
