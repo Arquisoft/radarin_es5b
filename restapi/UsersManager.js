@@ -122,14 +122,15 @@ class UsersManager {
 		this.users = new Map() //Hash map con los usuarios logeados (webId -> User)
 	}
 	
-	async loginUser(user) {
-		if (await db.validateUser(user.webId, user.pass)) {
-			let newUser = new User(user.webId, user.coords)
-			this.users.set(user.webId, newUser)
-			return true
-		}
-		else
-			return false
+	loginUser(user, callback) {
+		
+		db.validateUser(user.webId, user.pass, added => {
+			if (added) {
+				let newUser = new User(user.webId, user.coords)
+				this.users.set(user.webId, newUser)
+			}
+			callback(added)
+		})
 	}
 	
 	logOutUser(webId) {
@@ -149,11 +150,21 @@ class UsersManager {
 	}
 }
 
-async function registerUser(webId) {
-	return await db.addUser(webId);
+function registerUser(webId, callback) {
+	db.addUser(webId, callback)
 }
 
 usersManager = new UsersManager();
-
+usersManager.loginUser({webId: "usuario1", pass: "111", coords: {lon: 0, lat: 0, alt: 0}}, resp => {
+	console.log(resp)
+	
+	usersManager.loginUser({webId: "usuario2", pass: "222", coords: {lon: 0, lat: 5, alt: 0}}, resp2 => {
+		console.log(resp2)
+		
+		usersManager.users.get("usuario2").addFriends([usersManager.users.get("usuario1").webId])
+		usersManager.users.get("usuario1").addFriends([usersManager.users.get("usuario2").webId, "usuario3"])
+		console.log(usersManager.users.get("usuario1").getFriendsCoords())
+	})
+})
 
 module.exports = {users: usersManager, registerUser}
