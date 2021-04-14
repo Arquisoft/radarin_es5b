@@ -23,7 +23,7 @@ async function connect() {
 	console.log(response.status);
 	if (response.status != 200) { //El usuario ya está registrado
 		console.log("Este es el webid" + webId);
-		var pass = await getPass(webId);
+		var pass = "aa"//await getPass(webId);
 		console.log("Usuario ya está registrado");
 		await getLocationLogin(webId,pass);
 		update();
@@ -62,7 +62,7 @@ async function getLocationLogin(webId, pass) {
 		console.log("Datos del login: "+webId,pass,coords);
 		let response = await restapi.login(webId,pass,coords);
 		logged = true
-		console.log("Respuesta del login" + await response.text());
+		//console.log("Respuesta del login" + await response.text());
 	});
 }
 

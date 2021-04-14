@@ -1,5 +1,4 @@
 const express = require("express")
-const expressSession = require('express-session')
 
 const http = require("http")
 const https = require("https")
@@ -7,6 +6,7 @@ const fs = require("fs")
 //const promBundle = require("express-prom-bundle");
 const cors = require('cors');
 //const mongoose = require("mongoose")
+const sessionManager = require("./SessionManager")
 const api = require("./api")
 
 class Server {
@@ -18,15 +18,10 @@ class Server {
 	start() {
 		this.app = express()
 		
-		this.app.use(expressSession({
-			secret: 'abcdefg',
-			resave: true,
-			saveUninitialized: true
-		}))
-		
 		this.app.use(cors());
 		this.app.options('*', cors());
 		this.app.use(express.json())
+		this.app.use(sessionManager.setReqSession.bind(sessionManager))
 		this.app.use("/user", api.userRouter)
 		this.app.use("/coords", api.coordsRouter)
 		api.init(this.app)

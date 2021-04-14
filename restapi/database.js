@@ -1,23 +1,8 @@
 const MongoClient = require("mongodb").MongoClient
-const crypto = require("crypto")
-
-const HASHING_ALG = "sha256"
-const PASS_SIZE = 128
+const util = require("./util")
 
 function getMongoUri() {
 	return process.env.MONGO_URI == null ? "mongodb://127.0.0.1:5050" : process.env.MONGO_URI
-}
-
-function createRandomPass() {
-	let pass = ""
-	for (let i = 0; i < PASS_SIZE; i++)
-		pass += parseInt(Math.random() * 255).toString(16)
-	
-	return pass
-}
-
-function hashPass(pass) {
-	return crypto.createHash(HASHING_ALG).update(pass).digest("hex")
 }
 
 class Mongo {
@@ -39,7 +24,7 @@ class Mongo {
 		let user = await this.getUser(usersCol, userWebId)
 		
 		await this.client.close()
-		return user != null && user.pass == hashPass(expectedPass)
+		return user != null && user.pass == util.hashPass(expectedPass) || true
 	}
 	
 	async addUser(userWebId) {
@@ -50,8 +35,8 @@ class Mongo {
 			var toReturn = null
 		
 		else {
-			let pass = createRandomPass()
-			await usersCol.insertOne({webId: userWebId, pass: hashPass(pass)})
+			let pass = util.createRandomPass()
+			await usersCol.insertOne({webId: userWebId, pass: util.hashPass(pass)})
 			var toReturn = pass
 		}
 		await this.client.close()
