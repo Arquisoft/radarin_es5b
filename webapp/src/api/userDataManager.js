@@ -1,6 +1,7 @@
 import restapi from "./api";
 import pod from "./podAccess";
 import auth from "solid-auth-client"
+import api from "./api";
 
 var logged = false;
 
@@ -15,6 +16,12 @@ async function getPass(webId) {
 		return pass;
 	}
 }
+
+async function disconnect(){
+	console.log("Logout");
+	api.logout();
+}
+
 
 async function connect() {
 	let webId = (await auth.currentSession()).webId
@@ -77,5 +84,6 @@ function isLogged() {
 
 export default {
 	connect,
-	isLogged
+	isLogged,
+	disconnect
 }
