@@ -27,8 +27,8 @@ class App extends React.Component {
     }
   }
 
-  showNotification() {
-    new Notification("Prueba notificacion");
+  showNotification(txt) {
+    new Notification(txt);
   }
 
   render() {
@@ -47,7 +47,7 @@ class App extends React.Component {
         <div class="layout">
           <LoggedIn>
             <div>
-              <button onClick={this.showNotification}>
+              <button onClick={() => new Notification("Not")}>
                 Click to show notification
               </button>
             </div>
