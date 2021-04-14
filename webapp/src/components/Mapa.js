@@ -36,7 +36,7 @@ class Mapa extends React.Component {
     
     var result = [];
     for(var friend of friends) {
-      result.push({"lat": friend.coords.lon, "lng": friend.coords.lat});
+      result.push({"lat": friend.coords.lat, "lng": friend.coords.lon});
     }
     
     console.log(result);

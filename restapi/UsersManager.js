@@ -35,7 +35,7 @@ class User {
 	
 	addLoggedFriend(friendUser) {
 		let friend = new Friend(friendUser)
-		this.loggedFriends.set(friend.webId, friend)
+		this.loggedFriends.set(friend.user.webId, friend)
 		this.updateFriendCoords_me(friend, getDistance(this.coords, friendUser.coords))
 	}
 	
@@ -52,6 +52,8 @@ class User {
 			else
 				this.loggedOutFriends.add(friendWebId)
 		}
+		console.log(this.loggedFriends)
+		console.log(this.loggedOutFriends)
 		return true
 	}
 	
@@ -77,7 +79,7 @@ class User {
 		for (let friend of this.loggedFriends.values()) {
 			let dist = getDistance(this.coords, friend.user.coords)
 			this.updateFriendCoords_me(friend, dist)
-			friend.updateFriendCoords(this, dist)
+			friend.user.updateFriendCoords(this.webId, dist)
 		}
 	}
 	
@@ -93,7 +95,7 @@ class User {
 	}
 	
 	updateFriendCoords(friendWebId, dist) {
-		this.updateFriendCoords(this.loggedFriends.get(friendWebId, dist))
+		this.loggedFriends.get(friendWebId).dist = dist
 	}
 	
 	inAdviseDistance(dist) {
