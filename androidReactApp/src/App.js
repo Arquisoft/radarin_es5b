@@ -12,6 +12,7 @@ class App extends React.Component {
   constructor() {
     super();
     this.state = { users: [] };
+    this.showNotification = this.showNotification.bind(this);
   }
 
   refreshUsers(users) {
@@ -27,7 +28,7 @@ class App extends React.Component {
   }
 
   showNotification() {
-    new Notification("Toma notificacion papa");
+    new Notification("Prueba notificacion");
   }
 
   render() {
@@ -37,9 +38,6 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1>Radarin_ES5B</h1>
           <AuthButton
-            onClick={() => {
-              console.log("xd");
-            }}
             popup="https://solid.github.io/solid-auth-client/dist/popup.html"
             login="Iniciar sesion"
             logout="Cerrar sesion"
@@ -48,14 +46,14 @@ class App extends React.Component {
 
         <div class="layout">
           <LoggedIn>
-            <Mapa />
-            componentDidMount()
-            <nav class="Menu">
-
+            <div>
               <button onClick={this.showNotification}>
                 Click to show notification
               </button>
+            </div>
 
+            <Mapa />
+            <nav class="Menu">
               <h5>
                 Welcome back, <Value src="user.name" />.
               </h5>

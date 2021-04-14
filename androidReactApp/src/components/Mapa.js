@@ -7,7 +7,7 @@ import {
   useLoadScript,
   InfoWindow,
   Marker,
-  Circle
+  Circle,
 } from "react-google-maps";
 import credentials from "./credentials";
 import { getFriendsCoords } from "../api/api.js";
@@ -27,16 +27,14 @@ class Mapa extends React.Component {
     this.componentDidMount();
   }
 
-
-
-  componentDidMount(){
+  componentDidMount() {
     // or you can set markers list somewhere else
     // please also set your correct lat & lng
     // you may only use 1 image for all markers, if then, remove the img_src attribute ^^
     var friends = getFriendsCoords();
     var result = [];
-    for(var friend of friends){
-      result.push({"lat": friend.coords.lon, "lng": friend.coords.lat});
+    for (var friend of friends) {
+      result.push({ lat: friend.coords.lon, lng: friend.coords.lat });
     }
     console.log(result);
     this.setState({
@@ -89,21 +87,29 @@ class Mapa extends React.Component {
             lng: this.state.longitude,
           }}
         >
-          <Marker position={{ lat: this.state.latitude, lng: this.state.longitude }} text="UD está aquí"/>
+          <Marker
+            position={{ lat: this.state.latitude, lng: this.state.longitude }}
+            text="UD está aquí"
+          />
           <Circle
-                  defaultCenter={{
-                    lat: this.state.latitude,
-                    lng: this.state.longitude
-                  }}
-                  radius={5000}
-                />
-          {this.state.users.map((user, i) =>{
+            defaultCenter={{
+              lat: this.state.latitude,
+              lng: this.state.longitude,
+            }}
+            radius={5000}
+          />
+          {this.state.users.map((user, i) => {
             console.log(user);
-              return(
-                <Marker position={{lat:user.lat, lng:user.lng}} />
 
-              )
-            })} 
+            var lat = this.state.latitude;
+            var lgn = this.state.longitude;
+
+            console.log(Math.sqrt((user.lat - lat) ** 2 + (user.lng - lgn) ** 2));
+
+            if (Math.sqrt((user.lat - lat) ** 2 + (user.lng - lgn) ** 2) <= 0.05) {
+              return <Marker position={{ lat: user.lat, lng: user.lng }} />;
+            }
+          })}
         </GoogleMap>
       ))
     );
