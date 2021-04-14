@@ -7,6 +7,7 @@ import {
   useLoadScript,
   InfoWindow,
   Marker,
+  Circle
 } from "react-google-maps";
 import credentials from "./credentials";
 import restapi from "../api/api";
@@ -24,20 +25,20 @@ class Mapa extends React.Component {
     this.getLocation = this.getLocation.bind(this);
     this.getCoordinates = this.getCoordinates.bind(this);
     this.getLocation();
-    this.componentDidMount();
+    setTimeout(this.updateFriendsPos.bind(this), 2000)
   }
-
-
-
-  async componentDidMount(){
+  
+  async updateFriendsPos() {
     // or you can set markers list somewhere else
     // please also set your correct lat & lng
     // you may only use 1 image for all markers, if then, remove the img_src attribute ^^
-    var friends = user.isLogged() && false ? await (await restapi.getFriendsCoords()).json() : [];
+    var friends = await (await restapi.getFriendsCoords()).json();
+    
     var result = [];
-    for(var friend of friends){
+    for(var friend of friends) {
       result.push({"lat": friend.coords.lon, "lng": friend.coords.lat});
     }
+    
     console.log(result);
     this.setState({
       users: result,
@@ -90,20 +91,23 @@ class Mapa extends React.Component {
           }}
         >
           <Marker position={{ lat: this.state.latitude, lng: this.state.longitude }} text="UD está aquí"/>
+          <Circle
+                  defaultCenter={{
+                    lat: this.state.latitude,
+                    lng: this.state.longitude
+                  }}
+                  radius={5000}
+                />
           {this.state.users.map((user, i) =>{
             console.log(user);
               return(
                 <Marker position={{lat:user.lat, lng:user.lng}} />
+
               )
             })} 
         </GoogleMap>
       ))
     );
-
-    const myStyle = {
-      height: "600px",
-    };
-
     const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
     return (
       <div class="map">
