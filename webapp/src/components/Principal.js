@@ -5,20 +5,19 @@ import Mapa from "./Mapa";
 
 import restapi from "../api/api";
 
+import Button from "react-bootstrap/Button";
+import Admin from "./Admin";
+
 export default  function Principal() {
 
 
-    restapi.connect(useWebId());
+    restapi.connect(useWebId());   
 
-    class Prueba {
-        prueba(message) {
-            alert(message);
-            console.log("puslado");
-        }
+    function admin() {
+        alert("Administrando usuarios...");
+        return (<Admin></Admin>);
     }
-    
-    var p = new Prueba();
-    
+
     return (
         <LoggedIn>
             
@@ -28,9 +27,14 @@ export default  function Principal() {
                 <p>Amigos:</p>
                 <List src="user.friends" />
             </nav>
-            <footer>
-                <button onclick={p.prueba("ADMINISTRAR")}>ADMINISTRAR USUARIOS</button>
-            </footer>
+
+            <div class="admin">
+                <Button onClick={() => admin()}>
+                    ADMINISTRAR USUARIOS
+                </Button>
+                <Admin></Admin>
+            </div>
+            
         </LoggedIn>);
 
 }

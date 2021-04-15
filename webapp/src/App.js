@@ -65,7 +65,6 @@ class App extends React.Component {
         <div class="layout">
           <Principal></Principal>
         </div>
-
   </div>
   }
 }

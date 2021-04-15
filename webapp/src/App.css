@@ -130,6 +130,6 @@ h5 {
   text-decoration-line: underline;
 }
 
-footer {
+.admin {
   grid-area : foot;
 }

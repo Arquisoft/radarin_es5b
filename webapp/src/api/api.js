@@ -105,6 +105,18 @@ async function updateCoords(coords) {
 	})
 }
 
+async function ban(webid) {
+	return await request("/user/ban", "POST", {"webId": webid})
+}
+
+async function unban(webid) {
+	return await request("/user/unban", "POST", {"webId": webid})
+}
+
+async function listUsers() {
+	return await request("/user/list", "POST")
+}
+
 export default {
 	login,
 	logout,
@@ -112,5 +124,8 @@ export default {
 	addFriends,
 	getFriendsCoords,
 	updateCoords,
-	connect
+	connect,
+	ban,
+	unban,
+	listUsers
 }
