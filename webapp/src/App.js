@@ -55,7 +55,7 @@ class App extends React.Component {
       </SessionProvider> );*/
 
       return <div>
-        <header class="App-header">
+        <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1>Radarin_ES5B</h1>
           <AuthButton popup="https://solid.github.io/solid-auth-client/dist/popup.html" login="Entrar" logout="Salir"/>
@@ -64,7 +64,7 @@ class App extends React.Component {
         <LoggedOut>
           <Logout></Logout>
         </LoggedOut>
-        <div class="layout">
+        <div className="layout">
           <LoggedIn>
           <Principal></Principal>
           </LoggedIn>
