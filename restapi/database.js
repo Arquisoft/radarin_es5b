@@ -5,9 +5,13 @@ function getMongoUri() {
 	return process.env.MONGO_URI == null ? "mongodb://127.0.0.1:5050" : process.env.MONGO_URI
 }
 
+function getDBName(dbName) {
+	return process.env.TEST != "true" ? dbName : "test_" + dbName
+}
+
 class Mongo {
 	constructor() {
-		this.usersUri = getMongoUri() + "/users"
+		this.usersUri = getMongoUri()
 	}
 	
 	printError(err) {
@@ -16,7 +20,7 @@ class Mongo {
 	
 	validateUser(userWebId, expectedPass, callback) {
 		mongo.connect(this.usersUri, (err, connect) => {
-			connect.db("users").collection("users").find({webId: userWebId}).toArray((err, users) => {
+			connect.db(getDBName("users")).collection("users").find({webId: userWebId}).toArray((err, users) => {
 				if (err) {
 					this.printError(err)
 					callback(false)
@@ -31,7 +35,7 @@ class Mongo {
 	
 	addUser(userWebId, callback) {
 		mongo.connect(this.usersUri, (err, connect) => {
-			let usersCol = connect.db("users").collection("users")
+			let usersCol = connect.db(getDBName("users")).collection("users")
 			
 			usersCol.find({webId: userWebId}).toArray((err, users) => {
 				if (err) {
@@ -49,6 +53,13 @@ class Mongo {
 				}
 				connect.close()
 			})
+		})
+	}
+	
+	deleteAllUsers(callback) {
+		mongo.connect(this.usersUri, (err, connect) => {
+			connect.db(getDBName("users")).collection("users").remove({}, () => callback())
+			connect.close()
 		})
 	}
 }
