@@ -32,7 +32,7 @@ jobs:
     - run: npm ci
     - run: >
       env MONGO_URI=${{secrets.MONGO_URI}}
-      DEPLOY="true"
+      DEPLOY=true
       HTTPS_PASS=${{secrets.HTTPS_PASS}}
       HTTPS_KEY=${{secrets.HTTPS_KEY}}
       HTTPS_CERT=${{secrets.HTTPS_CERT}}
