@@ -1,48 +1,67 @@
-const request = require('supertest');
-const server = require('./server-for-tests')
+const server = require("./server-for-tests")
+const Requester = require("./requests")
+
+apiAddr = {
+	ip: "127.0.0.1",
+	port: 5001
+}
 
 /**
  * Connect to a new in-memory database before running any tests.
  */
 beforeAll(async () => {
-    await server.startdb()
-    app = await server.startserver()
-});
-
-/**
- * Clear all test data after every test.
- */
-afterEach(async () => await server.clearDatabase());
+	await server.startserver()
+})
 
 /**
  * Remove and close the db and server.
  */
-afterAll(async () => {
-    await server.closeServer() //finish the server
-    await server.closeDB()
+afterAll(async done => {
+	await server.closeServer() //finish the server
+	server.clearDatabase(done)
 })
 
 /**
  * Product test suite.
  */
-describe('user ', () => {
-    /**
-     * Test that we can list users without any error.
-     */
-    it('can be listed',async () => {
-        const response = await request(app).get("/api/users/list");
-        expect(response.statusCode).toBe(200);
-    });
-
-    /**
-     * Tests that a user can be created through the productService without throwing any errors.
-     */
-    it('can be created correctly', async () => {
-        username = 'Pablo'
-        email = 'pablo@uniovi.es'
-        const response = await request(app).post('/api/users/add').send({name: username,email: email}).set('Accept', 'application/json')
-        expect(response.statusCode).toBe(200);
-        expect(response.body.name).toBe(username);
-        expect(response.body.email).toBe(email);
-    });
-});
+describe("user", () => {
+	var requester = new Requester()
+	var user1Pass = null
+	
+	it("can be registered", done => {
+		requester.request(apiAddr, "/user/register", "POST", {webId: "user1"}, (res, data) => {
+			expect(res.statusCode).toBe(200)
+			user1Pass = data
+			done()
+		})
+	})
+	
+	it("can login", done => {
+		let credentials = {webId: "user1", pass: user1Pass}
+		
+		requester.request(apiAddr, "/user/login", "POST", credentials, (res, data) => {
+			expect(res.statusCode).toBe(200)
+			requester.setHeader("sessionid", JSON.parse(data).sessionId)
+			
+			requester.request(apiAddr, "/user/logout", "GET", null, (res, data) => {
+				expect(res.statusCode).toBe(200)
+				done()
+			})
+		})
+	})
+	
+	it("not logged can not logout", done => {
+		requester.request(apiAddr, "/user/logout", "GET", null, (res, data) => {
+			expect(res.statusCode).not.toBe(200)
+			done()
+		})
+	})
+	
+	it("can not register duplicated", done => {
+		requester.request(apiAddr, "/user/register", "POST", {webId: "user1"}, (res, data) => {
+			expect(res.statusCode).not.toBe(200)
+			expect(JSON.parse(data).error).toBe("webId already registered")
+			done()
+		})
+	})
+})
