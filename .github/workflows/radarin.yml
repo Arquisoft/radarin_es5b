@@ -29,6 +29,9 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: 12.14.1
+      env:
+        MONGO_URI: ${{secrets.MONGO_URI}}
+        DEPLOY: "true"
     - run: npm ci
     - run: npm test
   e2e-tests:

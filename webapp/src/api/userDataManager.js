@@ -6,7 +6,7 @@ import api from "./api";
 var logged = false;
 
 
-	async function getPass(webId) {
+/*async function getPass(webId) {
 	if (webId != null) {
 		console.log("web id en getpass:" + webId);
 		var url = webId.replace("profile/card#me","");
@@ -16,7 +16,7 @@ var logged = false;
 		console.log("Contraseña sacada"+pass);
 		return pass;
 	}
-}
+}*/
 
 async function disconnect(){
 	console.log("Logout");
@@ -30,12 +30,12 @@ async function connect() {
 	
 	var response = await restapi.register(webId);
 	console.log(response.status);
-	if (response.status != 200) { //El usuario ya está registrado
+	if (response.status !== 200) { //El usuario ya está registrado
 		console.log("Este es el webid" + webId);
 		var pass = "aa"//await getPass(webId);
 		console.log("Usuario ya está registrado");
 		await getLocationLogin(webId,pass);
-		logged=true;
+		logged = true;
 		setTimeout(update,1000);
 	}
 	else {
@@ -82,7 +82,7 @@ async function getLocationLogin(webId, pass) {
 		restapi.addFriends(friends);
 		
 		logged = true
-		//console.log("Respuesta del login" + await response.text());
+		console.log("Respuesta del login" + JSON.stringify(response));
 	});
 }
 
@@ -90,9 +90,10 @@ function isLogged() {
 	return logged;
 }
 
-export default {
+var toExport = {
 	connect,
 	update,
 	isLogged,
 	disconnect
 }
+export default toExport

@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import logo from "./logo.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { AuthButton,Like, LoggedIn, Value,List,Follow, useWebId, LoggedOut} from "@solid/react";
+import { AuthButton, LoggedIn, LoggedOut} from "@solid/react";
 
 import Principal from "./components/Principal";
 

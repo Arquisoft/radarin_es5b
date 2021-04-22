@@ -1,5 +1,3 @@
-import pod from "./podAccess";
-
 //REACT_APP_API_URI is an enviroment variable defined in the file .env.development or .env.production
 const apiEndPoint = process.env.REACT_APP_API_URI || "http://127.0.0.1:5000"
 
@@ -49,7 +47,7 @@ async function updateCoords(coords) {
 	})
 }
 
-export default {
+var toExport = {
 	login,
 	logout,
 	register,
@@ -57,3 +55,4 @@ export default {
 	getFriendsCoords,
 	updateCoords
 }
+export default toExport
