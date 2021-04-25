@@ -1,4 +1,8 @@
-import auth from "solid-auth-client";
+
+//import { VCARD } from "@inrupt/vocab-common-rdf";
+import { foaf } from 'rdf-namespaces';
+import auth from 'solid-auth-client';
+import { fetchDocument } from 'tripledoc'
 
 function runFetch(fetchCall, f=p => p) {
 	return fetchCall.then(p => p.text()).then(f)
@@ -10,8 +14,21 @@ function runFetch(fetchCall, f=p => p) {
  * @param {function} f Función callback para llamadas asíncronas
  * @return {string} String con el contenido del archivo
  */
-export function getFile(filename, f) {
+function getFile(filename, f) {
 	return runFetch(auth.fetch(filename), f)
+}
+
+async function fetchProfile () {
+	const currentSession = await auth.currentSession();
+    if (! currentSession) {
+      return null;
+    }
+  
+    const webIdDoc = await fetchDocument(currentSession.webId);
+    const profile = webIdDoc.getSubject(currentSession.webId);
+	
+    let friends = await profile.getAllRefs(foaf.knows)
+	return friends;
 }
 
 /**
@@ -21,7 +38,7 @@ export function getFile(filename, f) {
  * @param {function} f Función callback para llamadas asíncronas
  * @return {string} String con el retorno de la petición http
  */
-export function updateFile(filename, content, f) {
+function updateFile(filename, content, f) {
 	return runFetch(auth.fetch(filename, {
 		method: "PUT", body: content
 	}), f)
@@ -34,7 +51,7 @@ export function updateFile(filename, content, f) {
  * @param {function} f Función callback para llamadas asíncronas
  * @return {string} String con el retorno de la petición http
  */
-export async function addToFile(filename, toAdd, f) {
+async function addToFile(filename, toAdd, f) {
 	return updateFile(filename, await getFile(filename) + toAdd, f)
 }
 
@@ -44,6 +61,15 @@ export async function addToFile(filename, toAdd, f) {
  * @param {function} f Función callback para llamadas asíncronas
  * @return {string} String con el retorno de la petición http
  */
-export function deleteFile(filename, f) {
+function deleteFile(filename, f) {
 	return runFetch(auth.fetch(filename, {method: "DELETE"}), f)
 }
+
+var toExport = {
+	getFile,
+	updateFile,
+	addToFile,
+	deleteFile,
+	fetchProfile
+}
+export default toExport

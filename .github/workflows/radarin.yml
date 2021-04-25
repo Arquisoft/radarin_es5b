@@ -30,7 +30,13 @@ jobs:
       with:
         node-version: 12.14.1
     - run: npm ci
-    - run: npm test
+    - run: >
+        env MONGO_URI="${{secrets.MONGO_URI}}"
+        DEPLOY=true
+        HTTPS_PASS="${{secrets.HTTPS_PASS}}"
+        HTTPS_KEY="${{secrets.HTTPS_KEY}}"
+        HTTPS_CERT="${{secrets.HTTPS_CERT}}"
+        npm test
   e2e-tests:
     needs: [build-test-webapp, build-test-restapi]
     runs-on: ubuntu-latest
@@ -72,6 +78,13 @@ jobs:
           appdir: "restapi"
           docker_build_args: |
             MONGO_URI
+            DEPLOY
+            HTTPS_PASS
+            HTTPS_KEY
+            HTTPS_CERT
         env:
           MONGO_URI: ${{secrets.MONGO_URI}}
-
+          DEPLOY: "true"
+          HTTPS_PASS: ${{secrets.HTTPS_PASS}}
+          HTTPS_KEY: ${{secrets.HTTPS_KEY}}
+          HTTPS_CERT: ${{secrets.HTTPS_CERT}}

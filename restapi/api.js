@@ -1,9 +1,15 @@
 const express = require("express")
+const sessionManager = require("./SessionManager")
 const {users, registerUser} = require("./UsersManager")
+
+function sendError(res, errorDesc=null) {
+	res.status(400)
+	res.send(errorDesc != null ? {error: errorDesc} : {})
+}
 
 function checkLogged(req, res, next) {
 	if (req.session.webId == null)
-		res.send("Error: Not logged")
+		sendError(res, "Not logged")
 	
 	else
 		next()
@@ -18,50 +24,65 @@ userRouter.use(function(req, res, next) {
 		checkLogged(req, res, next)
 })
 
-userRouter.post("/login", async (req, res) => {
-	if (req.body.webId != null && req.body.pass != null &&
-			req.session.webId == null && users.getUser(req.body.webId) == null &&
-			await users.loginUser(req.body)) {
-		
-		req.session.webId = req.body.webId
-		res.send("OK")
+userRouter.post("/login", (req, res) => {
+	if (req.body.webId != null && req.body.pass != null) {
+		if (req.session.webId == null && users.getUser(req.body.webId) == null) {
+			users.loginUser(req.body, result => {
+				if (result)
+					res.send({sessionId: sessionManager.newSession({webId: req.body.webId})})
+				
+				else
+					sendError(res, "Login error")
+			})
+		}
+		else
+			sendError(res, "Login error")
 	}
 	else
-		res.send("Error")
+		sendError(res, "Invalid request")
 })
 
-userRouter.get("/logout", async (req, res) => {
+userRouter.get("/logout", (req, res) => {
 	if (users.logOutUser(req.session.webId)) {
-		req.session.webId = null
-		res.send("OK")
+		sessionManager.delete(req)
+		res.send({})
 	}
 	else
-		res.send("Error")
+		sendError(res, "Not logged")
 })
 
-userRouter.post("/register", async (req, res) => {
+userRouter.post("/register", (req, res) => {
 	if (req.body.webId == null)
-		res.send("Error")
+		sendError(res, "Invalid request")
 	
 	else {
-		let result = await registerUser(req.body.webId)
-		res.send(result == -1 ? "Error" : result)
+		registerUser(req.body.webId, result => {
+			if (result == null)
+				sendError(res, "webId already registered")
+			
+			else
+				res.send(result)
+		})
 	}
 })
 
-userRouter.post("/add_friends", async (req, res) => {
-	res.send(users.getUser(req.session.webId).addFriends(req.body) ? "OK" : "Error")
+userRouter.post("/add_friends", (req, res) => {
+	if (users.getUser(req.session.webId).addFriends(req.body))
+		res.send({})
+	
+	else
+		sendError(res, "Invalid request")
 })
 
 const coordsRouter = express.Router()
 coordsRouter.use(checkLogged)
 
-coordsRouter.get("/friends/list", async (req, res) => {
+coordsRouter.get("/friends/list", (req, res) => {
 	let user = users.getUser(req.session.webId)
 	res.send(user.getFriendsCoords())
 })
 
-coordsRouter.post("/update", async (req, res) => {
+coordsRouter.post("/update", (req, res) => {
 	users.getUser(req.session.webId).updateCoords(req.body.coords)
 	res.send("OK")
 })
