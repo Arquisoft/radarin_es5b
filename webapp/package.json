@@ -11,6 +11,7 @@
     "@testing-library/user-event": "^12.6.0",
     "bootstrap": "^4.5.3",
     "express": "^4.17.1",
+    "jquery": "^3.6.0",
     "rdf-namespaces": "^1.9.2",
     "react": "^16.8.4",
     "react-bootstrap": "^1.4.3",
