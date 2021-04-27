@@ -67,8 +67,9 @@ userRouter.post("/register", (req, res) => {
 })
 
 userRouter.post("/add_friends", (req, res) => {
-	if (users.getUser(req.session.webId).addFriends(req.body))
-		res.send({})
+	let result = users.getUser(req.session.webId).addFriends(req.body)
+	if (result != null)
+		res.send(result)
 	
 	else
 		sendError(res, "Invalid request")

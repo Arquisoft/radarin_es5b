@@ -1,7 +1,6 @@
 import restapi from "./api";
 import pod from "./podAccess";
 import auth from "solid-auth-client"
-import api from "./api";
 
 var logged = false;
 
@@ -20,7 +19,7 @@ var logged = false;
 
 async function disconnect(){
 	console.log("Logout");
-	api.logout();
+	restapi.logout();
 	logged=false;
 }
 
