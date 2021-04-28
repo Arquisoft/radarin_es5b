@@ -5,7 +5,8 @@ import api from "./api";
 
 var logged = false;
 
-async function getPass(webId) {
+
+	async function getPass(webId) {
 	if (webId != null) {
 		console.log("web id en getpass:" + webId);
 		var url = webId.replace("profile/card#me","");
@@ -20,6 +21,7 @@ async function getPass(webId) {
 async function disconnect() {
 	console.log("Logout");
 	api.logout();
+	logged=false;
 }
 
 
@@ -33,7 +35,8 @@ async function connect() {
 		var pass = "aa"//await getPass(webId);
 		console.log("Usuario ya está registrado");
 		await getLocationLogin(webId,pass);
-		update();
+		logged=true;
+		setTimeout(update,1000);
 	}
 	else {
 		console.log(response);
@@ -46,13 +49,18 @@ async function connect() {
 		let pass = await response.text()
 		pod.updateFile(url, pass);
 		await getLocationLogin(webId, pass);
-		update();
+		logged=true;
+		setTimeout(update,1000);
 	}
 }
 
 
 async function update() {
-	setTimeout(update,1000);
+	console.log("update iLogged="+isLogged());
+	//;
+	if( isLogged())
+		setTimeout(update,1000);
+
 	 navigator.geolocation.getCurrentPosition(async function f(pos) {
 		var coords = {"lat":pos.coords.latitude,"lon":pos.coords.longitude,"alt":0}
 		
@@ -79,11 +87,12 @@ async function getLocationLogin(webId, pass) {
 }
 
 function isLogged() {
-	return isLogged
+	return logged;
 }
 
 export default {
 	connect,
+	update,
 	isLogged,
 	disconnect
 }
