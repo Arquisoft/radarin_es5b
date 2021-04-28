@@ -1,10 +1,8 @@
 const express = require("express")
 
 const http = require("http")
-const https = require("https")
-const fs = require("fs")
 //const promBundle = require("express-prom-bundle");
-const cors = require('cors');
+const cors = require("cors")
 //const mongoose = require("mongoose")
 const sessionManager = require("./SessionManager")
 const api = require("./api")
