@@ -1,12 +1,9 @@
-import { AuthButton, Like, LoggedIn, Value, List, Follow, useWebId, } from "@solid/react";
-import auth from "solid-auth-client"
+import { LoggedIn, Value, List } from "@solid/react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import Mapa from "./Mapa";
 
 import api from "../api/userDataManager";
-import { render } from "@testing-library/react";
-import { useLDflexValue, useLDflexList } from '@solid/react';
 
 //export default  function Principal() {
 

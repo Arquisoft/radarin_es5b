@@ -5,7 +5,7 @@ const DEGREES_FACTOR = 180 / Math.PI
 const toRadians = (angle) => angle * RADIANS_FACTOR
 const toDegrees = (angle) => angle * DEGREES_FACTOR
 
-EARTH_RADIUS = 6371
+const EARTH_RADIUS = 6371
 
 //Todos los cálculos de coordenadas han sido porteados
 //de una entrega de la asignatura SEW, programados inicialmente en python

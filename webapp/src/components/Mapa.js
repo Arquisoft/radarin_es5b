@@ -4,14 +4,11 @@ import {
   GoogleMap,
   withScriptjs,
   withGoogleMap,
-  useLoadScript,
-  InfoWindow,
   Marker,
   Circle
 } from "react-google-maps";
 import credentials from "./credentials";
 import restapi from "../api/api";
-import user from "../api/userDataManager";
 
 class Mapa extends React.Component {
   constructor() {
@@ -76,6 +73,8 @@ class Mapa extends React.Component {
         break;
       case error.UNKNOWN_ERROR:
         alert("An unknown error occurred.");
+        break;
+      default:
         break;
     }
   }

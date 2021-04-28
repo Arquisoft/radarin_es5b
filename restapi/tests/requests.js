@@ -1,4 +1,4 @@
-const https = require("https")
+const http = require("http")
 
 class ApiRequester {
 	
@@ -23,7 +23,7 @@ class ApiRequester {
 			rejectUnauthorized: false
 		}
 		
-		let request = https.request(options, res => {
+		let request = http.request(options, res => {
 			res.setEncoding("utf-8")
 			res.on("data", data => callback(res, data))
 			res.on("error", err => callback(res, err))
