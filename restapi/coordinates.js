@@ -81,14 +81,7 @@ class DistCalc {
 }
 
 function getDistance(p1, p2) {
-	let distCalc = new DistCalc(new Coords(p1), new Coords(p2))
-	let curvDist = distCalc.getCurvedDist()
-	
-	if (curvDist > 100)
-		return curvDist
-	
-	else
-		return (distCalc.getLinDist()**2 + Math.abs(p2.alt - p1.alt)**2)**0.5
+	return new DistCalc(new Coords(p1), new Coords(p2)).getCurvedDist()
 }
 
 module.exports = {getDistance}
