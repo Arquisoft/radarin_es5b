@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import logo from "./logo.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { AuthButton,Like, LoggedIn, Value,List,Follow, useWebId, LoggedOut} from "@solid/react";
+import { AuthButton, LoggedIn, LoggedOut} from "@solid/react";
 
 import Principal from "./components/Principal";
 
@@ -55,7 +55,7 @@ class App extends React.Component {
       </SessionProvider> );*/
 
       return <div>
-        <header class="App-header">
+        <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1>Radarin_ES5B</h1>
           <AuthButton popup="https://solid.github.io/solid-auth-client/dist/popup.html" login="Entrar" logout="Salir"/>
@@ -64,7 +64,7 @@ class App extends React.Component {
         <LoggedOut>
           <Logout></Logout>
         </LoggedOut>
-        <div class="layout">
+        <div className="layout">
           <LoggedIn>
           <Principal></Principal>
           </LoggedIn>
