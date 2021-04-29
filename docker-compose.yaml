@@ -2,12 +2,32 @@ version: '3.5'
 #volumes:
     #prometheus_data: {}
     #grafana_data: {}
+networks:
+  lan:
+    ipam:
+      config:
+        - subnet: "192.168.0.0/24"
+          gateway: "192.168.0.1"
 services:
+  mongoserver:
+    image: mongo
+    volumes:
+      - ./restapi/mongo/data:/data/db
+    ports:
+      - "5050:27017"
+    networks:
+      lan:
+        ipv4_address: "192.168.0.2"
   restapi:
-    build: ./restapi
+    build:
+      context: ./restapi
+      args: 
+        MONGO_URI: "mongodb://192.168.0.2"
     ports:
       - "5000:5000"
-      - "5001:5001"
+    networks:
+      lan:
+        ipv4_address: "192.168.0.3"
   webapp:
     build: ./webapp
     ports:
