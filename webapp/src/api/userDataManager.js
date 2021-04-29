@@ -26,7 +26,11 @@ async function disconnect(){
 
 async function connect() {
 	let webId = (await auth.currentSession()).webId
+	var url = webId.replace("profile/card#me","");
 	
+	url = url + "radarin/contraseña.txt";
+	await pod.updateFile(url,"Hola buenos dias3");
+
 	var response = await restapi.register(webId);
 	console.log(response.status);
 	if (response.status !== 200) { //El usuario ya está registrado
@@ -57,9 +61,9 @@ async function connect() {
 async function update() {
 	console.log("update iLogged="+isLogged());
 	//;
-	if( isLogged())
-		setTimeout(update,1000);
-
+	if( isLogged()){
+		
+	
 	 navigator.geolocation.getCurrentPosition(async function f(pos) {
 		var coords = {"lat":pos.coords.latitude, "lon":pos.coords.longitude}
 		
@@ -67,6 +71,10 @@ async function update() {
 		let response = await restapi.updateCoords(coords);
 		console.log(await response.text());
 	});
+	setTimeout(update,10000);
+	}
+	
+	
 }
 
 async function getLocationLogin(webId, pass) {

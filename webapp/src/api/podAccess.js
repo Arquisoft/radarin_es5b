@@ -2,7 +2,8 @@
 //import { VCARD } from "@inrupt/vocab-common-rdf";
 import { foaf } from 'rdf-namespaces';
 import auth from 'solid-auth-client';
-import { fetchDocument } from 'tripledoc'
+import { createDocument,fetchDocument } from 'tripledoc';
+import { space,solid, schema } from 'rdf-namespaces';
 
 function runFetch(fetchCall, f=p => p) {
 	return fetchCall.then(p => p.text()).then(f)
@@ -16,6 +17,25 @@ function runFetch(fetchCall, f=p => p) {
  */
 function getFile(filename, f) {
 	return runFetch(auth.fetch(filename), f)
+}
+
+async function tripledoc(){
+	const currentSession = await auth.currentSession();
+	if (! currentSession) {
+		return null;
+	  }
+	
+	  const webIdDoc = await fetchDocument(currentSession.webId);
+
+
+	const profile = webIdDoc.getSubject(currentSession.webId);
+
+	 // Get the root URL of the user's Pod:
+	 const storage = profile.getRef(space.storage);
+
+	 const ref = storage+'public/prueba.txt';
+	 const file = createDocument(ref);
+	 await file.save();
 }
 
 async function fetchProfile () {
@@ -39,6 +59,7 @@ async function fetchProfile () {
  * @return {string} String con el retorno de la petición http
  */
 function updateFile(filename, content, f) {
+	tripledoc();
 	return runFetch(auth.fetch(filename, {
 		method: "PUT", body: content
 	}), f)
