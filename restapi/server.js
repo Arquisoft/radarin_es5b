@@ -37,20 +37,7 @@ class Server {
 var port = process.env.PORT == null ? 5000 : process.env.PORT
 var server = new Server([port, null])
 
-if (require.main == module) {
+if (require.main == module)
 	server.start()
-	
-	usersManager.loginUser({webId: "usuario1", pass: "111", coords: {lon: 0, lat: 0, alt: 0}}, resp => {
-	console.log(resp)
-	
-	usersManager.loginUser({webId: "usuario2", pass: "222", coords: {lon: 0, lat: 5, alt: 0}}, resp2 => {
-		console.log(resp2)
-		
-		usersManager.users.get("usuario2").addFriends([usersManager.users.get("usuario1").webId])
-		usersManager.users.get("usuario1").addFriends([usersManager.users.get("usuario2").webId, "usuario3"])
-		console.log(usersManager.users.get("usuario1").getFriendsCoords())
-	})
-})
-}
 
 module.exports = server

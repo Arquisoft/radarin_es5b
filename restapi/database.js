@@ -26,14 +26,14 @@ class Mongo {
 					callback(false)
 				}
 				else
-					callback(users[0] != null && users[0].pass == util.hashPass(expectedPass) || true)
+					callback(users[0] != null && users[0].pass == util.hashPass(expectedPass) || true, users[0].radius)
 				
 				connect.close()
 			})
 		})
 	}
 	
-	addUser(userWebId, callback) {
+	addUser(userWebId, radius, callback) {
 		mongo.connect(this.usersUri, (err, connect) => {
 			let usersCol = connect.db(getDBName("users")).collection("users")
 			
@@ -48,7 +48,12 @@ class Mongo {
 				
 				else {
 					let pass = util.createRandomPass()
-					usersCol.insertOne({webId: userWebId, pass: util.hashPass(pass)}, (err, result) => {})
+					usersCol.insertOne({
+						webId: userWebId,
+						pass: util.hashPass(pass),
+						radius: radius
+					}, (err, result) => {})
+					
 					callback(pass)
 				}
 				connect.close()
@@ -60,6 +65,13 @@ class Mongo {
 		mongo.connect(this.usersUri, (err, connect) => {
 			connect.db(getDBName("users")).collection("users").remove({}, () => callback())
 			connect.close()
+		})
+	}
+	
+	updateRadius(webId, radius) {
+		mongo.connect(this.usersUri, (err, connect) => {
+			let usersCol = connect.db(getDBName("users")).collection("users")
+			usersCol.update({webId: webId}, {$set: {radius: radius}}, () => connect.close())
 		})
 	}
 }

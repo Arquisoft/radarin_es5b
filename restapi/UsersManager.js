@@ -2,7 +2,7 @@ const getDistance = require("./coordinates").getDistance
 const DistNotifications = require("./notifications")
 const db = require("./database")
 
-const DEFAULT_ADVISE_DIST = 0.1
+const DEFAULT_ADVISE_DIST = 1
 
 class Friend {
 	constructor(friend) {
@@ -14,14 +14,14 @@ class Friend {
 
 class User {
 	
-	constructor(webId, coords) {
+	constructor(webId, coords, radius) {
 		this.webId = webId
 		
 		this.loggedFriends = new Map() //Hash map con los amigos logeados (webId -> Friend)
 		this.loggedOutFriends = new Set() //Set con los webId de los amigos no logeados
 		
 		this.coords = coords
-		this.adviseDist = DEFAULT_ADVISE_DIST
+		this.adviseDist = radius
 		this.distNotifications = new DistNotifications()
 	}
 	
@@ -33,9 +33,23 @@ class User {
 	}
 	
 	/**
+	 * Cambia el valor del radio de aviso y le almacena en la base de datos para proximos logeos
+	 * @param {number} newRadius Nuevo valor del radio de aviso
+	 */
+	updateRadius(newRadius) {
+		this.adviseDist = newRadius
+		
+		for (let friend of this.loggedFriends.values()) {
+			let dist = getDistance(this.coords, friend.user.coords)
+			this.updateFriendCoords(friend, dist)
+		}
+		db.updateRadius(this.webId, newRadius)
+	}
+	
+	/**
 	 * Añade una lista de amigos a los amigos cargados en el servidor
 	 * Actualiza las distancias entre los amigos que están logeados
-	 * @param {Array} friendsWebIds Lista con los webid de los amigos a añadir
+	 * @param {Array} friendsWebIds Lista con los webId de los amigos a añadir
 	 * @return {Array} Lista con los WebId de los amigos que no de han podido añadir por no ser amigos mutuamente
 	 */
 	addFriends(friendsWebIds) {
@@ -181,12 +195,12 @@ class UsersManager {
 	
 	loginUser(user, callback) {
 		
-		db.validateUser(user.webId, user.pass, added => {
-			if (added) {
-				let newUser = new User(user.webId, user.coords)
+		db.validateUser(user.webId, user.pass, (valid, radius) => {
+			if (valid) {
+				let newUser = new User(user.webId, user.coords, radius)
 				this.users.set(user.webId, newUser)
 			}
-			callback(added)
+			callback(valid, radius)
 		})
 	}
 	
@@ -208,7 +222,7 @@ class UsersManager {
 }
 
 function registerUser(webId, callback) {
-	db.addUser(webId, callback)
+	db.addUser(webId, DEFAULT_ADVISE_DIST, callback)
 }
 
 var usersManager = new UsersManager()

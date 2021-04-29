@@ -27,9 +27,12 @@ userRouter.use(function(req, res, next) {
 userRouter.post("/login", (req, res) => {
 	if (req.body.webId != null && req.body.pass != null) {
 		if (req.session.webId == null && users.getUser(req.body.webId) == null) {
-			users.loginUser(req.body, result => {
+			users.loginUser(req.body, (result, radius) => {
 				if (result)
-					res.send({sessionId: sessionManager.newSession({webId: req.body.webId})})
+					res.send({
+						sessionId: sessionManager.newSession({webId: req.body.webId}),
+						radius: radius
+					})
 				
 				else
 					sendError(res, "Login error")
@@ -86,6 +89,11 @@ coordsRouter.get("/friends/list", (req, res) => {
 coordsRouter.post("/update", (req, res) => {
 	users.getUser(req.session.webId).updateCoords(req.body.coords)
 	res.send("OK")
+})
+
+coordsRouter.post("/radius", (req, res) => {
+	users.getUser(req.session.webId).updateRadius(req.body.radius)
+	res.send({})
 })
 
 function getPlaintext(req, res) {

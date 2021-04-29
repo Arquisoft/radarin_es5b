@@ -61,7 +61,7 @@ async function update() {
 		setTimeout(update,1000);
 
 	 navigator.geolocation.getCurrentPosition(async function f(pos) {
-		var coords = {"lat":pos.coords.latitude,"lon":pos.coords.longitude,"alt":0}
+		var coords = {"lat":pos.coords.latitude, "lon":pos.coords.longitude}
 		
 		//console.log(coords);
 		let response = await restapi.updateCoords(coords);
