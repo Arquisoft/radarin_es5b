@@ -52,6 +52,12 @@ async function updateCoords(coords) {
 	})
 }
 
+async function updateRadius(coords) {
+	return await request("/radius", "POST", {
+		coords
+	})
+}
+
 var toExport = {
 	login,
 	logout,
