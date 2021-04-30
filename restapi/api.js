@@ -81,7 +81,7 @@ userRouter.post("/add_friends", (req, res) => {
 const coordsRouter = express.Router()
 coordsRouter.use(checkLogged)
 
-coordsRouter.get("/friends/list", (req, res) => {
+coordsRouter.get("/friends", (req, res) => {
 	let user = users.getUser(req.session.webId)
 	res.send(user.getFriendsCoords())
 })
@@ -94,6 +94,14 @@ coordsRouter.post("/update", (req, res) => {
 coordsRouter.post("/radius", (req, res) => {
 	users.getUser(req.session.webId).updateRadius(req.body.radius)
 	res.send({})
+})
+
+const notificationsRouter = express.Router()
+notificationsRouter.use(checkLogged)
+
+notificationsRouter.get("/friends_dist", (req, res) => {
+	let user = users.getUser(req.session.webId)
+	res.send(user.getDistNotifications())
 })
 
 function getPlaintext(req, res) {
@@ -133,4 +141,9 @@ function init(app) {
 	app.post("/getObject", postObject)
 }
 
-module.exports = {userRouter, coordsRouter, init}
+module.exports = {
+	userRouter,
+	coordsRouter,
+	notificationsRouter,
+	init
+}

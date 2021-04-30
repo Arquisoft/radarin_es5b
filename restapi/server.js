@@ -22,6 +22,7 @@ class Server {
 		this.app.use(sessionManager.setReqSession.bind(sessionManager))
 		this.app.use("/user", api.userRouter)
 		this.app.use("/coords", api.coordsRouter)
+		this.app.use("/notifications", api.notificationsRouter)
 		api.init(this.app)
 		
 		this.server = http.createServer(this.app)

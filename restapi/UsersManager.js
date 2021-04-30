@@ -1,5 +1,4 @@
 const getDistance = require("./coordinates").getDistance
-const DistNotifications = require("./notifications")
 const db = require("./database")
 
 const DEFAULT_ADVISE_DIST = 1
@@ -9,6 +8,15 @@ class Friend {
 		this.user = friend
 		this.dist = 0
 		this.inAdviseDist = false
+	}
+	
+	toApiFormat() {
+		return {
+			webId: this.user.webId,
+			coords: this.user.coords,
+			dist: this.dist,
+			inAdviseDist: this.inAdviseDist
+		}
 	}
 }
 
@@ -22,7 +30,7 @@ class User {
 		
 		this.coords = coords
 		this.adviseDist = radius
-		this.distNotifications = new DistNotifications()
+		this.distNotifications = []
 	}
 	
 	/**
@@ -140,7 +148,7 @@ class User {
 			friend.inAdviseDist = ! friend.inAdviseDist
 			
 			if (friend.inAdviseDist)
-				this.distNotifications.add(friend)
+				this.distNotifications.push(friend)
 		}
 	}
 	
@@ -173,17 +181,21 @@ class User {
 	 */
 	getFriendsCoords() {
 		let friendCoords = []
-		for (let friend of this.loggedFriends.values()) {
-			let friendUser = friend.user
-			
-			friendCoords.push({
-				webId: friendUser.webId,
-				coords: friendUser.coords,
-				dist: friend.dist,
-				inAdviseDist: friend.inAdviseDist
-			})
-		}
+		for (let friend of this.loggedFriends.values())
+			friendCoords.push(friend.toApiFormat())
+		
 		return friendCoords
+	}
+	
+	/**
+	 * Devuelve los amigos que han entrado en el radio de aviso desde la última llamada
+	 * Cada elemento devuelto contiene los mismos datos que en la llamada a getFriendsCoords
+	 * @return {Array} Lista de amigos que han entrado en en radio de aviso
+	 */
+	getDistNotifications() {
+		let toReturn = this.distNotifications.map(not => not.toApiFormat())
+		this.distNotifications = []
+		return toReturn
 	}
 }
 

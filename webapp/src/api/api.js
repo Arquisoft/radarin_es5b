@@ -43,7 +43,7 @@ async function addFriends(friends) {
 }
 
 async function getFriendsCoords() {
-	return await request("/coords/friends/list", "GET")
+	return await request("/coords/friends", "GET")
 }
 
 async function updateCoords(coords) {
@@ -58,12 +58,18 @@ async function updateRadius(coords) {
 	})
 }
 
+async function getNotifications() {
+	return await request("/notifications/friends_dist", "GET")
+}
+
 var toExport = {
 	login,
 	logout,
 	register,
 	addFriends,
 	getFriendsCoords,
-	updateCoords
+	updateCoords,
+	updateRadius,
+	getNotifications
 }
 export default toExport

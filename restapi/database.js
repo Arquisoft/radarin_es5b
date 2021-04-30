@@ -25,8 +25,10 @@ class Mongo {
 					this.printError(err)
 					callback(false)
 				}
-				else
-					callback(users[0] != null && users[0].pass == util.hashPass(expectedPass), users[0].radius)
+				else {
+					let validated = users[0] != null && users[0].pass == util.hashPass(expectedPass)
+					callback(validated, validated ? users[0].radius : 0)
+				}
 				
 				connect.close()
 			})
