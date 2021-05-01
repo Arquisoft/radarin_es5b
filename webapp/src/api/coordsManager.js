@@ -1,5 +1,7 @@
 import auth from 'solid-auth-client';
 import pod from "./podAccess";
+import Geocode from "react-geocode";
+import credentials from "../components/credentials";
 
 const RADIANS_FACTOR = Math.PI / 180
 const DEGREES_FACTOR = 180 / Math.PI
@@ -102,10 +104,31 @@ async function addCoordToFile(coords) {
 	console.log("resultado: " + result);
 	var json = JSON.parse(result);
 	var hoy = new Date();
-
-	json.ubicaciones.push({ "lat": coords.lat, "lon": coords.lon, "hour": hoy.getHours() + ":" + hoy.getMinutes() });
+	 var nombre = await getLocation(coords.lat,coords.lon)
+	console.log("ubicacion a meter:"+nombre);
+	 json.ubicaciones.push({ "lat": coords.lat, "lon": coords.lon, "hour": hoy.getHours() + ":" + hoy.getMinutes()
+,"name": nombre});
 
 	pod.updateFile(urlFicheroHoy, JSON.stringify(json));
+	
+}
+
+async function getLocation(lat,lon){
+	Geocode.setApiKey(credentials.geocoder);
+	
+
+	return Geocode.fromLatLng(lat, lon).then(
+		(response) => {
+		  const address = response.results[0].formatted_address;
+		console.log("nombre:"+address);	
+		  return address
+		},
+		(error) => {
+			return "Nombre no disponible"
+		}
+	  );
+	
+
 }
 
 function checkLastLocation(p1, p2) {
@@ -122,8 +145,10 @@ async function getLocations() {
 	var ficheros = ubicaciones.split(" ")
 	console.log(ficheros);
 	var result = []
-
 	for(let i=0;i<ficheros.length;i++){
+		if(ficheros[i]=="" || ficheros[i]==" ")
+			break;
+		
 		var locations = JSON.parse(await pod.getFile(url + "radarin/ubicaciones/" + ficheros[i]));
 		var location = locations.ubicaciones
 		for(let j=0; j<location.length;j++){
