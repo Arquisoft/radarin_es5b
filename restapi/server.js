@@ -1,7 +1,7 @@
 const express = require("express")
+const promBundle = require("express-prom-bundle")
 
 const http = require("http")
-//const promBundle = require("express-prom-bundle")
 const cors = require("cors")
 
 const sessionManager = require("./SessionManager")
@@ -15,6 +15,10 @@ class Server {
 	async start() {
 		this.app = express()
 		
+		//Monitoring middleware
+		const metricsMiddleware = promBundle({includeMethod: true})
+		this.app.use(metricsMiddleware)
+
 		this.app.use(cors())
 		this.app.options("*", cors())
 		this.app.use(express.json())
