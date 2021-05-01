@@ -42,7 +42,7 @@ The `Dockerfile` for the webapp is pretty simple. Just copy the app, install the
 
 In order to run the app, we need a server. npm start is not good for production so we are going to use [Express](https://expressjs.com/es/). Check [server.js](webapp/server.js) in the webapp to understand the configuration. As we will run it in port 3000 (in localhost), we have to bind this port with the port in our local machine.
 
-<mark>Note: You can see that in some places of the application the running port is configured as `var port =  process.env.PORT || 3000`. This is necessary for deploying the app to services like Heroku. Heroku do not let us choose in which port our application is going to run so we have to get it using the `PORT` environment variable.</mark>
+<mark>Note: You can see that in some places of the application the running port is configured as `var port = process.env.PORT || 3000`. This is necessary for deploying the app to services like Heroku. Heroku do not let us choose in which port our application is going to run so we have to get it using the `PORT` environment variable.</mark>
 
 <mark>Important: As you can see, this docker image takes a long time to build. The problem is installing all the software for building the doc inside the docker image. This obviously is not a good solution as this should be a production image. I leave for future work changing this for avoiding generating the doc inside the production docker image.</mark>
 
@@ -69,13 +69,13 @@ Another important point is the api end point. In react it will be hardcoded comp
 
 ## E2E testing
 Integration tests is maybe the most difficult part to integratein our system. We have to test the system as a whole. The idea here is to deploy the system and make the tests using [jest-puppeteer](https://github.com/smooth-code/jest-puppeteer) (browser automatization) and [jest-cucumber](https://www.npmjs.com/package/jest-cucumber) (user stories). We will also be using [expect-puppeteer](https://www.npmjs.com/package/expect-puppeteer) to make easier the test writing. All the structure needed is under the `webapp/e2e` directory. This tests can be run locally using `npm run test:e2e` and they will be run also in GitHub Actions, just after the unitary tests. Let me explain each part, and how the pieces work together:
--  `features`. This directory is for writing the user stories, using Gherkin.
--  `steps`. Each feature is divided in parts. Here we implement the steps to complete each part in the test. We have to iterate with the browser so we will have to find elements by id, fill elements in forms, click buttons, etc.
--  `custom-environment.js`. Launchs the browsers (by default chromium). We can choose if we want it to be headless (good for github actions) or with graphical interface, to see what is actually happening. Just change the `headless` parameter.
--  `global-setup.js`. Defines how to launch our system. In our case we need, the database, the restapi and the webapp.
--  `global-teardown.js`. Clean resources once tests finish.
--  `jest-config.js`. This file links everything. Is the entry point for jest to load the e2e tests.
--  `start-restapi.js`. Launchs the rest api. Uses a script from the restapi directory. It is used by `global-setup.js`.
+-   `features`. This directory is for writing the user stories, using Gherkin.
+-   `steps`. Each feature is divided in parts. Here we implement the steps to complete each part in the test. We have to iterate with the browser so we will have to find elements by id, fill elements in forms, click buttons, etc.
+-   `custom-environment.js`. Launchs the browsers (by default chromium). We can choose if we want it to be headless (good for github actions) or with graphical interface, to see what is actually happening. Just change the `headless` parameter.
+-   `global-setup.js`. Defines how to launch our system. In our case we need, the database, the restapi and the webapp.
+-   `global-teardown.js`. Clean resources once tests finish.
+-   `jest-config.js`. This file links everything. Is the entry point for jest to load the e2e tests.
+-   `start-restapi.js`. Launchs the rest api. Uses a script from the restapi directory. It is used by `global-setup.js`.
 
 ## Load testing (Gatling)
 This part will be carried out using [Gatling](https://gatling.io/). Gatling will simulate load in our system making petitions to the webapp.

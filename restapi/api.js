@@ -31,7 +31,7 @@ userRouter.post("/login", (req, res) => {
 				if (result)
 					res.send({
 						sessionId: sessionManager.newSession({webId: req.body.webId}),
-						radius: radius
+						radius
 					})
 				
 				else

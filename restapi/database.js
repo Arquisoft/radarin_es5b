@@ -53,7 +53,7 @@ class Mongo {
 					usersCol.insertOne({
 						webId: userWebId,
 						pass: util.hashPass(pass),
-						radius: radius
+						radius
 					}, (err, result) => {})
 					
 					callback(pass)
@@ -73,7 +73,7 @@ class Mongo {
 	updateRadius(webId, radius) {
 		mongo.connect(this.usersUri, (err, connect) => {
 			let usersCol = connect.db(getDBName("users")).collection("users")
-			usersCol.update({webId: webId}, {$set: {radius: radius}}, () => connect.close())
+			usersCol.update({webId}, {$set: {radius}}, () => connect.close())
 		})
 	}
 }

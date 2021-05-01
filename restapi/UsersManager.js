@@ -69,7 +69,7 @@ class User {
 		for (let friendWebId of friendsWebIds) {
 			let friend = usersManager.users.get(friendWebId)
 			
-			if (friend != undefined) {
+			if (friend != null) {
 				if (friend.friendLogged(this))
 					this.addLoggedFriend(friend)
 				
@@ -82,8 +82,6 @@ class User {
 			else
 				this.loggedOutFriends.add(friendWebId)
 		}
-		console.log(this.loggedFriends)
-		console.log(this.loggedOutFriends)
 		return notMutualFriends
 	}
 	
@@ -144,7 +142,7 @@ class User {
 	updateFriendCoords(friend, dist) {
 		friend.dist = dist
 		
-		if (this.inAdviseDistance(dist) != friend.inAdviseDist) {
+		if (this.inAdviseDistance(dist) !== friend.inAdviseDist) {
 			friend.inAdviseDist = ! friend.inAdviseDist
 			
 			if (friend.inAdviseDist)
@@ -229,7 +227,7 @@ class UsersManager {
 	
 	getUser(webId) {
 		let user = this.users.get(webId)
-		return user != undefined ? user : null
+		return user != null ? user : null
 	}
 }
 
