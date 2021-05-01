@@ -35,38 +35,56 @@ class Mongo {
 		})
 	}
 	
+	checkNotInCollection(collection, searchObj, callback) {
+		collection.find(searchObj).toArray((err, users) => {
+			if (err) {
+				this.printError(err)
+				callback(false)
+			}
+			else
+				callback(users.length === 0)
+		})
+	}
+	
 	addUser(userWebId, radius, callback) {
 		mongo.connect(this.usersUri, (err, connect) => {
-			let usersCol = connect.db(getDBName("users")).collection("users")
+			let usersDB = connect.db(getDBName("users"))
+			let usersCol = usersDB.collection("users")
 			
-			usersCol.find({webId: userWebId}).toArray((err, users) => {
-				if (err) {
-					this.printError(err)
-					callback(null)
+			this.checkNotInCollection(usersCol, {webId: userWebId}, userNotFound => {
+				if (userNotFound) {
+					this.checkNotInCollection(usersDB.collection("banned"), {webId: userWebId}, banNotFound =>  {
+						
+						if (banNotFound) {
+							let pass = util.createRandomPass()
+							usersCol.insertOne({
+								webId: userWebId,
+								pass: util.hashPass(pass),
+								radius
+							}, (err, result) => connect.close())
+							
+							callback(true, pass)
+						}
+						else {
+							callback(false, "Banned user")
+							connect.close()
+						}
+					})
 				}
-				
-				else if (users.length !== 0)
-					callback(null)
-				
 				else {
-					let pass = util.createRandomPass()
-					usersCol.insertOne({
-						webId: userWebId,
-						pass: util.hashPass(pass),
-						radius
-					}, (err, result) => {})
-					
-					callback(pass)
+					callback(false, "webId already registered")
+					connect.close()
 				}
-				connect.close()
 			})
 		})
 	}
 	
 	deleteAllUsers(callback) {
 		mongo.connect(this.usersUri, (err, connect) => {
-			connect.db(getDBName("users")).collection("users").remove({}, () => callback())
-			connect.close()
+			connect.db(getDBName("users")).collection("users").remove({}, () => {
+				callback()
+				connect.close()
+			})
 		})
 	}
 	
@@ -74,6 +92,56 @@ class Mongo {
 		mongo.connect(this.usersUri, (err, connect) => {
 			let usersCol = connect.db(getDBName("users")).collection("users")
 			usersCol.update({webId}, {$set: {radius}}, () => connect.close())
+		})
+	}
+	
+	getAdmins(callback) {
+		mongo.connect(this.usersUri, (err, connect) => {
+			let usersDB = connect.db(getDBName("users"))
+			usersDB.collection("admins").find({}).toArray((err, admins) => {
+				if (err) {
+					this.printError(err)
+					callback([])
+				}
+				else {
+					callback(admins.map(admin => admin.webId))
+				}
+				connect.close()
+			})
+		})
+	}
+	
+	listUsersAdmin(callback) {
+		mongo.connect(this.usersUri, (err, connect) => {
+			let usersDB = connect.db(getDBName("users"))
+			
+			usersDB.collection("users").find({}).toArray((err, users) => {
+				usersDB.collection("banned").find({}).toArray((err, bannedUsers) => {
+					
+					let getWebId = user => user.webId
+					callback({users: users.map(getWebId), banned: bannedUsers.map(getWebId)})
+					
+					connect.close()
+				})
+			})
+		})
+	}
+	
+	banUser(webIdToBan) {
+		mongo.connect(this.usersUri, (err, connect) => {
+			let usersDB = connect.db(getDBName("users"))
+			
+			usersDB.collection("users").remove({webId: webIdToBan}, () => {
+				let bannedCol = usersDB.collection("banned")
+				bannedCol.insertOne({webId: webIdToBan}, (err, result) => connect.close())
+			})
+		})
+	}
+	
+	unbanUser(webIdToUnban) {
+		mongo.connect(this.usersUri, (err, connect) => {
+			let usersDB = connect.db(getDBName("users"))
+			usersDB.collection("banned").remove({webId: webIdToUnban}, () => connect.close())
 		})
 	}
 }

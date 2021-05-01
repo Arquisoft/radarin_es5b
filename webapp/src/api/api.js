@@ -62,6 +62,18 @@ async function getNotifications() {
 	return await request("/notifications/friends_dist", "GET")
 }
 
+async function adminGetUsers() {
+	return await request("/admin/users", "GET")
+}
+
+async function adminBanUser(webId) {
+	return await request("/admin/ban", "POST", {webId})
+}
+
+async function adminUnbanUser(webId) {
+	return await request("/admin/unban", "POST", {webId})
+}
+
 var toExport = {
 	login,
 	logout,
@@ -70,6 +82,9 @@ var toExport = {
 	getFriendsCoords,
 	updateCoords,
 	updateRadius,
-	getNotifications
+	getNotifications,
+	adminGetUsers,
+	adminBanUser,
+	adminUnbanUser
 }
 export default toExport

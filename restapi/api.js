@@ -1,6 +1,10 @@
 const express = require("express")
 const sessionManager = require("./SessionManager")
 const {users, registerUser} = require("./UsersManager")
+const db = require("./database")
+
+var admins = new Set()
+db.getAdmins(dbAdmins => admins = new Set(dbAdmins))
 
 function sendError(res, errorDesc=null) {
 	res.status(400)
@@ -16,7 +20,7 @@ function checkLogged(req, res, next) {
 }
 
 const userRouter = express.Router()
-userRouter.use(function(req, res, next) {
+userRouter.use((req, res, next) => {
 	if (req.path === "/login" || req.path === "/register")
 		next()
 	
@@ -59,12 +63,12 @@ userRouter.post("/register", (req, res) => {
 		sendError(res, "Invalid request")
 	
 	else {
-		registerUser(req.body.webId, result => {
-			if (result == null)
-				sendError(res, "webId already registered")
+		registerUser(req.body.webId, (registered, msg) => {
+			if (registered)
+				res.send(msg)
 			
 			else
-				res.send(result)
+				sendError(res, msg)
 		})
 	}
 })
@@ -104,8 +108,34 @@ notificationsRouter.get("/friends_dist", (req, res) => {
 	res.send(user.getDistNotifications())
 })
 
+const adminRouter = express.Router()
+adminRouter.use(checkLogged)
+
+adminRouter.use((req, res, next) => {
+	if (admins.has(req.session.webId))
+		next()
+	
+	else
+		sendError(res, "Logged user is not admin")
+})
+
+adminRouter.get("/users", (req, res) => {
+	db.listUsersAdmin(res.send.bind(res))
+})
+
+adminRouter.post("/ban", (req, res) => {
+	db.banUser(req.body.webId)
+	res.send({})
+})
+
+adminRouter.post("/unban", (req, res) => {
+	db.unbanUser(req.body.webId)
+	res.send({})
+})
+
 module.exports = {
 	userRouter,
 	coordsRouter,
-	notificationsRouter
+	notificationsRouter,
+	adminRouter
 }

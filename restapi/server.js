@@ -22,6 +22,7 @@ class Server {
 		this.app.use("/user", api.userRouter)
 		this.app.use("/coords", api.coordsRouter)
 		this.app.use("/notifications", api.notificationsRouter)
+		this.app.use("/admin", api.adminRouter)
 		
 		this.server = http.createServer(this.app)
 		await this.server.listen(...this.addr)
