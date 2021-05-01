@@ -14,17 +14,30 @@ class Principal extends React.Component {
         this.state = {
             connected: false
         };
-        //  api.connect();
+       
     }
+    
+    /*
+      componentDidMount() {
+        var f =async  () => {
+            await api.connect();
 
-    componentDidMount() {
+            this.setState({ connected: true });
+        };
+        f();
+
+        
+        
+    }
+*/
+    componentDidMount(){
         api.connect();
         this.setState({ connected: true });
     }
 
 
     render() {
-
+/*
         if(this.state.connected){
         return (
             <LoggedIn>
@@ -46,7 +59,19 @@ class Principal extends React.Component {
             <p>Amigos:</p>
             <List src="user.friends" />
         </nav></div>);
-        }
+        }*/
+        return (
+            <LoggedIn>
+
+                    
+                <Mapa />
+                <nav class="Menu">
+                    <h5>Welcome back, <Value src="user.vcard_fn" />.</h5>
+                    <p>Amigos:</p>
+                    <List src="user.friends" />
+                </nav>
+            </LoggedIn>);
+
     }
 }
 

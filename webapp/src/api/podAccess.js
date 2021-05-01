@@ -59,7 +59,7 @@ async function fetchProfile () {
  * @return {string} String con el retorno de la petición http
  */
 function updateFile(filename, content, f) {
-	tripledoc();
+	//tripledoc();
 	return runFetch(auth.fetch(filename, {
 		method: "PUT", body: content
 	}), f)

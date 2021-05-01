@@ -8,7 +8,6 @@ import Principal from "./components/Principal";
 
 
 import Logout from "./components/Logout";
-
 class App extends React.Component {
   constructor() {
     super();
@@ -26,6 +25,7 @@ class App extends React.Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1>Radarin_ES5B</h1>
           <AuthButton popup="https://solid.github.io/solid-auth-client/dist/popup.html" login="Entrar" logout="Salir"/>
+         
         </header>
        
         <LoggedOut>
