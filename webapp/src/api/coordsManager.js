@@ -82,11 +82,11 @@ class DistCalc {
 
 
 
-function calcularFicheroHoy(webId){
+function calcularFicheroHoy(webId) {
 	var url = webId.replace("profile/card#me", "");
 	const today = new Date(Date.now());
-//	var nombreFichero = today.toLocaleDateString().replace("/", "").replace("/", "") + ".json" //El fichero tiene el nombre del dia de hoy
-	var nombreFichero = today.getDate()+""+(today.getMonth()+1)+""+today.getFullYear()+".json";
+	//	var nombreFichero = today.toLocaleDateString().replace("/", "").replace("/", "") + ".json" //El fichero tiene el nombre del dia de hoy
+	var nombreFichero = today.getDate() + "" + (today.getMonth() + 1) + "" + today.getFullYear() + ".json";
 	var urlFicheroHoy = url + "radarin/ubicaciones/" + nombreFichero;
 
 	return urlFicheroHoy;
@@ -95,9 +95,9 @@ function calcularFicheroHoy(webId){
 
 async function addCoordToFile(coords) {
 	var webId = (await auth.currentSession()).webId
-	var urlFicheroHoy=calcularFicheroHoy(webId);
-	
-	console.log("url fichero: "+urlFicheroHoy);
+	var urlFicheroHoy = calcularFicheroHoy(webId);
+
+	console.log("url fichero: " + urlFicheroHoy);
 	var result = await pod.getFile(urlFicheroHoy);
 	console.log("resultado: " + result);
 	var json = JSON.parse(result);
@@ -114,9 +114,34 @@ function checkLastLocation(p1, p2) {
 	return result > 1 //Cuando te mueves más de 1km
 }
 
+async function getLocations() {
+	var webId = (await auth.currentSession()).webId
+	var url = webId.replace("profile/card#me", "");
+	var ubicaciones = await pod.getFile(url + "radarin/ubicaciones/ubicaciones.txt")
+	
+	var ficheros = ubicaciones.split(" ")
+	console.log(ficheros);
+	var result = []
+
+	for(let i=0;i<ficheros.length;i++){
+		var locations = JSON.parse(await pod.getFile(url + "radarin/ubicaciones/" + ficheros[i]));
+		var location = locations.ubicaciones
+		for(let j=0; j<location.length;j++){
+			result.push(location[j]);
+		}
+		
+		
+	}
+	return result;	
+//	console.log("resultado:"+result);
+
+//	console.log(JSON.stringify(result));
+}
+
 var toExport = {
 	checkLastLocation,
 	addCoordToFile,
-	calcularFicheroHoy
+	calcularFicheroHoy,
+	getLocations
 }
 export default toExport
