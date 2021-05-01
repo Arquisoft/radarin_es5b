@@ -45,7 +45,7 @@ async function connect() {
 	else {
 		console.log(response);
 		
-		var url = webId.replace("profile/card#me","");
+		url = webId.replace("profile/card#me","");
 	
 	 	url = url + "radarin/contraseña.txt";
 		

@@ -6,7 +6,7 @@ function getMongoUri() {
 }
 
 function getDBName(dbName) {
-	return process.env.TEST != "true" ? dbName : "test_" + dbName
+	return process.env.TEST !== "true" ? dbName : "test_" + dbName
 }
 
 class Mongo {
@@ -26,7 +26,7 @@ class Mongo {
 					callback(false)
 				}
 				else {
-					let validated = users[0] != null && users[0].pass == util.hashPass(expectedPass)
+					let validated = users[0] != null && users[0].pass === util.hashPass(expectedPass)
 					callback(validated, validated ? users[0].radius : 0)
 				}
 				
@@ -45,7 +45,7 @@ class Mongo {
 					callback(null)
 				}
 				
-				else if (users.length != 0)
+				else if (users.length !== 0)
 					callback(null)
 				
 				else {
