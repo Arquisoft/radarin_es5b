@@ -157,11 +157,13 @@ async function removeLocation(id){
 	var ubicaciones = json.ubicaciones;
 	for(let i=0;i<ubicaciones.length;i++){
 		console.log("ID original:"+ubicaciones[i].id+"Id a borrar:"+id);
-		if(ubicaciones[i].id == id)
-			ubicaciones.pop(i)
+		if(ubicaciones[i].id == id){
+			console.log(ubicaciones.splice(i,1))
+			break;
+		}
 	}
 	json.ubicaciones=ubicaciones;
-	pod.updateFile(url,JSON.stringify(json));
+	await pod.updateFile(url,JSON.stringify(json));
 }
 
 async function getLocations() {
