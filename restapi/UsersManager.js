@@ -206,7 +206,7 @@ class UsersManager {
 	loginUser(user, callback) {
 		
 		db.validateUser(user.webId, user.pass, (valid, radius) => {
-			if (valid) {
+			if (valid && this.users.get(user.webId) == null) {
 				let newUser = new User(user.webId, user.coords, radius)
 				this.users.set(user.webId, newUser)
 			}
