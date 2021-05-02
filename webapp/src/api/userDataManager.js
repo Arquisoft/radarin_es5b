@@ -35,6 +35,8 @@ async function connect() {
 		console.log("Este es el webid" + webId);
 		var pass = await getPass(webId);
 		console.log("Usuario ya está registrado");
+		await checkUbicationFile(webId);
+		
 		await getLocationLogin(webId, pass);
 		logged = true;
 		setTimeout(update, 1000);
@@ -54,6 +56,14 @@ async function connect() {
 	}
 
 }
+async function checkUbicationFile(){
+	var url = webId.replace("profile/card#me", "");
+	const today = new Date(Date.now());
+	var nombreFichero = today.getDate()+""+(today.getMonth()+1)+""+today.getFullYear()+".json";
+	//url+="radarin/ubicaciones/"+nombreFichero;
+	await pod.checkTodayFileAndCreate(url,nombreFichero);
+}
+
 
 async function initializePod(pass, url) { //Inicializamos el POD cuando nos registramos
 	const today = new Date(Date.now());
@@ -66,7 +76,6 @@ async function initializePod(pass, url) { //Inicializamos el POD cuando nos regi
 
 	var ubicaciones = [];
 	var objeto = {};
-	//ubicaciones.push({});
 
 	objeto.ubicaciones = ubicaciones;
 
@@ -77,8 +86,8 @@ async function initializePod(pass, url) { //Inicializamos el POD cuando nos regi
 	//initialJSON  = await JSON.stringify(obj);
 	//console.log(initialJSON);
 	await pod.updateFile(urlPass, pass); //Creamos el fichero que tendrá la contraseña
-	await pod.updateFile(urlUbicaciones, nombreFichero + " "); //Creamos el fichero que tendrá los ficheros de ubicaciones
-	await pod.updateFile(urlFicheroHoy, json); //Creamos el fichero que tendrá los ficheros de ubicaciones
+	await pod.updateFile(urlUbicaciones, nombreFichero); //Creamos el fichero que tendrá los ficheros de ubicaciones
+	await pod.updateFile(urlFicheroHoy, json); //Creamos el fichero que tendrá las ubicaciones en sí
 
 
 

@@ -122,7 +122,7 @@ class Mapa extends React.Component {
     );
     const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
     return (
-      <div class="map">
+      <div className="map">
         <button onClick={this.updateFriendsPos.bind(this)}>Actualizar mapa</button>
         <MyMapComponent
           googleMapURL={mapURL}

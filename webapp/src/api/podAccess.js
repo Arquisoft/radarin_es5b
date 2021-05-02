@@ -4,6 +4,7 @@ import { foaf } from 'rdf-namespaces';
 import auth from 'solid-auth-client';
 import { createDocument,fetchDocument } from 'tripledoc';
 import { space,solid, schema } from 'rdf-namespaces';
+import { Pond } from 'rdf-namespaces/dist/schema';
 
 function runFetch(fetchCall, f=p => p) {
 	return fetchCall.then(p => p.text()).then(f)
@@ -51,6 +52,28 @@ async function fetchProfile () {
 	return friends;
 }
 
+async function checkTodayFileAndCreate(url,nombreFichero){
+	//Obtenemos los ficheros de ubicaciones.txt
+	var ficheros=await getFile(url+"radarin/ubicaciones/ubicaciones.txt")
+	ficheros = ficheros.split(" ");
+	for(let i =0;i<ficheros.length;i++){
+		if(ficheros[i] === nombreFichero)
+			return;
+	}
+	
+	//Si no ha encontrado el fichero con el nombre de hoy hay que crearlo
+	await addToFile(url+"radarin/ubicaciones/ubicaciones.txt"," "+nombreFichero);
+	//Creamos el json para el fichero
+	var ubicaciones = [];
+	var objeto = {};
+
+	objeto.ubicaciones = ubicaciones;
+
+	var json = JSON.stringify(objeto)
+
+	await updateFile(url+"radarin/ubicaciones/"+nombreFichero, json); //Creamos el fichero con las ubicaciones de hoy
+}
+
 /**
  * Actualiza el contenido de un archivo del pod del usuario, si no existe se crea
  * @param {string} filename Url del archivo en el pod del usuario
@@ -90,6 +113,7 @@ var toExport = {
 	getFile,
 	updateFile,
 	addToFile,
+	checkTodayFileAndCreate,
 	deleteFile,
 	fetchProfile
 }
