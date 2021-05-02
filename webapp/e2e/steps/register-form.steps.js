@@ -53,6 +53,7 @@ defineFeature(feature, test => {
 		
 		then("A welcome message should be shown in the screen", async () => {
 			await expect(page).toMatch('Welcome',{waitUntil: "load", timeout:0});
+			return;
 		});
 	});
 	/*

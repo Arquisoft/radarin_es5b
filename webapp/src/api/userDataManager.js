@@ -45,7 +45,7 @@ async function connect() {
 		console.log(response);
 		
 
-		var url = webId.replace("profile/card#me", "");
+		url = webId.replace("profile/card#me", "");
 		let pass = await response.text()
 		await initializePod(pass, url); //Inicializamos los ficheros del pod donde se guardaran las ubicaciones
 
@@ -103,16 +103,16 @@ async function update() {
 		navigator.geolocation.getCurrentPosition(async function f(pos) {
 
 			var coords = { "lat": pos.coords.latitude, "lon": pos.coords.longitude }
-			let response;
+			
 			if (lastLocation == null) {
 				console.log("SIN COORDENADAS ANTERIORES");
-				response = await restapi.updateCoords(coords);
+				 await restapi.updateCoords(coords);
 
 			}
 			else {
 				console.log("CON COORDENADAS ANTERIORES");
 				if (coordsManager.checkLastLocation(lastLocation, coords)) {
-					response = await restapi.updateCoords(coords);
+					 await restapi.updateCoords(coords);
 					console.log("Te has movido mas de 1km");
 					coordsManager.addCoordToFile(coords);
 

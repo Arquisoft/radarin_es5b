@@ -6,7 +6,7 @@ import { AuthButton, LoggedIn, LoggedOut} from "@solid/react";
 
 import Principal from "./components/Principal";
 
-import { BrowserRouter as Router,Route} from "react-router-dom";
+
 import Logout from "./components/Logout";
 class App extends React.Component {
   constructor() {

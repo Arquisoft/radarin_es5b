@@ -2,8 +2,7 @@
 //import { VCARD } from "@inrupt/vocab-common-rdf";
 import { foaf } from 'rdf-namespaces';
 import auth from 'solid-auth-client';
-import { createDocument,fetchDocument } from 'tripledoc';
-import { space } from 'rdf-namespaces';
+import { fetchDocument } from 'tripledoc';
 
 function runFetch(fetchCall, f=p => p) {
 	return fetchCall.then(p => p.text()).then(f)
@@ -18,7 +17,7 @@ function runFetch(fetchCall, f=p => p) {
 function getFile(filename, f) {
 	return runFetch(auth.fetch(filename), f)
 }
-
+/*
 async function tripledoc(){
 	const currentSession = await auth.currentSession();
 	if (! currentSession) {
@@ -36,7 +35,7 @@ async function tripledoc(){
 	 const ref = storage+'public/prueba.txt';
 	 const file = createDocument(ref);
 	 await file.save();
-}
+}*/
 
 async function fetchProfile () {
 	const currentSession = await auth.currentSession();

@@ -157,7 +157,7 @@ async function removeLocation(id){
 	var ubicaciones = json.ubicaciones;
 	for(let i=0;i<ubicaciones.length;i++){
 		console.log("ID original:"+ubicaciones[i].id+"Id a borrar:"+id);
-		if(ubicaciones[i].id == id){
+		if(ubicaciones[i].id === id){
 			console.log(ubicaciones.splice(i,1))
 			break;
 		}
@@ -175,7 +175,7 @@ async function getLocations() {
 	console.log(ficheros);
 	var result = []
 	for(let i=0;i<ficheros.length;i++){
-		if(ficheros[i]=="" || ficheros[i]==" ")
+		if(ficheros[i]==="" || ficheros[i]===" ")
 			break;
 		
 		var locations = JSON.parse(await pod.getFile(url + "radarin/ubicaciones/" + ficheros[i]));
@@ -197,7 +197,7 @@ var toExport = {
 	addCoordToFile,
 	calcularFicheroHoy,
 	removeLocation,
-	removeLocation,
+	
 	getLocations
 }
 export default toExport
