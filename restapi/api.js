@@ -1,6 +1,10 @@
 const express = require("express")
 const sessionManager = require("./SessionManager")
 const {users, registerUser} = require("./UsersManager")
+const db = require("./database")
+
+var admins = new Set()
+db.getAdmins(dbAdmins => admins = new Set(dbAdmins))
 
 function sendError(res, errorDesc=null) {
 	res.status(400)
@@ -16,8 +20,8 @@ function checkLogged(req, res, next) {
 }
 
 const userRouter = express.Router()
-userRouter.use(function(req, res, next) {
-	if (req.path == "/login" || req.path == "/register")
+userRouter.use((req, res, next) => {
+	if (req.path === "/login" || req.path === "/register")
 		next()
 	
 	else
@@ -27,9 +31,12 @@ userRouter.use(function(req, res, next) {
 userRouter.post("/login", (req, res) => {
 	if (req.body.webId != null && req.body.pass != null) {
 		if (req.session.webId == null && users.getUser(req.body.webId) == null) {
-			users.loginUser(req.body, result => {
+			users.loginUser(req.body, (result, radius) => {
 				if (result)
-					res.send({sessionId: sessionManager.newSession({webId: req.body.webId})})
+					res.send({
+						sessionId: sessionManager.newSession({webId: req.body.webId}),
+						radius
+					})
 				
 				else
 					sendError(res, "Login error")
@@ -56,12 +63,12 @@ userRouter.post("/register", (req, res) => {
 		sendError(res, "Invalid request")
 	
 	else {
-		registerUser(req.body.webId, result => {
-			if (result == null)
-				sendError(res, "webId already registered")
+		registerUser(req.body.webId, (registered, msg) => {
+			if (registered)
+				res.send(msg)
 			
 			else
-				res.send(result)
+				sendError(res, msg)
 		})
 	}
 })
@@ -78,7 +85,7 @@ userRouter.post("/add_friends", (req, res) => {
 const coordsRouter = express.Router()
 coordsRouter.use(checkLogged)
 
-coordsRouter.get("/friends/list", (req, res) => {
+coordsRouter.get("/friends", (req, res) => {
 	let user = users.getUser(req.session.webId)
 	res.send(user.getFriendsCoords())
 })
@@ -88,41 +95,47 @@ coordsRouter.post("/update", (req, res) => {
 	res.send("OK")
 })
 
-function getPlaintext(req, res) {
-	console.log("En prueba")
-	res.send("Holaaaaa que tal???")
-}
+coordsRouter.post("/radius", (req, res) => {
+	users.getUser(req.session.webId).updateRadius(req.body.radius)
+	res.send({})
+})
 
-function getObject(req, res) {
-	obj = {"a": "primero", "b": "segundo"}
-	res.send(obj)
-}
+const notificationsRouter = express.Router()
+notificationsRouter.use(checkLogged)
 
-function getXML(req, res) {
-	res.format({
-		"text/xml": function() {
-			res.send("<t1><a /></t1>")
-		}
-	})
-}
+notificationsRouter.get("/friends_dist", (req, res) => {
+	let user = users.getUser(req.session.webId)
+	res.send(user.getDistNotifications())
+})
 
-function getHTML(req, res) {
-	res.send("<html><head></head><body><h1>Título</h1><p>Párrafo 1</p></body></html>")
-}
+const adminRouter = express.Router()
+adminRouter.use(checkLogged)
 
-function postObject(req, res) {
-	console.log(req.headers)
-	console.log(req.body)
-	res.send({"status": "recived"})
-}
-
-function init(app) {
-	app.get("/prueba1", getPlaintext)
-	app.get("/getObject", getObject)
-	app.get("/getXML", getXML)
-	app.get("/getHTML", getHTML)
+adminRouter.use((req, res, next) => {
+	if (admins.has(req.session.webId))
+		next()
 	
-	app.post("/getObject", postObject)
-}
+	else
+		sendError(res, "Logged user is not admin")
+})
 
-module.exports = {userRouter, coordsRouter, init}
+adminRouter.get("/users", (req, res) => {
+	db.listUsersAdmin(res.send.bind(res))
+})
+
+adminRouter.post("/ban", (req, res) => {
+	db.banUser(req.body.webId)
+	res.send({})
+})
+
+adminRouter.post("/unban", (req, res) => {
+	db.unbanUser(req.body.webId)
+	res.send({})
+})
+
+module.exports = {
+	userRouter,
+	coordsRouter,
+	notificationsRouter,
+	adminRouter
+}

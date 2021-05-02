@@ -5,9 +5,9 @@ import auth from "solid-auth-client"
 var logged = false;
 
 
-/*async function getPass(webId) {
+async function getPass(webId) {
 	if (webId != null) {
-		console.log("web id en getpass:" + webId);
+		//console.log("web id en getpass:" + webId);
 		var url = webId.replace("profile/card#me","");
 		url = url + "radarin/contraseña.txt";
 
@@ -15,7 +15,7 @@ var logged = false;
 		console.log("Contraseña sacada"+pass);
 		return pass;
 	}
-}*/
+}
 
 async function disconnect() {
 	console.log("Logout");
@@ -26,12 +26,17 @@ async function disconnect() {
 
 async function connect() {
 	let webId = (await auth.currentSession()).webId
+	var url = webId.replace("profile/card#me","");
 	
+	//url = url + "radarin/contraseña.txt";
+	//await pod.updateFile(url,"Hola buenos dias3");
+
 	var response = await restapi.register(webId);
 	console.log(response.status);
 	if (response.status !== 200) { //El usuario ya está registrado
 		console.log("Este es el webid" + webId);
-		var pass = "aa"//await getPass(webId);
+		var pass = await getPass(webId);
+	//	var pass = "a";
 		console.log("Usuario ya está registrado");
 		await getLocationLogin(webId,pass);
 		logged = true;
@@ -40,13 +45,15 @@ async function connect() {
 	else {
 		console.log(response);
 		
-		var url = webId.replace("profile/card#me","");
+		url = webId.replace("profile/card#me","");
 	
 	 	url = url + "radarin/contraseña.txt";
-		console.log(url);
+		
 		
 		let pass = await response.text()
-		pod.updateFile(url, pass);
+		console.log("Contraseña: "+pass);
+		await pod.updateFile(url, pass);
+
 		await getLocationLogin(webId, pass);
 		logged=true;
 		setTimeout(update,1000);
@@ -57,16 +64,20 @@ async function connect() {
 async function update() {
 	console.log("update iLogged="+isLogged());
 	//;
-	if( isLogged())
-		setTimeout(update,1000);
-
+	if( isLogged()){
+		
+	
 	 navigator.geolocation.getCurrentPosition(async function f(pos) {
-		var coords = {"lat":pos.coords.latitude,"lon":pos.coords.longitude,"alt":0}
+		var coords = {"lat":pos.coords.latitude, "lon":pos.coords.longitude}
 		
 		//console.log(coords);
 		let response = await restapi.updateCoords(coords);
 		console.log(await response.text());
 	});
+	setTimeout(update,10000);
+	}
+	
+	
 }
 
 async function getLocationLogin(webId, pass) {

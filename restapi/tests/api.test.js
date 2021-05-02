@@ -1,7 +1,7 @@
 const server = require("./server-for-tests")
 const Requester = require("./requests")
 
-apiAddr = {
+var apiAddr = {
 	ip: "127.0.0.1",
 	port: 5000
 }

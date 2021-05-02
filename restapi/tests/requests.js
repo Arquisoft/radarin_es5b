@@ -17,8 +17,8 @@ class ApiRequester {
 		let options = {
 			host: addr.ip,
 			port: addr.port,
-			path: path,
-			method: method,
+			path,
+			method,
 			headers: this.headers,
 			rejectUnauthorized: false
 		}
