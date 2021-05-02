@@ -29,8 +29,8 @@ class Principal extends React.Component {
       else result.lejanos.push(f);
     }
 
-    result.cercanos[0] = { id: "1" };
-    result.cercanos[1] = { id: "2" };
+    //result.cercanos[0] = { id: "1" };
+    //result.cercanos[1] = { id: "2" };
 
     this.setState({
       amigos: result,
@@ -49,7 +49,7 @@ class Principal extends React.Component {
           <p>Amigos cercanos:</p>
           <ul>
             {this.state.amigos.cercanos.map((amigo) => {
-              return <li> {amigo.id} </li>;
+              return <li> {amigo.webId} </li>;
             })}
           </ul>
 
