@@ -2,6 +2,7 @@ const {defineFeature, loadFeature} = require("jest-cucumber");
 const feature = loadFeature("./features/register-form.feature");
 defineFeature(feature, test => {
 
+	/*
 	function wait(time) {
 		return new Promise(function (resolve) {
 		  setTimeout(resolve, time);
@@ -11,24 +12,25 @@ defineFeature(feature, test => {
 	  beforeEach(async () => {
 		await global.page.goto('http://localhost:3000')
 	  })
-
+*/
 	  
-	test("The user is not registered in the site", ({given, when, then}) => {
+	test("The user is not registered in the site", ({given, when, then}) => {/*
 		
 		let popup;
 		let webID;
 		let password;
-		let user;
+		let user;*/
 		
-		given("An unregistered user", async () => {
+		given("An unregistered user", async () => {/*
 			//Datos de login de inrupt
 			webID = "https://radarines5b.inrupt.net/profile/card#me";
 			password = "Radarin5b.";
 			user="Radarines5b";
-			await global.page.goto('http://localhost:3000/')
+			await global.page.goto('http://localhost:3000/')*/
 		});
 		
 		when("I fill the data in the form and press submit", async () => {
+			/*
 			//Capturamos el popup
 			//const newPagePromise = new Promise((x) =>  page.once(("targetcreated"), (target) => x(target.page())));	
 			newPagePromise = new Promise(x => page.once('popup', x));
@@ -44,7 +46,7 @@ defineFeature(feature, test => {
 			await popup.type('[name="password"]', password);
 			await expect(popup).toClick('[id="login"]');
 			//await wait(1000); //esperamos a que cargue
-			await page.goto('http://localhost:3000/')
+			await page.goto('http://localhost:3000/')*/
 
 		});
 		
