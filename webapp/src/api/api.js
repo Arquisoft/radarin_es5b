@@ -43,7 +43,7 @@ async function addFriends(friends) {
 }
 
 async function getFriendsCoords() {
-	return await request("/coords/friends/list", "GET")
+	return await request("/coords/friends", "GET")
 }
 
 async function updateCoords(coords) {
@@ -58,12 +58,33 @@ async function updateRadius(coords) {
 	})
 }
 
+async function getNotifications() {
+	return await request("/notifications/friends_dist", "GET")
+}
+
+async function adminGetUsers() {
+	return await request("/admin/users", "GET")
+}
+
+async function adminBanUser(webId) {
+	return await request("/admin/ban", "POST", {webId})
+}
+
+async function adminUnbanUser(webId) {
+	return await request("/admin/unban", "POST", {webId})
+}
+
 var toExport = {
 	login,
 	logout,
 	register,
 	addFriends,
 	getFriendsCoords,
-	updateCoords
+	updateCoords,
+	updateRadius,
+	getNotifications,
+	adminGetUsers,
+	adminBanUser,
+	adminUnbanUser
 }
 export default toExport

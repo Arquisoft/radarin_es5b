@@ -1,12 +1,11 @@
 const express = require("express")
+const promBundle = require("express-prom-bundle")
 
 const http = require("http")
-//const promBundle = require("express-prom-bundle");
 const cors = require("cors")
-//const mongoose = require("mongoose")
+
 const sessionManager = require("./SessionManager")
 const api = require("./api")
-const usersManager = require("./UsersManager").users
 
 class Server {
 	constructor(addr) {
@@ -16,13 +15,18 @@ class Server {
 	async start() {
 		this.app = express()
 		
-		this.app.use(cors());
-		this.app.options('*', cors());
+		//Monitoring middleware
+		const metricsMiddleware = promBundle({includeMethod: true})
+		this.app.use(metricsMiddleware)
+
+		this.app.use(cors())
+		this.app.options("*", cors())
 		this.app.use(express.json())
 		this.app.use(sessionManager.setReqSession.bind(sessionManager))
 		this.app.use("/user", api.userRouter)
 		this.app.use("/coords", api.coordsRouter)
-		api.init(this.app)
+		this.app.use("/notifications", api.notificationsRouter)
+		this.app.use("/admin", api.adminRouter)
 		
 		this.server = http.createServer(this.app)
 		await this.server.listen(...this.addr)
@@ -37,7 +41,7 @@ class Server {
 var port = process.env.PORT == null ? 5000 : process.env.PORT
 var server = new Server([port, null])
 
-if (require.main == module)
+if (require.main === module)
 	server.start()
 
 module.exports = server

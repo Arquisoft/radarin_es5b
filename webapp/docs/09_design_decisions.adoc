@@ -3,6 +3,7 @@
 
 ****
 * Los datos de los usuarios se guardarán en sus pods SOLID, por lo que nuestra persistencia privada en el servidor se reducirá al mínimo, solo los datos necesarios de transacciones que estén a la espera de ser actualizados en los pods de los usuarios. Esto servirá para proporcionar a nuestros usuarios el control de sus datos de la aplicación.
+* Optimizar, en la medida de lo posible, el número y tamaño de las peticiones al servidor, y así estar preparados para soportar un gran número de usuarios conectados simultáneamente.
 * Crear una interfáz web sencilla, para facilitar el uso a los usuarios. Seguiremos las convenciones en interfaces gráficas actuales de aplicaciones de mapas y mensajería, para simplificar el uso de la web y facilizar su aprendizaje a usuarios nuevos.
 * Buscaremos crear una aplicación muy responsiva. Para conseguir este objetivo usaremos React, por sus capacidades de trabajar con páginas dinámicas, actualizando los datos desde un servidor sin necesidad de recargar la página, a diferencia de una aplicación web tradicional.
 * La misma interfáz web será compatible con PC y movil. Esto nos permitirá facilitar el desarrollo, ya que nos evitará tener que desarrollar dos interfaces independientes. Por otro lado podría limitarnos el desarrollo en el entorno móvil al no ser una aplicación nativa.

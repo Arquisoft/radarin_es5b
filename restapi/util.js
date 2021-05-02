@@ -6,7 +6,7 @@ const PASS_SIZE = 128
 function createRandomPass() {
 	let pass = ""
 	for (let i = 0; i < PASS_SIZE; i++)
-		pass += parseInt(Math.random() * 255).toString(16)
+		pass += parseInt(Math.random() * 255, 10).toString(16)
 	
 	return pass
 }

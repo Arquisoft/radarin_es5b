@@ -43,6 +43,7 @@ async function connect() {
 	}
 	else { //Registro del usuario
 		console.log(response);
+		
 
 		var url = webId.replace("profile/card#me", "");
 		let pass = await response.text()

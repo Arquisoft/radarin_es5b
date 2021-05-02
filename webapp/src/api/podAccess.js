@@ -3,8 +3,7 @@
 import { foaf } from 'rdf-namespaces';
 import auth from 'solid-auth-client';
 import { createDocument,fetchDocument } from 'tripledoc';
-import { space,solid, schema } from 'rdf-namespaces';
-import { Pond } from 'rdf-namespaces/dist/schema';
+import { space } from 'rdf-namespaces';
 
 function runFetch(fetchCall, f=p => p) {
 	return fetchCall.then(p => p.text()).then(f)
