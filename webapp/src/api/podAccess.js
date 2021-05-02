@@ -74,6 +74,8 @@ async function checkTodayFileAndCreate(url,nombreFichero){
 	await updateFile(url+"radarin/ubicaciones/"+nombreFichero, json); //Creamos el fichero con las ubicaciones de hoy
 }
 
+
+
 /**
  * Actualiza el contenido de un archivo del pod del usuario, si no existe se crea
  * @param {string} filename Url del archivo en el pod del usuario

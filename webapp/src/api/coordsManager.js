@@ -94,6 +94,12 @@ function calcularFicheroHoy(webId) {
 	return urlFicheroHoy;
 }
 
+function generateId(){
+	const today = new Date(Date.now());
+	var result = today.getDate() + "" + (today.getMonth() + 1) + "" + today.getFullYear() + ".json";
+	result+="-"+today.getTime();
+	return result;
+}
 
 async function addCoordToFile(coords) {
 	var webId = (await auth.currentSession()).webId
@@ -103,15 +109,18 @@ async function addCoordToFile(coords) {
 	var result = await pod.getFile(urlFicheroHoy);
 	console.log("resultado: " + result);
 	var json = JSON.parse(result);
-	var hoy = new Date();
+	var hoy = new Date(Date.now());
 	 var nombre = await getLocation(coords.lat,coords.lon)
 	console.log("ubicacion a meter:"+nombre);
-	 json.ubicaciones.push({ "lat": coords.lat, "lon": coords.lon, "hour": hoy.getHours() + ":" + hoy.getMinutes()
-,"name": nombre});
+	var id = generateId(); 
+	json.ubicaciones.push({ "lat": coords.lat, "lon": coords.lon, "hour": hoy.getHours() + ":" + hoy.getMinutes()
+,"name": nombre,"day":hoy.getDate()+"/"+(hoy.getMonth() + 1)+"/"+hoy.getFullYear(),"id":id});
 
 	pod.updateFile(urlFicheroHoy, JSON.stringify(json));
 	
 }
+
+
 
 async function getLocation(lat,lon){
 	Geocode.setApiKey(credentials.geocoder);
@@ -135,6 +144,24 @@ function checkLastLocation(p1, p2) {
 	var result = new DistCalc(new Coords(p1), new Coords(p2)).getLinDist()
 	console.log("distancia: " + result);
 	return result > 1 //Cuando te mueves más de 1km
+}
+
+async function removeLocation(id){
+	var datos = id.split("-");
+	var fichero = datos[0]
+	
+	var webId = (await auth.currentSession()).webId
+	var url =  webId.replace("profile/card#me", "");
+	url+="radarin/ubicaciones/"+fichero
+	var json = JSON.parse(await pod.getFile(url));
+	var ubicaciones = json.ubicaciones;
+	for(let i=0;i<ubicaciones.length;i++){
+		console.log("ID original:"+ubicaciones[i].id+"Id a borrar:"+id);
+		if(ubicaciones[i].id == id)
+			ubicaciones.pop(i)
+	}
+	json.ubicaciones=ubicaciones;
+	pod.updateFile(url,JSON.stringify(json));
 }
 
 async function getLocations() {
@@ -167,6 +194,8 @@ var toExport = {
 	checkLastLocation,
 	addCoordToFile,
 	calcularFicheroHoy,
+	removeLocation,
+	removeLocation,
 	getLocations
 }
 export default toExport

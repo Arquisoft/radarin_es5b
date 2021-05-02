@@ -53,6 +53,7 @@ class Mapa extends React.Component {
     this.setState({
       users: result,
     });
+   this.getLocation()
   }
 
   getLocation() {

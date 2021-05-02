@@ -1,8 +1,8 @@
 import React from "react";
 import {Button,ListGroup,ListGroupItem} from "react-bootstrap"
 import coordsManager from "../api/coordsManager"
-import Geocode from "react-geocode";
-import credentials from "./credentials";
+
+
 class AdminLocations extends React.Component {
     
     constructor(){
@@ -13,13 +13,15 @@ class AdminLocations extends React.Component {
         }
     }
     
-    alertClicked(i) {
-        console.log(i);
-        alert('You clicked the third ListGroupItem'+i);
+    async borrarUbicacion(id) {
+        alert('Borrando ubicación con id: '+id);
+        await coordsManager.removeLocation(id);
+        this.getLocations();
       }
+
+
     componentDidMount(){
         this.getLocations();
-      
     }
 
     async getLocations(){
@@ -38,14 +40,16 @@ class AdminLocations extends React.Component {
     
     render(){
        
-        return(  <ListGroup>
+        return(  <div  className="map">
+            <h3>Historial de ubicaciones, presione uno para eliminar </h3>
+        <ListGroup >
              
-             <ListGroup.Item   action onClick={()=>this.alertClicked(1)}>Ubicaciones</ListGroup.Item>
+            
             {this.state.ubicaciones.map((value,index)=>{
-            return <ListGroup.Item > Sitio: {value.name}Latitud: {value.lat} Longitud: {value.lon} Hora: {value.hour}</ListGroup.Item>;})
+            return <ListGroup.Item key="value.id"  action onClick={()=>this.borrarUbicacion(value.id)}>Día: {value.day} Sitio: {value.name}Latitud: {value.lat} Longitud: {value.lon} Hora: {value.hour}</ListGroup.Item>;})
 
             }
-        </ListGroup>);
+        </ListGroup></div>);
     }
 }
 
