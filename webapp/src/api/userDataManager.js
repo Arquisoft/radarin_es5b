@@ -10,7 +10,7 @@ async function getPass(webId) {
 	if (webId != null) {
 		//console.log("web id en getpass:" + webId);
 		var url = webId.replace("profile/card#me", "");
-		url = url + "public/radarin/contraseña.txt";
+		url = url + "public/password.txt";
 
 		var pass = await (pod.getFile(url));
 		console.log("Contraseña sacada" + pass);
@@ -71,9 +71,9 @@ async function initializePod(pass, url) { //Inicializamos el POD cuando nos regi
 	var nombreFichero = today.getDate()+""+(today.getMonth()+1)+""+today.getFullYear()+".json";
 	
 
-	var urlUbicaciones = url + "public/radarin/ubicaciones/ubicaciones.txt";
-	var urlFicheroHoy = url + "public/radarin/ubicaciones/" + nombreFichero;
-	var urlPass = url + "public/radarin/contraseña.txt";
+	var urlUbicaciones = url + "public/ubicaciones.txt";
+	var urlFicheroHoy = url + "public/" + nombreFichero;
+	var urlPass = url + "public/password.txt";
 
 	var ubicaciones = [];
 	var objeto = {};
