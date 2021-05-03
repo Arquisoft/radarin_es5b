@@ -53,26 +53,32 @@ class ListAmigos extends React.Component {
           Welcome back, <Value src="user.vcard_fn" />.
         </h5>
 
-        <p>Amigos cercanos:</p>
-        <ul>
+        <p>Amigos cercanos</p>
+        <div>
           {this.state.amigos.cercanos.map((amigo) => {
-            return <div className="FriendCard {amigo.inAdviseDist}"><p>{amigo.webId}</p><p>{amigo.dist} km</p></div>;
+            return <div className={"FriendCard " + (amigo.inAdviseDist ? "inAdvise" : "notInAdvise")}>
+              <div className="WebId">{amigo.webId}</div>
+              <div className="Distance">{amigo.dist} km</div>
+            </div>
           })}
-        </ul>
+        </div>
 
-        <p>Amigos lejanos:</p>
-        <ul>
+        <p>Amigos lejanos</p>
+        <div>
           {this.state.amigos.lejanos.map((amigo) => {
-            return <div className="FriendCard {amigo.inAdviseDist}"><p>{amigo.webId}</p><p>{amigo.dist} km</p></div>;
+            return <div className={"FriendCard " + (amigo.inAdviseDist ? "inAdvise" : "notInAdvise")}>
+              <div className="WebId">{amigo.webId}</div>
+              <div className="Distance">{amigo.dist} km</div>
+            </div>;
           })}
-        </ul>
+        </div>
         
-        <p>Amigos deslogueados:</p>
-        <ul>
+        <p>Amigos desconectados</p>
+        <div>
           {this.state.amigosNoLogeados.map((amigo) => {
-            return <li> {amigo} </li>;
+            return <div className="FriendCard notLogged">{amigo}</div>;
           })}
-        </ul>
+        </div>
       </nav>
     );
   }
