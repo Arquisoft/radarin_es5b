@@ -30,7 +30,7 @@ userRouter.use((req, res, next) => {
 
 userRouter.post("/login", (req, res) => {
 	if (req.body.webId != null && req.body.pass != null) {
-		if (req.session.webId == null && users.getUser(req.body.webId) == null) {
+		if (req.session.webId == null) {
 			users.loginUser(req.body, (result, radius) => {
 				if (result)
 					res.send({

@@ -2,8 +2,7 @@
 //import { VCARD } from "@inrupt/vocab-common-rdf";
 import { foaf } from 'rdf-namespaces';
 import auth from 'solid-auth-client';
-import { createDocument,fetchDocument } from 'tripledoc';
-import { space } from 'rdf-namespaces';
+import { fetchDocument } from 'tripledoc';
 
 function runFetch(fetchCall, f=p => p) {
 	return fetchCall.then(p => p.text()).then(f)
@@ -18,7 +17,7 @@ function runFetch(fetchCall, f=p => p) {
 function getFile(filename, f) {
 	return runFetch(auth.fetch(filename), f)
 }
-
+/*
 async function tripledoc(){
 	const currentSession = await auth.currentSession();
 	if (! currentSession) {
@@ -36,7 +35,7 @@ async function tripledoc(){
 	 const ref = storage+'public/prueba.txt';
 	 const file = createDocument(ref);
 	 await file.save();
-}
+}*/
 
 async function fetchProfile () {
 	const currentSession = await auth.currentSession();
@@ -51,6 +50,30 @@ async function fetchProfile () {
 	return friends;
 }
 
+async function checkTodayFileAndCreate(url,nombreFichero){
+	//Obtenemos los ficheros de ubicaciones.txt
+	var ficheros=await getFile(url+"public/ubicaciones.txt")
+	ficheros = ficheros.split(" ");
+	for(let i =0;i<ficheros.length;i++){
+		if(ficheros[i] === nombreFichero)
+			return;
+	}
+	
+	//Si no ha encontrado el fichero con el nombre de hoy hay que crearlo
+	await addToFile(url+"public/ubicaciones.txt"," "+nombreFichero);
+	//Creamos el json para el fichero
+	var ubicaciones = [];
+	var objeto = {};
+
+	objeto.ubicaciones = ubicaciones;
+
+	var json = JSON.stringify(objeto)
+
+	await updateFile(url+"public/"+nombreFichero, json); //Creamos el fichero con las ubicaciones de hoy
+}
+
+
+
 /**
  * Actualiza el contenido de un archivo del pod del usuario, si no existe se crea
  * @param {string} filename Url del archivo en el pod del usuario
@@ -59,7 +82,7 @@ async function fetchProfile () {
  * @return {string} String con el retorno de la petición http
  */
 function updateFile(filename, content, f) {
-	tripledoc();
+	//tripledoc();
 	return runFetch(auth.fetch(filename, {
 		method: "PUT", body: content
 	}), f)
@@ -90,6 +113,7 @@ var toExport = {
 	getFile,
 	updateFile,
 	addToFile,
+	checkTodayFileAndCreate,
 	deleteFile,
 	fetchProfile
 }

@@ -9,6 +9,7 @@ webapp/node_modules
 
 # testing
 /webapp/coverage
+/restapi/coverage
 
 # production
 webapp/build
