@@ -105,6 +105,11 @@ class Mapa extends React.Component {
     }
   }
 
+  actualizar() {
+    this.updateFriendsPos.bind(this);
+    
+  }
+
   render() {
     const MyMapComponent = withScriptjs(
       withGoogleMap((props) => (
