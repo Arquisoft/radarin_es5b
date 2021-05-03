@@ -126,10 +126,7 @@ class Mapa extends React.Component {
           <Marker position={{ lat: this.state.latitude, lng: this.state.longitude }} 
            icon= 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
            >
-             <InfoWindow
-                            onClose={this.onInfoWindowClose}
-                            position={{ lat: (this.state.latitude + 0.0018), lng:this.state.latitude }}
-                        >
+             <InfoWindow onClose={this.onInfoWindowClose}>
                             <div>
                                 <span style={{ padding: 0, margin: 0 }}>Usted está aquí</span>
                             </div>
@@ -151,10 +148,7 @@ class Mapa extends React.Component {
                 <Marker position={{ lat: user.lat, lng: user.lng }} 
                 icon= 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
                 >
-                  <InfoWindow
-                                 onClose={this.onInfoWindowClose}
-                                 position={{ lat: (user.lat + 0.0018), lng:user.lat }}
-                             >
+                  <InfoWindow    onClose={this.onInfoWindowClose} >
                                  <div>
                                      <span style={{ padding: 0, margin: 0 }}>{user.webId}</span>
                                  </div>
