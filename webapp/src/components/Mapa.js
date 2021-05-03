@@ -56,8 +56,7 @@ class Mapa extends React.Component {
         this.setState({radius: initRad})
     }
     
-    var friends = await response.json();
-    
+    var friends = (await response.json()).logged;
    
     var result = [];
     for(var friend of friends) {

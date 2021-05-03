@@ -10,6 +10,7 @@ class ListAmigos extends React.Component {
     super();
     this.state = {
       amigos: { cercanos: [], lejanos: [] },
+      amigosNoLogeados: []
     };
   }
 
@@ -28,7 +29,8 @@ class ListAmigos extends React.Component {
     }
 
     var listAmigos = await response.json();
-    for (var f of listAmigos) {
+    var logged = listAmigos.logged
+    for (var f of logged) {
       var fin = f.webId.indexOf(".inrupt");
       var inicio = f.webId.indexOf("//");
 
@@ -40,6 +42,7 @@ class ListAmigos extends React.Component {
 
     this.setState({
       amigos: result,
+      amigosNoLogeados: listAmigos.notLogged
     });
   }
 
@@ -53,14 +56,21 @@ class ListAmigos extends React.Component {
         <p>Amigos cercanos:</p>
         <ul>
           {this.state.amigos.cercanos.map((amigo) => {
-            return <li> {amigo.webId} </li>;
+            return <div className="FriendCard {amigo.inAdviseDist}"><p>{amigo.webId}</p><p>{amigo.dist} km</p></div>;
           })}
         </ul>
 
         <p>Amigos lejanos:</p>
         <ul>
           {this.state.amigos.lejanos.map((amigo) => {
-            return <li> {amigo.webId} </li>;
+            return <div className="FriendCard {amigo.inAdviseDist}"><p>{amigo.webId}</p><p>{amigo.dist} km</p></div>;
+          })}
+        </ul>
+        
+        <p>Amigos deslogueados:</p>
+        <ul>
+          {this.state.amigosNoLogeados.map((amigo) => {
+            return <li> {amigo} </li>;
           })}
         </ul>
       </nav>
