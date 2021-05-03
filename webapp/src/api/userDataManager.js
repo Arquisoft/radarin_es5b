@@ -5,6 +5,7 @@ import coordsManager from "./coordsManager"
 var logged = false;
 var lastLocation;
 var webId;
+var radius = null;
 
 async function getPass(webId) {
 	if (webId != null) {
@@ -148,8 +149,8 @@ async function getLocationLogin(webId, pass) {
 
 		logged = true
 		//console.log("Respuesta del login" + response);
-
-
+		
+		radius = response.radius
 	});
 
 }
@@ -158,10 +159,17 @@ function isLogged() {
 	return logged;
 }
 
+function getRadius() {
+	let curRadius = radius
+	radius = null
+	return curRadius
+}
+
 var toExport = {
 	connect,
 	update,
 	isLogged,
-	disconnect
+	disconnect,
+	getRadius
 }
 export default toExport
