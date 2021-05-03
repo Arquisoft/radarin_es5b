@@ -64,7 +64,6 @@ class Principal extends React.Component {
               </Link>
             </div>
           </nav>
-
           <ListAmigos />
         </LoggedIn>
       </Router>

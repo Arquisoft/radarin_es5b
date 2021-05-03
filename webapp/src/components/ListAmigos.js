@@ -41,6 +41,8 @@ class ListAmigos extends React.Component {
     this.setState({
       amigos: result,
     });
+
+    setTimeout(this.listarAmigos.bind(this), 5000);
   }
 
   render() {
