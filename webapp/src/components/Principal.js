@@ -31,7 +31,7 @@ class Principal extends React.Component {
 
                     
                 <Mapa />
-                <nav class="Menu">
+                <nav className="Menu">
                     <h5>Welcome back, <Value src="user.vcard_fn" />.</h5>
                     <p>Amigos:</p>
                     <List src="user.friends" />
@@ -41,7 +41,7 @@ class Principal extends React.Component {
         else{
             return(
             <div>
-            <nav class="Menu">
+            <nav className="Menu">
             <h5>Welcome back, <Value src="user.vcard_fn" />.</h5>
             <p>Amigos:</p>
             <List src="user.friends" />

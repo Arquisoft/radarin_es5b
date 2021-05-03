@@ -49,7 +49,7 @@ class Mapa extends React.Component {
         this.handleLocationError
       );
     } else {
-      alert("Geolocation is not supported by this browser.");
+      console.log("Geolocation is not supported by this browser.");
     }
   }
 
@@ -109,7 +109,7 @@ class Mapa extends React.Component {
     );
     const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
     return (
-      <div class="map">
+      <div className="map">
         <button onClick={this.updateFriendsPos.bind(this)}>Actualizar mapa</button>
         <MyMapComponent
           googleMapURL={mapURL}
