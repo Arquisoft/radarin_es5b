@@ -41,7 +41,8 @@ class Principal extends React.Component {
     var notificaciones = await response.json();
     console.log(notificaciones);
     for (var n of notificaciones) {
-      new Notification("El usuario " + n.webId + " esta a " + n.dist + " kilómetros.");
+      var distancia = n.dist.toString().slice(0, 4);
+      new Notification("El usuario " + n.webId + " esta a " + distancia + " kilómetros.");
     }
     
     setTimeout(this.notificaciones.bind(this), 20000);
