@@ -1,9 +1,9 @@
-import { LoggedIn, Value, List } from "@solid/react";
+import { LoggedIn } from "@solid/react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import Mapa from "./Mapa";
 
-import restapi from "../api/api";
+
 import AdminLocations from "./AdminLocations";
 import api from "../api/userDataManager";
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
