@@ -5,11 +5,14 @@ import {
   withScriptjs,
   withGoogleMap,
   Marker,
+  InfoWindow,
   Circle
 } from "react-google-maps";
+
 import credentials from "./credentials";
 import restapi from "../api/api";
 import userDataManager from "../api/userDataManager";
+
 
 class Mapa extends React.Component {
   constructor() {
@@ -52,7 +55,7 @@ class Mapa extends React.Component {
    
     var result = [];
     for(var friend of friends) {
-      result.push({"lat": friend.coords.lat, "lng": friend.coords.lon});
+      result.push({"lat": friend.coords.lat, "lng": friend.coords.lon,"webId":friend.webId});
     }
     
     console.log(result);
@@ -120,7 +123,20 @@ class Mapa extends React.Component {
             lng: this.state.longitude,
           }}
         >
-          <Marker position={{ lat: this.state.latitude, lng: this.state.longitude }} text="UD está aquí"/>
+          <Marker position={{ lat: this.state.latitude, lng: this.state.longitude }} 
+           icon= 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+           >
+             <InfoWindow
+                            onClose={this.onInfoWindowClose}
+                            position={{ lat: (this.state.latitude + 0.0018), lng:this.state.latitude }}
+                        >
+                            <div>
+                                <span style={{ padding: 0, margin: 0 }}>Usted está aquí</span>
+                            </div>
+                        </InfoWindow>
+            </Marker>
+          
+          
           <Circle
                   defaultCenter={{
                     lat: this.state.latitude,
@@ -129,9 +145,21 @@ class Mapa extends React.Component {
                   radius={this.state.radius * 1000}
                 />
           {this.state.users.map((user, i) =>{
+           
             console.log(user);
               return(
-                <Marker position={{lat:user.lat, lng:user.lng}} />
+                <Marker position={{ lat: user.lat, lng: user.lng }} 
+                icon= 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'
+                >
+                  <InfoWindow
+                                 onClose={this.onInfoWindowClose}
+                                 position={{ lat: (user.lat + 0.0018), lng:user.lat }}
+                             >
+                                 <div>
+                                     <span style={{ padding: 0, margin: 0 }}>{user.webId}</span>
+                                 </div>
+                             </InfoWindow>
+                 </Marker>
 
               )
             })} 
