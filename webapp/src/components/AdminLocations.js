@@ -7,9 +7,10 @@ class AdminLocations extends React.Component {
 
     constructor() {
         super();
+        
         this.state = {
             ubicaciones: [],
-            nombres: []
+            nombres: [],
         }
     }
 
@@ -41,7 +42,7 @@ class AdminLocations extends React.Component {
     render() {
         var i=-1;
         return (<div className="map">
-            <h3>Historial de ubicaciones, presione uno para eliminar </h3>
+            <h3 id="title">Historial de ubicaciones, presione uno para eliminar</h3>
             <ListGroup >
 
 

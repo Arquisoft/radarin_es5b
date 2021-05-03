@@ -6,7 +6,7 @@ import Mapa from "./Mapa";
 
 import AdminLocations from "./AdminLocations";
 import api from "../api/userDataManager";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { HashRouter as Router, Route, Link } from "react-router-dom";
 import ListAmigos from "./ListAmigos";
 
 class Principal extends React.Component {
