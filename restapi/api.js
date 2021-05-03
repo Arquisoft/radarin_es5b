@@ -96,8 +96,7 @@ coordsRouter.post("/update", (req, res) => {
 })
 
 coordsRouter.post("/radius", (req, res) => {
-	users.getUser(req.session.webId).updateRadius(req.body.radius)
-	res.send({})
+	users.getUser(req.session.webId).updateRadius(req.body.radius, () => res.send({}))
 })
 
 const notificationsRouter = express.Router()

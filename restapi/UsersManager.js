@@ -44,14 +44,14 @@ class User {
 	 * Cambia el valor del radio de aviso y le almacena en la base de datos para proximos logeos
 	 * @param {number} newRadius Nuevo valor del radio de aviso
 	 */
-	updateRadius(newRadius) {
+	updateRadius(newRadius, callback) {
 		this.adviseDist = newRadius
 		
 		for (let friend of this.loggedFriends.values()) {
 			let dist = getDistance(this.coords, friend.user.coords)
 			this.updateFriendCoords(friend, dist)
 		}
-		db.updateRadius(this.webId, newRadius)
+		db.updateRadius(this.webId, newRadius, callback)
 	}
 	
 	/**

@@ -40,8 +40,7 @@ class TestUser {
 			expect(data.radius).toBe(expectedRadius)
 			this.requester.setHeader("sessionid", data.sessionId)
 			
-			//Esperando a que se actualize el radio en la base de datos, no es síncrono
-			setTimeout(callback, 1500)
+			callback()
 		})
 	}
 	

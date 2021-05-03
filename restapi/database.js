@@ -88,10 +88,13 @@ class Mongo {
 		})
 	}
 	
-	updateRadius(webId, radius) {
+	updateRadius(webId, radius, callback) {
 		mongo.connect(this.usersUri, (err, connect) => {
 			let usersCol = connect.db(getDBName("users")).collection("users")
-			usersCol.update({webId}, {$set: {radius}}, () => connect.close())
+			usersCol.update({webId}, {$set: {radius}}, () => {
+				callback()
+				connect.close()
+			})
 		})
 	}
 	
