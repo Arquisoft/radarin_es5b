@@ -9,11 +9,13 @@ import {
 } from "react-google-maps";
 import credentials from "./credentials";
 import restapi from "../api/api";
+import userDataManager from "../api/userDataManager";
 
 class Mapa extends React.Component {
   constructor() {
     super();
     this.state = {
+      radius: 1,
       users: [],
       latitude: null,
       longitude: null,
@@ -41,6 +43,10 @@ class Mapa extends React.Component {
       setTimeout(this.updateFriendsPos.bind(this), 3000)
       return;
     }
+    let initRad = userDataManager.getRadius()
+    if (initRad != null)
+      this.setState({radius: initRad})
+    
     var friends = await response.json();
     
    
@@ -55,6 +61,12 @@ class Mapa extends React.Component {
     });
    this.getLocation()
   }
+  
+  async updateRadius() {
+    let newRadius = document.getElementById("inputRad").value
+    this.setState({radius: newRadius})
+    restapi.updateRadius(newRadius < 0 ? -newRadius : newRadius)
+  }
 
   getLocation() {
     if (navigator.geolocation) {
@@ -63,7 +75,7 @@ class Mapa extends React.Component {
         this.handleLocationError
       );
     } else {
-      alert("Geolocation is not supported by this browser.");
+      console.log("Geolocation is not supported by this browser.");
     }
   }
 
@@ -109,7 +121,7 @@ class Mapa extends React.Component {
                     lat: this.state.latitude,
                     lng: this.state.longitude
                   }}
-                  radius={5000}
+                  radius={this.state.radius * 1000}
                 />
           {this.state.users.map((user, i) =>{
             console.log(user);
@@ -125,6 +137,8 @@ class Mapa extends React.Component {
     return (
       <div className="map">
         <button onClick={this.updateFriendsPos.bind(this)}>Actualizar mapa</button>
+        <input id="inputRad" type="number" placeholder="Radio en km"></input>
+        <button onClick={this.updateRadius.bind(this)}>Actualizar radio</button>
         <MyMapComponent
           googleMapURL={mapURL}
           loadingElement={<div style={{ height: `100%` }} />}

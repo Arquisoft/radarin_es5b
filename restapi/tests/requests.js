@@ -2,7 +2,8 @@ const http = require("http")
 
 class ApiRequester {
 	
-	constructor() {
+	constructor(addr) {
+		this.addr = addr
 		this.headers = {
 			"Accept": "application/json;charset=UTF-8",
 			"Content-Type": "application/json"
@@ -13,10 +14,10 @@ class ApiRequester {
 		this.headers[key] = value
 	}
 	
-	request(addr, path, method, content, callback) {
+	request(path, method, content, callback) {
 		let options = {
-			host: addr.ip,
-			port: addr.port,
+			host: this.addr.ip,
+			port: this.addr.port,
 			path,
 			method,
 			headers: this.headers,

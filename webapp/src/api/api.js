@@ -52,9 +52,9 @@ async function updateCoords(coords) {
 	})
 }
 
-async function updateRadius(coords) {
-	return await request("/radius", "POST", {
-		coords
+async function updateRadius(radius) {
+	return await request("/coords/radius", "POST", {
+		radius
 	})
 }
 

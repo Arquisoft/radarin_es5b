@@ -18,20 +18,7 @@ class Principal extends React.Component {
        
     }
     
-    /*
-      componentDidMount() {
-        var f =async  () => {
-            await api.connect();
-
-            this.setState({ connected: true });
-        };
-        f();
-
-        
-        
-    }
-*/
-    componentDidMount(){
+    componentDidMount() {
         api.connect();
         this.setState({ connected: true });
     }
@@ -40,29 +27,24 @@ class Principal extends React.Component {
     render() {
         return (
             <Router>
-            <LoggedIn>
-
-                    
-                <Route path="/" exact component={Mapa}></Route>
-                <Route path="/admin" exact component={AdminLocations}></Route>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <div class="container-fluid">
-                <Link class="navbar-brand" to="/admin">Administrar Ubicaciones</Link>
-                <Link class="navbar-brand" to="/">Mapa</Link>
-                    </div>
-                </nav>
-                <nav class="Menu">
-                    <h5>Welcome back, <Value src="user.vcard_fn" />.</h5>
-                   
-                    <p>Amigos:</p>
-                    <List src="user.friends" />
-                </nav>
-            </LoggedIn>
-            </Router>)
-            ;
-
+                <LoggedIn>
+                    <Route path="/" exact component={Mapa}></Route>
+                    <Route path="/admin" exact component={AdminLocations}></Route>
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                        <div className="container-fluid">
+                            <Link className="navbar-brand" to="/admin">Administrar Ubicaciones</Link>
+                            <Link className="navbar-brand" to="/">Mapa</Link>
+                        </div>
+                    </nav>
+                    <nav className="Menu">
+                        <h5>Welcome back, <Value src="user.vcard_fn" />.</h5>
+                       
+                        <p>Amigos:</p>
+                        <List src="user.friends" />
+                    </nav>
+                </LoggedIn>
+            </Router>);
     }
 }
 
 export default Principal;
-

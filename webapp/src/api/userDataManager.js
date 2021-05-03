@@ -5,12 +5,13 @@ import coordsManager from "./coordsManager"
 var logged = false;
 var lastLocation;
 var webId;
+var radius = null;
 
 async function getPass(webId) {
 	if (webId != null) {
 		//console.log("web id en getpass:" + webId);
 		var url = webId.replace("profile/card#me", "");
-		url = url + "radarin/contraseña.txt";
+		url = url + "public/password.txt";
 
 		var pass = await (pod.getFile(url));
 		console.log("Contraseña sacada" + pass);
@@ -71,9 +72,9 @@ async function initializePod(pass, url) { //Inicializamos el POD cuando nos regi
 	var nombreFichero = today.getDate()+""+(today.getMonth()+1)+""+today.getFullYear()+".json";
 	
 
-	var urlUbicaciones = url + "radarin/ubicaciones/ubicaciones.txt";
-	var urlFicheroHoy = url + "radarin/ubicaciones/" + nombreFichero;
-	var urlPass = url + "radarin/contraseña.txt";
+	var urlUbicaciones = url + "public/ubicaciones.txt";
+	var urlFicheroHoy = url + "public/" + nombreFichero;
+	var urlPass = url + "public/password.txt";
 
 	var ubicaciones = [];
 	var objeto = {};
@@ -148,8 +149,8 @@ async function getLocationLogin(webId, pass) {
 
 		logged = true
 		//console.log("Respuesta del login" + response);
-
-
+		
+		radius = response.radius
 	});
 
 }
@@ -158,10 +159,17 @@ function isLogged() {
 	return logged;
 }
 
+function getRadius() {
+	let curRadius = radius
+	radius = null
+	return curRadius
+}
+
 var toExport = {
 	connect,
 	update,
 	isLogged,
-	disconnect
+	disconnect,
+	getRadius
 }
 export default toExport
