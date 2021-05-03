@@ -5,6 +5,7 @@ import Mapa from "./Mapa";
 
 import AdminLocations from "./AdminLocations";
 import api from "../api/userDataManager";
+import restapi from "../api/api"
 import { HashRouter as Router, Route, Link } from "react-router-dom";
 import ListAmigos from "./ListAmigos";
 
