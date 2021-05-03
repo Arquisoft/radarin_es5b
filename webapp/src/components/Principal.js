@@ -36,6 +36,11 @@ class Principal extends React.Component {
 
     var listAmigos = await response.json();
     for (var f of listAmigos) {
+      var fin = f.webId.indexOf(".inrupt");
+      var inicio = f.webId.indexOf("//");
+
+      f.webId = f.webId.slice(inicio + 2, fin);
+
       if (f.inAdviseDist) result.cercanos.push(f);
       else result.lejanos.push(f);
     }

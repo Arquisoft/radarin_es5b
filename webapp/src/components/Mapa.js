@@ -93,6 +93,11 @@ class Mapa extends React.Component {
     }
   }
 
+  actualizar() {
+    this.updateFriendsPos.bind(this);
+    
+  }
+
   render() {
     const MyMapComponent = withScriptjs(
       withGoogleMap((props) => (
@@ -124,7 +129,7 @@ class Mapa extends React.Component {
     const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
     return (
       <div className="map">
-        <button onClick={this.updateFriendsPos.bind(this)}>Actualizar mapa</button>
+        <button onClick={this.actualizar()}>Actualizar mapa</button>
         <MyMapComponent
           googleMapURL={mapURL}
           loadingElement={<div style={{ height: `100%` }} />}
