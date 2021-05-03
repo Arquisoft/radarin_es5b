@@ -48,7 +48,13 @@ class Mapa extends React.Component {
     }
     let initRad = userDataManager.getRadius()
     if (initRad != null)
-      this.setState({radius: initRad})
+      this.setRadius(initRad)
+    
+    else {
+      initRad = sessionStorage.getItem("radius")
+      if (initRad != null)
+        this.setState({radius: initRad})
+    }
     
     var friends = await response.json();
     
@@ -65,10 +71,15 @@ class Mapa extends React.Component {
    this.getLocation()
   }
   
-  async updateRadius() {
+  async changeRadius() {
     let newRadius = document.getElementById("inputRad").value
-    this.setState({radius: newRadius})
+    this.setRadius(newRadius)
     restapi.updateRadius(newRadius < 0 ? -newRadius : newRadius)
+  }
+  
+  setRadius(value) {
+    this.setState({radius: value})
+    sessionStorage.setItem("radius", value)
   }
 
   getLocation() {
@@ -165,7 +176,7 @@ class Mapa extends React.Component {
       <div className="map">
         <button onClick={this.updateFriendsPos.bind(this)}>Actualizar mapa</button>
         <input id="inputRad" type="number" placeholder="Radio en km"></input>
-        <button onClick={this.updateRadius.bind(this)}>Actualizar radio</button>
+        <button onClick={this.changeRadius.bind(this)}>Actualizar radio</button>
         <MyMapComponent
           googleMapURL={mapURL}
           loadingElement={<div style={{ height: `100%` }} />}
