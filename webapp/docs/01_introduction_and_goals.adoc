@@ -2,19 +2,19 @@
 == Introduction and Goals
 
 ****
-El objetivo de este proyecto es la creación de una aplicación en la que poder conectar con tus amigos que estén cercanos a ti, basado en un sistema de gestión de datos descentralizado (SOLID) y con tecnolgías como REACT.
+El objetivo de este proyecto es la creación de una aplicación en la que poder conectar con tus amigos que estén cercanos a ti, basado en un sistema de gestión de datos descentralizado (SOLID) y con tecnolgías como REACT. Además de poder tener un historial de las ubicaciones que hayamos ido visitando.
 ****
 
 === Requirements Overview
 
 
 ****
-* Los usuarios podrán mandar peticiones de amistad a otros usuarios. Hasta que ésta no sea aceptada no serán amigos.
-* Los usuarios podrán ver una lista de los amigos que tengan cerca.
-* Existirá un modo invisible que se podrá activar para no ser mostrado.
+* Los usuarios podrán ver su ubicación en el mapa además de la de sus amigos.
+* Los usuarios podrán ver una lista de los amigos, diferenciandose los que están cerca, lejos o desconectados.
+* Se recibirá una notificación cuando un amigo esté cerca.
 * El radio de aparición de los amigos podrá ser modificado por cada usuario.
-* El historial de localizaciones de cada usuario se almacenará en su pod y podrá ser visto por el propio usuario.
-* _Se podrán dejar comentarios, imágenes o videos de las localizaciones._
+* El historial de localizaciones de cada usuario se almacenará en su pod y podrá ser visto por el propio usuario, además se podrán eliminar las localizaciones que se deseen.
+
 ****
 
 === Quality Goals
@@ -40,4 +40,5 @@ El objetivo de este proyecto es la creación de una aplicación en la que poder 
 | Desarrolladores | Equipo de desarrollo que hará el proyecto. | Encargados de realizar la totalidad del sistema intentando cumplir los requisitos, importante la comunicación y el compromiso con el proyecto.
 | Profesorado| Profesores de la asignatura ASW| Encargados de supervisar el desarrollo y prestar asistencia si es necesaria.
 |Usuarios |Los usuarios finales de la aplicación| Usarán nuestra aplicación y deben poder hacer todo aquello que se les ha prometido o dicho, es importante que no necesiten hacer un esfuerzo para poder usar bien nuestra aplicación.
+| Inrupt | Compañia responsable de los PODs, su objetivo es promover el desarrollo de aplciaciones que utilicen SOLID| Ver el buen uso y creatividad de las aplicaciones utilizando sus tecnologías.
 |===

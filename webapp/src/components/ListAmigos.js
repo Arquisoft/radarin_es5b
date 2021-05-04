@@ -9,8 +9,7 @@ class ListAmigos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      amigos: { cercanos: [], lejanos: [] },
-      connected: 0
+      amigos: { cercanos: [], lejanos: [] }
     };
   }
 
