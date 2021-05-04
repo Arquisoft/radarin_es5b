@@ -13,7 +13,6 @@ class Principal extends React.Component {
   constructor() {
     super();
     this.state = {
-      connected: false,
       amigos: { cercanos: [], lejanos: [] }
     };
   }
@@ -31,6 +30,7 @@ class Principal extends React.Component {
   }
 
   async notificaciones() {
+    if(api.isLogged()){
     var response = await restapi.getNotifications();
 
     if (response.status !== 200) {
@@ -46,6 +46,8 @@ class Principal extends React.Component {
     }
     
     setTimeout(this.notificaciones.bind(this), 20000);
+    }
+   
   }
 
   render() {

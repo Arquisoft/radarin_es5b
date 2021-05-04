@@ -2,13 +2,15 @@ import { Value } from "@solid/react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 
-import restapi from "../api/api";
+
+import userDataManager from "../api/userDataManager";
 
 class ListAmigos extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       amigos: { cercanos: [], lejanos: [] },
+      connected: 0
     };
   }
 
@@ -17,23 +19,14 @@ class ListAmigos extends React.Component {
   }
 
   async listarAmigos() {
-    var result = { cercanos: [], lejanos: [] };
-    var response = await restapi.getFriendsCoords();
-
-    if (response.status !== 200) {
-      setTimeout(this.listarAmigos.bind(this), 3000);
+    var result = await userDataManager.listarAmigos()
+   console.log("Resultado: "+result);
+    if (result === -1) { //Esto quiere decir que el usuario se ha desconectado
       return;
     }
-
-    var listAmigos = await response.json();
-    for (var f of listAmigos) {
-      var fin = f.webId.indexOf(".inrupt");
-      var inicio = f.webId.indexOf("//");
-
-      f.webId = f.webId.slice(inicio + 2, fin);
-
-      if (f.inAdviseDist) result.cercanos.push(f);
-      else result.lejanos.push(f);
+    if (result === 0) { //Esto quiere decir que el usuario aun no está conectado
+      setTimeout(this.listarAmigos.bind(this), 3000);
+      return;
     }
 
     this.setState({
@@ -41,6 +34,7 @@ class ListAmigos extends React.Component {
     });
 
     setTimeout(this.listarAmigos.bind(this), 5000);
+
   }
 
   render() {
