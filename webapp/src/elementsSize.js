@@ -7,10 +7,10 @@ class MenuManager {
 	
 	updateWindowSize() {
 		let newMode = window.outerWidth < 1026
-		if (this.mobileMode != newMode) {
+		if (this.mobileMode !== newMode) {
 			this.mobileMode = newMode
 			
-			if (this.menuVisible == newMode)
+			if (this.menuVisible === newMode)
 				this.toogleMenu()
 			
 			else {
@@ -56,7 +56,8 @@ function updateSize() {
 		friendsMenu.style.height = (windowHeight - headerBounding.height - bottomMenuBounding.height - 50) + "px"
 	}
 	
-	document.getElementById("menuBt").style.top = (headerBounding.height - 80) + "px"
+	let menu = document.getElementById("menuBt")
+	menu.style.top = (headerBounding.height - menu.getBoundingClientRect().height - 20) + "px"
 }
 
 function updateMarkers() {

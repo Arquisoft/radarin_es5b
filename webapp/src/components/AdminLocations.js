@@ -47,7 +47,7 @@ class AdminLocations extends React.Component {
                 <div>
                     {
                         this.state.ubicaciones.map((value, index) => {
-                            if (value.info.city.length != 0) {
+                            if (value.info.city.length !== 0) {
                                 return <button className={"location location" + (i++ % 2)} onClick={() => this.borrarUbicacion(value.id)}>
                                     <div className="locStreet">{value.info.street}</div>
                                     <div className="locCity">{value.info.city} - {value.info.region}</div>

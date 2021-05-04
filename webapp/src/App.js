@@ -26,7 +26,7 @@ class App extends React.Component {
 
       return <div>
         <header className="App-header">
-          <img id="menuBt" onClick={elementsSize.toogleMenu} src={menuLogo}></img>
+          <img id="menuBt" onClick={elementsSize.toogleMenu} src={menuLogo} alt="menu"></img>
           <img src={logo} className="App-logo" alt="logo" />
           <h1>Radarin_ES5B</h1>
           <AuthButton popup="https://solid.github.io/solid-auth-client/dist/popup.html" login="Entrar" logout="Salir"/>
