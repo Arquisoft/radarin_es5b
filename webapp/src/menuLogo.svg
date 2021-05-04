@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="200">
+	<style id="syle1">
+		rect {
+			stroke-width: 0;
+			fill: #61dafb;
+		}
+	</style>
+	<rect x="0" y="0" width="250" height="50" rx="8" />
+	<rect x="0" y="75" width="250" height="50" rx="8" />
+	<rect x="0" y="150" width="250" height="50" rx="8" />
+</svg>

@@ -1,5 +1,4 @@
 import { Value } from "@solid/react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 
 import restapi from "../api/api";
@@ -48,7 +47,7 @@ class ListAmigos extends React.Component {
 
   render() {
     return (
-      <nav className="Menu">
+      <nav id="Menu">
         <h5>
           Welcome back, <Value src="user.vcard_fn" />.
         </h5>

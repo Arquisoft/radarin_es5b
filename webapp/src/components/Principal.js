@@ -1,5 +1,4 @@
 import { LoggedIn } from "@solid/react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import Mapa from "./Mapa";
 
@@ -27,21 +26,22 @@ class Principal extends React.Component {
     return (
       <Router>
         <LoggedIn>
-          <Route path="/" exact component={Mapa}></Route>
-          <Route path="/admin" exact component={AdminLocations}></Route>
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">
-              <Link className="navbar-brand" to="/admin">
-                Administrar Ubicaciones
-              </Link>
-              <Link className="navbar-brand" to="/">
-                Mapa
-              </Link>
-            </div>
-          </nav>
-
           <ListAmigos />
           
+          <Route path="/" exact component={Mapa}></Route>
+          <Route path="/admin" exact component={AdminLocations}></Route>
+          <nav id="bottomMenu">
+            <Link to="/">
+              <button type="button">
+                Mapa
+              </button>
+            </Link>
+            <Link to="/admin">
+              <button type="button">
+                Administrar ubicaciones
+              </button>
+            </Link>
+          </nav>
         </LoggedIn>
       </Router>
     );

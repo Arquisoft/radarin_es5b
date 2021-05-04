@@ -12,7 +12,7 @@ class Logout extends React.Component{
 
     render(){
         return(
-            <h2>bienvenido</h2>
+            <h2 id="welcomeMsg">Bienvenido</h2>
         );
     }
 

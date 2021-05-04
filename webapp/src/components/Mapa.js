@@ -1,5 +1,4 @@
 import React from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import {
   GoogleMap,
   withScriptjs,
@@ -12,7 +11,7 @@ import {
 import credentials from "./credentials";
 import restapi from "../api/api";
 import userDataManager from "../api/userDataManager";
-
+import elemsSize from "../elementsSize.js"
 
 class Mapa extends React.Component {
   constructor() {
@@ -33,6 +32,11 @@ class Mapa extends React.Component {
     this.getLocation();
     //setTimeout(this.updateFriendsPos.bind(this), 1000)
     this.updateFriendsPos()
+    elemsSize.updateSize()
+  }
+  
+  componentDidUpdate() {
+    setTimeout(elemsSize.updateMarkers, 200)
   }
 
   async updateFriendsPos() {
@@ -137,10 +141,8 @@ class Mapa extends React.Component {
            icon= 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
            >
              <InfoWindow onClose={this.onInfoWindowClose}>
-                            <div>
-                                <span style={{ padding: 0, margin: 0 }}>Usted está aquí</span>
-                            </div>
-                        </InfoWindow>
+                <span className="marker">Usted está aquí</span>
+              </InfoWindow>
             </Marker>
           
           
@@ -160,7 +162,7 @@ class Mapa extends React.Component {
                 >
                   <InfoWindow    onClose={this.onInfoWindowClose} >
                                  <div>
-                                     <span style={{ padding: 0, margin: 0 }}>{user.webId}</span>
+                                     <span className="marker">{user.webId}</span>
                                  </div>
                              </InfoWindow>
                  </Marker>
@@ -172,14 +174,18 @@ class Mapa extends React.Component {
     );
     const mapURL = `https://maps.googleapis.com/maps/api/js?v=3.exp&key=${credentials.mapsKey}`;
     return (
-      <div className="map">
-        <button onClick={this.updateFriendsPos.bind(this)}>Actualizar mapa</button>
-        <input id="inputRad" type="number" placeholder="Radio en km"></input>
-        <button onClick={this.changeRadius.bind(this)}>Actualizar radio</button>
+      <div id="mapBlock">
+        <div id="controls">
+          <button id="updateMapBt" onClick={this.updateFriendsPos.bind(this)}>Actualizar mapa</button>
+          <div id="radiusPanel">
+            <input id="inputRad" type="number" placeholder="Radio en km"></input>
+            <button onClick={this.changeRadius.bind(this)}>Actualizar radio</button>
+          </div>
+        </div>
         <MyMapComponent
           googleMapURL={mapURL}
           loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `800px` }} />}
+          containerElement={<div style={{ height: `100%` }} />}
           mapElement={<div style={{ height: `100%` }} />}
         ></MyMapComponent>
         
