@@ -1,5 +1,4 @@
 import { LoggedIn } from "@solid/react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 import Mapa from "./Mapa";
 
@@ -39,7 +38,7 @@ class Principal extends React.Component {
     }
 
     var notificaciones = await response.json();
-    console.log(notificaciones);
+
     for (var n of notificaciones) {
       var distancia = n.dist.toString().slice(0, 4);
       new Notification("El usuario " + n.webId + " esta a " + distancia + " kilómetros.");
@@ -54,19 +53,22 @@ class Principal extends React.Component {
     return (
       <Router>
         <LoggedIn>
+          <ListAmigos />
+          
           <Route path="/" exact component={Mapa}></Route>
           <Route path="/admin" exact component={AdminLocations}></Route>
-          <nav className="navbar navbar-expand-lg navbar-light bg-light">
-            <div className="container-fluid">
-              <Link className="navbar-brand" to="/admin">
-                Administrar Ubicaciones
-              </Link>
-              <Link className="navbar-brand" to="/">
+          <nav id="bottomMenu">
+            <Link to="/">
+              <button type="button">
                 Mapa
-              </Link>
-            </div>
+              </button>
+            </Link>
+            <Link to="/admin">
+              <button type="button">
+                Administrar ubicaciones
+              </button>
+            </Link>
           </nav>
-          <ListAmigos />
         </LoggedIn>
       </Router>
     );

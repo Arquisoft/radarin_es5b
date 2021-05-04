@@ -13,10 +13,10 @@ test("list of friends is present", async () => {
 
 
 
-	const amigoscercanos = screen.getByText("Amigos cercanos:");
+	const amigoscercanos = screen.getByText("Amigos cercanos");
 	expect(amigoscercanos).toBeInTheDocument();
 
-	const amigoslejanos = screen.getByText("Amigos lejanos:");
+	const amigoslejanos = screen.getByText("Amigos lejanos");
 	expect(amigoslejanos).toBeInTheDocument();
 
 })

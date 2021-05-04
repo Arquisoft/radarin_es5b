@@ -2,6 +2,7 @@ import { render, screen } from "@testing-library/react"
 import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
 
+import TestComponent from "./TestComponent"
 import Mapa from "../components/Mapa"
 
 
@@ -17,12 +18,12 @@ afterEach(() => {
 	container = null
 })
 
-test("map is present", () => {
+test("map is present", async () => {
 	act(() => {
-		ReactDOM.render(<Mapa />, container)
+		ReactDOM.render(<><TestComponent /><Mapa /></>, container)
 	})
 	
-	const linkElement = container.querySelector(".map")
+	const linkElement = container.querySelector("#mapBlock")
 	expect(linkElement).toBeInTheDocument()
 })
 

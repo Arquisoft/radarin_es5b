@@ -62,7 +62,7 @@ class TestUser {
 		this.requester.request("/coords/friends", "GET", null, (res, data) => {
 			this.checkResponse(res)
 			
-			data = JSON.parse(data)
+			data = JSON.parse(data).logged
 			expect(data.length).toBe(expectedCoords.length)
 			
 			for (let i = 0; i < expectedCoords.length; i++) {

@@ -169,7 +169,7 @@ async function listarAmigos() {
 		return 0;
 
 	var listAmigos = await response.json();
-	for (var f of listAmigos) {
+	for (var f of listAmigos.logged) {
 		var fin = f.webId.indexOf(".inrupt");
 		var inicio = f.webId.indexOf("//");
 
@@ -178,7 +178,10 @@ async function listarAmigos() {
 		if (f.inAdviseDist) result.cercanos.push(f);
 		else result.lejanos.push(f);
 	}
-	return result;
+	return {
+      amigos: result,
+      amigosNoLogeados: listAmigos.notLogged
+    };
 }
 
 function isLogged() {

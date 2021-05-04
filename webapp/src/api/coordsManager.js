@@ -3,6 +3,9 @@ import pod from "./podAccess";
 import Geocode from "react-geocode";
 import credentials from "../components/credentials";
 
+Geocode.setApiKey(credentials.geocoder)
+Geocode.setLanguage("es")
+
 const RADIANS_FACTOR = Math.PI / 180
 const DEGREES_FACTOR = 180 / Math.PI
 
@@ -113,29 +116,41 @@ async function addCoordToFile(coords) {
 	 var nombre = await getLocation(coords.lat,coords.lon)
 	console.log("ubicacion a meter:"+nombre);
 	var id = generateId(); 
-	json.ubicaciones.push({ "lat": coords.lat, "lon": coords.lon, "hour": hoy.getHours() + ":" + hoy.getMinutes()
-,"name": nombre,"day":hoy.getDate()+"/"+(hoy.getMonth() + 1)+"/"+hoy.getFullYear(),"id":id});
-
-	pod.updateFile(urlFicheroHoy, JSON.stringify(json));
+	json.ubicaciones.push({
+		lat: coords.lat,
+		lon: coords.lon,
+		hour: hoy.getHours() + ":" + hoy.getMinutes(),
+		info: nombre,
+		day: hoy.getDate() + "/" + (hoy.getMonth() + 1) + "/" + hoy.getFullYear(),
+		id
+	});
 	
+	pod.updateFile(urlFicheroHoy, JSON.stringify(json));
 }
 
 
 
 async function getLocation(lat,lon){
-	Geocode.setApiKey(credentials.geocoder);
-	
-
 	return Geocode.fromLatLng(lat, lon).then(
 		(response) => {
-		  const address = response.results[0].formatted_address;
-		console.log("nombre:"+address);	
-		  return address
+			const address = response.results[0].address_components;
+			console.log("nombre:"+address);	
+			return {
+				street: address[1].long_name,
+				city: address[2].long_name,
+				region: address[3].long_name,
+				country: address[5].long_name,
+			}
 		},
 		(error) => {
-			return "Nombre no disponible"
+			return {
+				street: "Nombre no disponible",
+				city: "",
+				region: "",
+				country: "",
+			}
 		}
-	  );
+	);
 	
 
 }

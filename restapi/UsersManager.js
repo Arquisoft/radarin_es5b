@@ -168,21 +168,25 @@ class User {
 	}
 	
 	/**
-	 * Devuelve los datos de las coordenadas de los amigos logeados
-	 * @return {Array}
+	 * Devuelve un array con los datos de los amigos logeados y otro con los webId de los no logeados
+	 * Datos de los amigos logeados:
 	 * {
 	 * webId: WebId del amigo,
 	 * coords: Coordenadas del amigo,
 	 * dist: Distancia entre los amigos en km,
 	 * inAdviseDist: Si el amigo está en la distancia de aviso configurada en el usuario
 	 * }
+	 * @return {Object} Datos de amigos logeados y amigos no logeados
 	 */
 	getFriendsCoords() {
 		let friendCoords = []
 		for (let friend of this.loggedFriends.values())
 			friendCoords.push(friend.toApiFormat())
 		
-		return friendCoords
+		return {
+			logged: friendCoords,
+			notLogged: Array.from(this.loggedOutFriends)
+		}
 	}
 	
 	/**

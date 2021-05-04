@@ -1,15 +1,15 @@
 import { Value } from "@solid/react";
-import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 
-
 import userDataManager from "../api/userDataManager";
+
 
 class ListAmigos extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      amigos: { cercanos: [], lejanos: [] }
+      amigos: { cercanos: [], lejanos: [] },
+      amigosNoLogeados: []
     };
   }
 
@@ -28,34 +28,44 @@ class ListAmigos extends React.Component {
       return;
     }
 
-    this.setState({
-      amigos: result,
-    });
-
+    this.setState(result);
     setTimeout(this.listarAmigos.bind(this), 5000);
 
   }
 
   render() {
     return (
-      <nav className="Menu">
+      <nav id="Menu">
         <h5>
           Welcome back, <Value src="user.vcard_fn" />.
         </h5>
 
-        <p>Amigos cercanos:</p>
-        <ul>
+        <p>Amigos cercanos</p>
+        <div>
           {this.state.amigos.cercanos.map((amigo) => {
-            return <li> {amigo.webId} </li>;
+            return <div className={"FriendCard " + (amigo.inAdviseDist ? "inAdvise" : "notInAdvise")}>
+              <div className="WebId">{amigo.webId}</div>
+              <div className="Distance">{amigo.dist} km</div>
+            </div>
           })}
-        </ul>
+        </div>
 
-        <p>Amigos lejanos:</p>
-        <ul>
+        <p>Amigos lejanos</p>
+        <div>
           {this.state.amigos.lejanos.map((amigo) => {
-            return <li> {amigo.webId} </li>;
+            return <div className={"FriendCard " + (amigo.inAdviseDist ? "inAdvise" : "notInAdvise")}>
+              <div className="WebId">{amigo.webId}</div>
+              <div className="Distance">{amigo.dist} km</div>
+            </div>;
           })}
-        </ul>
+        </div>
+        
+        <p>Amigos desconectados</p>
+        <div>
+          {this.state.amigosNoLogeados.map((amigo) => {
+            return <div className="FriendCard notLogged">{amigo}</div>;
+          })}
+        </div>
       </nav>
     );
   }
