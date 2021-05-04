@@ -3,7 +3,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import React from "react";
 
 import restapi from "../api/api";
-import api from "../api/userDataManager";
 
 class ListAmigos extends React.Component {
   constructor() {
@@ -14,7 +13,6 @@ class ListAmigos extends React.Component {
   }
 
   async componentDidMount() {
-    await api.connect();
     this.listarAmigos();
   }
 
