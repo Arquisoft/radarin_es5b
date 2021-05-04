@@ -6,9 +6,10 @@ class AdminLocations extends React.Component {
 
     constructor() {
         super();
+        
         this.state = {
             ubicaciones: [],
-            nombres: []
+            nombres: [],
         }
     }
 

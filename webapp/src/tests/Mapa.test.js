@@ -1,8 +1,9 @@
 import { render, screen } from "@testing-library/react"
 import ReactDOM from "react-dom"
 import { act } from "react-dom/test-utils"
-import Mapa from "./Mapa"
-import Principal from "./Principal"
+
+import Mapa from "../components/Mapa"
+
 
 let container
 
@@ -24,6 +25,7 @@ test("map is present", () => {
 	const linkElement = container.querySelector(".map")
 	expect(linkElement).toBeInTheDocument()
 })
+
 
 /*test("principal text", () => {
 	act(() => {

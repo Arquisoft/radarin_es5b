@@ -182,7 +182,10 @@ async function removeLocation(id){
 }
 
 async function getLocations() {
-	var webId = (await auth.currentSession()).webId
+	var session =await auth.currentSession()
+	if(session == null)
+		return;
+	var webId = session.webId
 	var url = webId.replace("profile/card#me", "");
 	var ubicaciones = await pod.getFile(url + "public/ubicaciones.txt")
 	
