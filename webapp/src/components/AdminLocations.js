@@ -14,7 +14,7 @@ class AdminLocations extends React.Component {
     }
 
     async borrarUbicacion(id) {
-        alert('Borrando ubicación con id: ' + id);
+        alert("Borrando ubicación con id: " + id);
         await coordsManager.removeLocation(id);
         this.getLocations();
     }
