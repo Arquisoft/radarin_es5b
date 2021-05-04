@@ -1,8 +1,8 @@
 import { Value } from "@solid/react";
 import React from "react";
 
-
 import userDataManager from "../api/userDataManager";
+
 
 class ListAmigos extends React.Component {
   constructor(props) {
