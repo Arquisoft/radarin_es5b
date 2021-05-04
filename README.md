@@ -3,7 +3,7 @@
 [![Codacy Badge](https://app.codacy.com/project/badge/Grade/52d7486a4dd6457c96d34771e8de7391)](https://www.codacy.com/gh/Arquisoft/radarin_es5b/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Arquisoft/radarin_es5b&amp;utm_campaign=Badge_Grade)
 
 
-## To Do before run the application
+# To Do before run the application
 This application uses the solid pod for saving the locations, this usually cause problems with permissons and different things. 
 The fastest option for solve it is to do the things in the [video](https://www.youtube.com/watch?v=wY2hHqtZi_g&ab_channel=EricAlmeda).
 We are trying to discover another more private and secure alternative but at this moment this is the best option.
