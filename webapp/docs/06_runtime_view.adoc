@@ -2,55 +2,96 @@
 == Runtime View
 
 
-[role="arc42help"]
-****
-.Contents
-The runtime view describes concrete behavior and interactions of the system’s building blocks in form of scenarios from the following areas:
 
-* important use cases or features: how do building blocks execute them?
-* interactions at critical external interfaces: how do building blocks cooperate with users and neighboring systems?
-* operation and administration: launch, start-up, stop
-* error and exception scenarios
-
-Remark: The main criterion for the choice of possible scenarios (sequences, workflows) is their *architectural relevance*. It is *not* important to describe a large number of scenarios. You should rather document a representative selection.
-
-.Motivation
-You should understand how (instances of) building blocks of your system perform their job and communicate at runtime.
-You will mainly capture scenarios in your documentation to communicate your architecture to stakeholders that are less willing or able to read and understand the static models (building block view, deployment view).
-
-.Form
-There are many notations for describing scenarios, e.g.
-
-* numbered list of steps (in natural language)
-* activity diagrams or flow charts
-* sequence diagrams
-* BPMN or EPCs (event process chains)
-* state machines
-* ...
-
-****
-
-=== <Runtime Scenario 1>
+=== Register
+En este escenario se explicará el diagrama de secuencia cuando un usuario se registra. 
+En resumen la webApp nos mostrará un PopUp de Solid para iniciar sesión, obtendremos el WebId del usuario y con una petición a la restApi esta nos registrará y generará una contraseña necesaria para las demás peticiones a la api. Después esta contraseña se guardará en el POD y se inicializarán los ficheros necesarios para las ubicaciones.
 
 
-* _<insert runtime diagram or textual description of the scenario>_
-* _<insert description of the notable aspects of the interactions between the
-building block instances depicted in this diagram.>_
-
-It is possible to use a sequence diagram:
-
-[plantuml,"Sequence diagram",png]
+[plantuml,"Sequence diagram login",png]
 ----
-actor Alice
-actor Bob
-database Pod as "Bob's Pod"
-Alice -> Bob: Authentication Request
-Bob --> Alice: Authentication Response
-Alice  --> Pod: Store route
-Alice -> Bob: Another authentication Request
-Alice <-- Bob: another authentication Response
+actor Usuario
+participant WebApp
+participant RestApi
+database MongoDB as "Mongo DB"
+database Pod as "Pod del Usuario"
+
+Usuario->WebApp: Entra en la aplicación
+WebApp->WebApp: Muestra PopUp de Inicio de sesion con solid
+Usuario->WebApp: Introduce sus datos solid
+WebApp->WebApp: Obtiene el WebId
+alt Registro
+WebApp->RestApi: Envía el WebId a registrar
+RestApi->MongoDB: Guarda en Mongo WebId, contraseña y radio por defecto.
+RestApi->WebApp: Devuelve la contraseña personal para la API
+WebApp->Pod: Guarda la contraseña de la API en un fichero en el POD.
+WebApp->Pod: Crea los ficheros necesarios para guardar las ubicaciones
+end
+WebApp->WebApp: Obtiene la ubicacion del usuario
+WebApp->RestApi: Se loguea en la restApi con la contraseña y el webId
+WebApp->Pod: Añade las coordenadas al fichero de ubicaciones
+WebApp->Pod: Solicita los webId de los amigos
+Pod->WebApp: Devuelve los webId de sus amigos
+WebApp->RestApi: Envía los amigos del usuario
+WebApp->Usuario: Muestra el mapa con los amigos además de la lista de amigos.
 ----
-=== <Runtime Scenario 2>
+
+=== Login
+En este escenario se explicará el diagrama de secuencia cuando un usuario inicia sesión. 
+Los primeros y últimos pasos son similares a los anteriores solo que ahora en vez de generarnos una contraseña nueva para la api, la WebApp ha de buscar en el pod dicha contraseña y pasarsela a la restApi para iniciar sesión. Además cogerá el nombre del fichero de ubicaciones del día de hoy y en caso de no existir todavía, se crea. Finalmente se logea en la api y se guarda la ubicación en el POD.
+Para hacer mas fácil el entendimiento podemos ver en un cuadrado llamado login los pasos que serían diferentes al registro.
+
+[plantuml,"Sequence diagram register",png]
+----
+actor Usuario
+participant WebApp
+participant RestApi
+database MongoDB as "Mongo DB"
+database Pod as "Pod del Usuario"
+
+
+Usuario->WebApp: Entra en la aplicación
+WebApp->WebApp: Muestra PopUp de Inicio de sesion con solid
+Usuario->WebApp: Introduce sus datos solid
+WebApp->WebApp: Obtiene el WebId
+alt Login
+    WebApp->Pod: Obtiene la contraseña de la API guardada
+    Pod->WebApp: Devuelve la contraseña
+    WebApp->Pod: Pide el nombre del fichero de ubicaciones de hoy 
+    Pod->WebApp: Devuelve los datos solicitados
+    alt No existe el fichero de ubicaciones de hoy
+        WebApp->Pod: Crea dicho fichero
+    end
+end
+WebApp->WebApp: Obtiene la ubicacion del usuario
+WebApp->RestApi: Se loguea en la restApi con la contraseña y el webId
+WebApp->Pod: Añade las coordenadas al fichero de ubicaciones
+WebApp->Pod: Solicita los webId de los amigos
+Pod->WebApp: Devuelve los webId de sus amigos
+WebApp->RestApi: Envía los amigos del usuario
+WebApp->Usuario: Muestra el mapa con los amigos además de la lista de amigos.
+
+----
+=== Save locations in the POD
+Cada 10 segundos se comprueba la ubicación del usuario y si esta cambia, se actualiza en el servidor y se escribe en el historial de ubicaciones del POD.
+[plantuml,"Sequence diagram register",png]
+----
+participant WebApp
+participant RestApi
+database Pod as "Pod del Usuario"
+WebApp->WebApp: Obtiene ubicacion actual
+alt La ubicacion no sigue siendo la misma
+    WebApp->RestApi: Manda ubicación 
+    RestApi->RestApi:   Actualiza última ubicación
+    WebApp->WebApp: Calcula el nombre del fichero de hoy
+    WebApp->Pod: Solicita el JSON de ubicaciones
+    Pod->WebApp: Devuelve el JSON con el historial de ubicaciones
+   
+    WebApp->WebApp: Obtiene el nombre de las coordendas
+    WebApp->WebApp: Añade la nueva ubicación al JSON
+    WebApp->Pod: Manda el contenido del fichero 
+end
+----
 
 === ...
 

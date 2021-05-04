@@ -1,50 +1,46 @@
 [[section-solution-strategy]]
 == Solution Strategy
 
-.Decisiones tecnológicas
+=== Technology decisions
 A la hora de crear la aplicación, la primera decisión que se tomó fue la de usar el lenguaje JavaScript, ya que es un lenguaje con una sintáxis fácil de entender
-para todos los integrantes del grupo y para así aprovechar el Framework React.js, lo que nos permitiría crear la apliación web de una manera muy sencilla. Además,
+para todos los integrantes del grupo y para así aprovechar el Framework React.js, lo que nos permitiría crear la aplicación web de una manera muy sencilla. Además,
 es una plataforma de código abierto con muchos tutoriales y facilidad para desarrollar el front-end de una app web.
 
-Otro punto a destacar es el uso de la tecnología SOLID, ya que permite dividir el dominio de datos para un usuario solo pueda acceder a los propios.
+Otro punto a destacar es el uso de la tecnología SOLID, ya que gracias a los POD´s cada usuario es propietario de sus datos.
 
 De cara a otros elementos menos orientados a la app, usaremos Gir como sistema de control de versiones y el modelo Arc42 para documentar.
 
-.Descomposición del sistema
-El sistema estará dividido en varios apartados que son los siguientes:
-- Aplicación Web 
-- Documentación
+==== Used technologies
+* JavaScript como lenguaje de programación de la aplicación.
+* React para facilitar el desarrollo del front-end.
+*  https://github.com/solid/react-components[solid-react] que nos permite realizar el Login.
+* https://github.com/solid/solid-auth-client[Solid-auth-client] para la autentificación con SOLID.
+* MongoDB para almacenar los datos requeridos por el servidor.
+* Express para la restApi.
+* https://vincenttunru.gitlab.io/tripledoc/[tripledoc] para obtener diferentes datos de los POD´s.
+* https://github.com/google-map-react/google-map-react[react-google-maps] que nos permite utilizar el mapa para mostrar los diferentes usuarios. 
+* https://github.com/shukerullah/react-geocode[react-geocode] para traducir coordenadas en ubicaciones con nombre.
+* https://jestjs.io/es-ES/[JEST] Para testing tanto de la restApi como de la webApp
+* https://reactrouter.com/web/guides/quick-start[react-router-dom] Permite navegar por las diferentes vistas de nuestra página.
+* Graphana y Prometheus para la monitorización.
+* https://dashboard.heroku.com/login[Heroku]para el despliegue de nuestra aplicación.
 
-La aplicación Web es la parte a la que accederán clientes de manera habitual, donde habrá un mapa donde ver su localización y la de sus amigos. Además, contará con un chat en vivo para contactar con otras personas
-dentro del radio de basúsqueda de la app.
 
-La documentación servirá para apuntar el funcionamiento de la app y las tecnologías que usa. No será visitada por el cliente en la mayoría de los casos.
 
-.Estándares de calidad
-Usaremos el framework de React para evolucionar nuestra app con el objetivo de que sea fácil de utilizar tanto por usuarios expertos como para gente que no está 
-acostumbrada al uso de estas apps.
+=== Decisions related to quality goals
+Para cumplir diferentes objetivos de calidad hemos decidido realizar diferentes acciones.
 
-.Organización
+* *Privacidad:* Para cumplir este objetivo hemos decidido guardar la menor información posible del usuario en nuestro servidor, con esta premisa finalmente guardamos todas las ubicaciones del usuario en su propio POD estando éstas a en su poder.
+* *Usabilidad:* Nuestra interfaz es bastante simple e intutitiva de forma que tendremos unicamente 3 elementos diferenciados: 
+    ** Lista de amigos: Podremos ver nuestros amigos cercanos, lejanos y desconectados.
+    ** Mapa: Un simple mapa donde podemos ver a nuestros amigos están su webID de solid en los marcadores además de nuestro radio marcado.
+    ** Historial de ubicaciones: Podemos ver una lista de nuestras ubicaciones, con el dia, hora y nombre reflejados, pudiendo eliminarlas de un simple click.
 
-Todavía no hemos divido el trabajo debido a que no hemos empezado la implementación (completar)
+* *Funcionalidad:* Nos ha parecido clave dar al usuario el manejo de sus ubicaciones en el POD para poder este tener información de sus movimientos.
+* *Rendimiento:* Debido al lento (e inestable) acceso al POD, la última ubicación de los usuarios se guarda en la base de datos Mongo para hacer más rápido el acceso a estas. Además en el caso de que la ubicación no varíe en un número de metros, esta no será enviada ni al servidor ni al POD.
+* *Testeabilidad:* Disponemos de un gran numero de pruebas de la restApi para asegurarnos de su correcto funcionamiento, por otro lado, las pruebas de la webApp no han sido tan exahustivas debido a la dependencia que tenemos de SOLID en los distintos componentes.
 
-[role="arc42help"]
-****
-.Contents
-A short summary and explanation of the fundamental decisions and solution strategies, that shape the system's architecture. These include
+=== Organization
+Matenemos reuniones semanales para hablar de los problemas y metas para la siguiente semana. 
+La implementación de la aplicación se realizará
 
-* technology decisions
-* decisions about the top-level decomposition of the system, e.g. usage of an architectural pattern or design pattern
-* decisions on how to achieve key quality goals
-* relevant organizational decisions, e.g. selecting a development process or delegating certain tasks to third parties.
-
-.Motivation
-These decisions form the cornerstones for your architecture. They are the basis for many other detailed decisions or implementation rules.
-
-.Form
-Keep the explanation of these key decisions short.
-
-Motivate what you have decided and why you decided that way,
-based upon your problem statement, the quality goals and key constraints.
-Refer to details in the following sections.
-****
