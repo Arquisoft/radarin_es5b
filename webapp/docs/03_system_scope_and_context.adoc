@@ -2,14 +2,8 @@
 == Alcance y contexto del sistema
 
 ****
-.Contents
-Nuestro proyecto consistirá en realizar una aplicación web mediante la cual podremos observar en un mapa a nuestros amigos cercanos.
 
-Las tecnologías que utilizaremos seran principalmente SOLID y MONGO para la gestión de datos, haciendo así que los datos de los usuarios se encuentren almacenados de forma centralizada y la lista de amigos guardada en SOLID controle que usuarios pueden acceder a dichas localizaciones, y REACT para el desarrollo de las interfaces de usuario de nuestra aplicación.
-
-.Motivation
-
-.Form
+Nuestro proyecto consiste en una aplicación web denominada Radarin mediante la cual podemos observar donde se encuentran nuestro amigos en un mapa meidante geolocalización, además de esto podemos establecer un radio en el cual se nos notificará si un amigo entra dentro de este. Para realizar nuestra aplicación es necesario tratar con datos de caracter sensible por lo que un aspecto muy importante a considear es la privacidad intentando mantener el menor numero de datos en sistemas centralizados.
 
 ****
 
@@ -17,14 +11,31 @@ Las tecnologías que utilizaremos seran principalmente SOLID y MONGO para la ges
 === Business Context
 
 ****
-.Contents
-Nuestra aplicación se basará en una aplicación web, esta aplicación tendrá la funcionalidad de un radar, el cual mostrará a los amigos cercanos de dicho usuario, la distancia hasta la cual podremos detectar amigos sera definida por el propio usuario. Dichos amigos apareceran en un mapa pudiendo ver claramente su posicion respecto a donde nos encontramos.
 
-.Motivation
-La funcionalidad de la aplicacion será similar a un radar, en este radar nosotros podremos observar a nuestros amigos y a la gente que nos haya compartido su ubicación.
+Nuestra aplicación se basa en una aplicación web la cual tendrá la funcionalidad de un radar el cual mostrará todos los amigos conectados del usuario, la distancia hasta la cual podremos detectar amigos para recibir una notificación es definida por el usuario. Dichos amigos se muestran en un mapa pudiendo ver claramente su posicion respecto a donde nos encontramos. Para maximizar la privacidad utilizaremos PODs de SOLID, esto permite que cada usuraio tenga su propio almacenamiento prescindiendo así de almacenanmientos centralizados.
 
-.Form
-Desde la aplicaion observaremos las localizaciones de nuestros amigos, mediante la restapi podremos acceder a los datos en MONGO asi como enviar las localizaciones de los usuarios cada cierto timepo, para finalizar SOLID se encargará del tratamiento de los amigos de cada usuario, gracias esto podremos mostrar únicamente las localizaciones de sus amigos.
+|=========================================================
+| Elemento | Entrada | Salida
+
+| Usuario
+| Ubicaciones de los amigos del usuario y notificaciones. 
+| Su ubicación y los usuarios que haya agregado como amigo en SOLID.
+
+| POD
+| Amigos y localizaciones del usuario y contraseña de la restapi.
+| Amigos y localizaciones del usuario y contraseña de la restapi.
+
+| Aplicación
+| Amigos y localizaciones del usuarios y las localizaciones de sus amigos.
+| Ubicaciones de los amigos y del usuario y notificaciones.
+
+| RestApi
+| Lista de usuarios.
+| Localizaciones de la lista de usuarios.
+
+| MongoDB
+| Radio establecido por el usuario y usuario y contraseña de la restapi.
+| Radio establecido por el usuario y usuario y contraseña de la restapi.
 
 ****
 
@@ -32,12 +43,16 @@ Desde la aplicaion observaremos las localizaciones de nuestros amigos, mediante 
 === Technical Context
 
 ****
-.Contents
-Esta aplicación se basara en diversas tecnologías, las más importantes son SOLID, MONGO y REACT.
 
-Mediante SOLID nuestra aplicacion será descentralizada lo que nos permitirá obtener información sin tener que realizar peticiones a un servidor centralizado, esto es gracias a los PODS que ejercen el papel de base de datos individual de cada usuario.
+La aplicación se basa en un sistema descentralizado basandose para ello en SOLID, su idea principal es la inexistencia de almacenamiento centralizado de datos si no que cada usuario posea su propio almacenamiento personal, este almacenamiento personal se gestiona mediante SOLID POD el cual ofrece un almacenamiento privado para cada usuario al cual unicamente pueden acceder aquellas entidades o usuarios que autorice.
 
-Con MONGO guardaremos los datos de los usuarios tales como localizaciones, etc. Estos datos deberian de guardarse en SOLID pero debido a diversos errores al acceder y escribir datos en los PODS se decidió utilizar mongo para los datos y SOLID para gestionar los amigos.
+.Diagrama del sistema
+image:Diagrama_Doc_3.png[Diagrama del sistema]
 
-REACT es una biblioteca Javascript de código abierto con la cual podremos realizar las interfaces de usuario para nuestra aplicación de forma sencilla.
+En el POD de cada usuario unicamente se guardan las ubicaciones de dicho usuario, es a traves de la restapi en la cual se guardan las ubicaciones actuales de todos los usuarios que han iniciado sesión desde donde se obtienen las ubicaciones de los demás usuarios.
+
+React es una biblioteca Javascript de código abierto con la cual hemos realizado de forma sencilla las interfaces de usuario para nuestra aplicación.
+
+En la base de datos mongo únicamente se guardan las credenciales para iniciar sesión en la restapi y el radio establecido por el usuario para ser notificado.
+
 ****
