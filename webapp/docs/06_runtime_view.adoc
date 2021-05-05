@@ -22,6 +22,7 @@ Usuario->WebApp: Introduce sus datos solid
 WebApp->WebApp: Obtiene el WebId
 alt Registro
 WebApp->RestApi: Envía el WebId a registrar
+RestApi->RestApi: Genera una contraseña y la encripta
 RestApi->MongoDB: Guarda en Mongo WebId, contraseña y radio por defecto.
 RestApi->WebApp: Devuelve la contraseña personal para la API
 WebApp->Pod: Guarda la contraseña de la API en un fichero en el POD.
