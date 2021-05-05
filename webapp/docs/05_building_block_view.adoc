@@ -75,7 +75,7 @@ image:Diagrama_Doc_5.4.png["WhiteBox del nivel 3"]
 .Descripcion de componentes de caja negra de Restapi
 |====
 |Controller |Tratar peticiones procedentes de la api
-|UserManager |Aportar y guardar datos de los usuarios
+|UserManager |Aportar y guardar datos de los usuarios como localizaciones, cunado hay que mandar una notificación etc
 |DataBaseAccess |Intermediar entre el usermanager y la basde de datos mongo
 |====
 ****
