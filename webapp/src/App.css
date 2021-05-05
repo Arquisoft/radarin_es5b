@@ -278,6 +278,7 @@ h5 {
 
 .notLogged {
 	background: #353535;
+	padding-bottom: 0.6em;
 }
 
 .notLogged:hover {

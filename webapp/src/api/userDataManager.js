@@ -158,6 +158,8 @@ async function getLocationLogin(webId, pass) {
 
 }
 
+const quitWebId = webId => webId.replace(/.*:[/][/]/, "").split(".")[0]
+
 async function listarAmigos() {
 	if (disconnected === true)
 		return -1;
@@ -167,20 +169,17 @@ async function listarAmigos() {
 
 	if (response.status !== 200)
 		return 0;
-
+	
 	var listAmigos = await response.json();
 	for (var f of listAmigos.logged) {
-		var fin = f.webId.indexOf(".inrupt");
-		var inicio = f.webId.indexOf("//");
-
-		f.webId = f.webId.slice(inicio + 2, fin);
+		f.webId = quitWebId(f.webId);
 
 		if (f.inAdviseDist) result.cercanos.push(f);
 		else result.lejanos.push(f);
 	}
 	return {
       amigos: result,
-      amigosNoLogeados: listAmigos.notLogged
+      amigosNoLogeados: listAmigos.notLogged.map(quitWebId)
     };
 }
 
@@ -200,6 +199,7 @@ var toExport = {
 	isLogged,
 	disconnect,
 	getRadius,
-	listarAmigos
+	listarAmigos,
+	quitWebId
 }
 export default toExport

@@ -1,8 +1,7 @@
 
 class MenuManager {
 	constructor() {
-		this.mobileMode = false
-		this.menuVisible = true;
+		this.logout()
 	}
 	
 	updateWindowSize() {
@@ -33,6 +32,11 @@ class MenuManager {
 			
 			updateSize()
 		}
+	}
+	
+	logout() {
+		this.mobileMode = false
+		this.menuVisible = true
 	}
 	
 	updateMenuBtsEnabled() {
@@ -81,6 +85,7 @@ window.onresize = updateSize
 var toExport = {
 	updateSize,
 	updateMarkers,
-	toogleMenu: menuManager.toogleMenu.bind(menuManager)
+	toogleMenu: menuManager.toogleMenu.bind(menuManager),
+	logout: menuManager.logout.bind(menuManager)
 }
 export default toExport

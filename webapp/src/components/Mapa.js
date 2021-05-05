@@ -162,7 +162,7 @@ class Mapa extends React.Component {
                 >
                   <InfoWindow    onClose={this.onInfoWindowClose} >
                                  <div>
-                                     <span className="marker">{user.webId}</span>
+                                     <span className="marker">{userDataManager.quitWebId(user.webId)}</span>
                                  </div>
                              </InfoWindow>
                  </Marker>
