@@ -1,76 +1,34 @@
 [[section-building-block-view]]
 
-
 == Building Block View
 
-[role="arc42help"]
 ****
-.Content
-The building block view shows the static decomposition of the system into building blocks (modules, components, subsystems, classes,
-interfaces, packages, libraries, frameworks, layers, partitions, tiers, functions, macros, operations,
-datas structures, ...) as well as their dependencies (relationships, associations, ...)
+En el siguiente esquema podemos observar la descomposición estatica del sistema mediante bloques de construcción así como las relaciones existentes entre estos.
 
-This view is mandatory for every architecture documentation.
-In analogy to a house this is the _floor plan_.
-
-.Motivation
-Maintain an overview of your source code by making its structure understandable through
-abstraction.
-
-This allows you to communicate with your stakeholder on an abstract level without disclosing implementation details.
-
-.Form
-The building block view is a hierarchical collection of black boxes and white boxes
-(see figure below) and their descriptions.
-
-image:05_building_blocks-EN.png["Hierarchy of building blocks"]
-
-*Level 1* is the white box description of the overall system together with black
-box descriptions of all contained building blocks.
-
-*Level 2* zooms into some building blocks of level 1.
-Thus it contains the white box description of selected building blocks of level 1, together with black box descriptions of their internal building blocks.
-
-*Level 3* zooms into selected building blocks of level 2, and so on.
+image:Diagrama_Doc_5.1.png["Esquema general descompuesto en bloques"]
 ****
 
 === Whitebox Overall System
 
-[role="arc42help"]
 ****
-Here you describe the decomposition of the overall system using the following white box template. It contains
+En la caja blanca del sistema encontramos los elemntos más basicos en los cuales podemos subdividirlo, estos componentes del sistema se definen como cajas negras.
 
- * an overview diagram
- * a motivation for the decomposition
- * black box descriptions of the contained building blocks. For these we offer you alternatives:
+image:Diagrama_Doc_5.2.png["WhiteBox del sistema"]
 
-   ** use _one_ table for a short and pragmatic overview of all contained building blocks and their interfaces
-   ** use a list of black box descriptions of the building blocks according to the black box template (see below).
-   Depending on your choice of tool this list could be sub-chapters (in text files), sub-pages (in a Wiki) or nested elements (in a modeling tool).
+Como se observa en el diagrama nos encontramos con una subdivisión del sistema en 4 elemntos principales.
 
+El usuario es toda aquella persona que interactua con la aplicación, además de la interacción con esta administra su POD privado desde el cual gestiona sus datos.
+Radarin es la aplicación en sí, esta interactua con el usuario mostrandole las diversas ubicaciones de los usuarios y permitiendole realizar gestion de sus propias ubicaciones.
+Para finalizar el sistema general tenemos aquellos sitemas que nos permitiran guardar y recuperar datos para posteriormente ser tratados por radarin, estos elemenntos son el POD person del usuario y la base de datos mongo.
 
- * (optional:) important interfaces, that are not explained in the black box templates of a building block, but are very important for understanding the white box.
-Since there are so many ways to specify interfaces why do not provide a specific template for them.
- In the worst case you have to specify and describe syntax, semantics, protocols, error handling,
- restrictions, versions, qualities, necessary compatibilities and many things more.
-In the best case you will get away with examples or simple signatures.
-
+|====
+|**Nombre** |**Responsabilidad**
+|Usuario |Administrar su POD personal
+|Radarin |Gestionar las peticiones del usuario
+|POD y mongo |Guardar y recuperar datos para radarin
+|====
 ****
 
-_**<Overview Diagram>**_
-
-Motivation::
-
-_<text explanation>_
-
-
-Contained Building Blocks::
-_<Description of contained building block (black boxes)>_
-
-Important Interfaces::
-_<Description of important interfaces>_
-
-[role="arc42help"]
 ****
 Insert your explanations of black boxes from level 1:
 
