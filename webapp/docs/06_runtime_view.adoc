@@ -8,7 +8,7 @@ En este escenario se explicará el diagrama de secuencia cuando un usuario se re
 En resumen la webApp nos mostrará un PopUp de Solid para iniciar sesión, obtendremos el WebId del usuario y con una petición a la restApi esta nos registrará y generará una contraseña necesaria para las demás peticiones a la api. Después esta contraseña se guardará en el POD y se inicializarán los ficheros necesarios para las ubicaciones.
 
 
-[plantuml,"Sequence diagram login",png]
+[plantuml,"Sequence diagram register",png]
 ----
 actor Usuario
 participant WebApp
@@ -33,7 +33,7 @@ WebApp->Pod: Añade las coordenadas al fichero de ubicaciones
 WebApp->Pod: Solicita los webId de los amigos
 Pod->WebApp: Devuelve los webId de sus amigos
 WebApp->RestApi: Envía los amigos del usuario
-WebApp->Usuario: Muestra el mapa con los amigos además de la lista de amigos.
+WebApp->Usuario: Muestra el mapa con los amigos\n además de la lista de amigos.
 ----
 
 === Login
@@ -41,7 +41,7 @@ En este escenario se explicará el diagrama de secuencia cuando un usuario inici
 Los primeros y últimos pasos son similares a los anteriores solo que ahora en vez de generarnos una contraseña nueva para la api, la WebApp ha de buscar en el pod dicha contraseña y pasarsela a la restApi para iniciar sesión. Además cogerá el nombre del fichero de ubicaciones del día de hoy y en caso de no existir todavía, se crea. Finalmente se logea en la api y se guarda la ubicación en el POD.
 Para hacer mas fácil el entendimiento podemos ver en un cuadrado llamado login los pasos que serían diferentes al registro.
 
-[plantuml,"Sequence diagram register",png]
+[plantuml,"Sequence diagram login",png]
 ----
 actor Usuario
 participant WebApp
@@ -69,12 +69,29 @@ WebApp->Pod: Añade las coordenadas al fichero de ubicaciones
 WebApp->Pod: Solicita los webId de los amigos
 Pod->WebApp: Devuelve los webId de sus amigos
 WebApp->RestApi: Envía los amigos del usuario
-WebApp->Usuario: Muestra el mapa con los amigos además de la lista de amigos.
+WebApp->Usuario: Muestra el mapa con los amigos\n además de la lista de amigos.
 
 ----
-=== Save locations in the POD
+
+=== Update map
+Cuando el usuario lo desee podrá actualizar el mapa, la WebApp realizará una petición a la RestApi pidiendo su lista de amigos junto sus coordenadas, una vez obtenida la respuesta se cargaran en el mapa y se mostrará.
+[plantuml,"Sequence diagram update map",png]
+----
+actor User
+participant WebApp
+participant RestApi 
+
+
+User->WebApp: Botón actualizar mapa
+WebApp->RestApi: Solicita los amigos conectados y sus coordenadas
+RestApi->WebApp: Devuelve los amigos conectados y sus coordenadas
+WebApp->WebApp: Carga en el mapa las coordenadas de los amigos
+WebApp->User: Muestra el mapa
+----
+
+=== Update locations 
 Cada 10 segundos se comprueba la ubicación del usuario y si esta cambia, se actualiza en el servidor y se escribe en el historial de ubicaciones del POD.
-[plantuml,"Sequence diagram register",png]
+[plantuml,"Sequence diagram save locations",png]
 ----
 participant WebApp
 participant RestApi
@@ -82,17 +99,53 @@ database Pod as "Pod del Usuario"
 WebApp->WebApp: Obtiene ubicacion actual
 alt La ubicacion no sigue siendo la misma
     WebApp->RestApi: Manda ubicación 
-    RestApi->RestApi:   Actualiza última ubicación
+    RestApi->RestApi:   Actualiza las coordenadas del usuario
+    RestApi->RestApi:   Actualiza las distancias con los amigos
     WebApp->WebApp: Calcula el nombre del fichero de hoy
     WebApp->Pod: Solicita el JSON de ubicaciones
     Pod->WebApp: Devuelve el JSON con el historial de ubicaciones
-   
     WebApp->WebApp: Obtiene el nombre de las coordendas
     WebApp->WebApp: Añade la nueva ubicación al JSON
     WebApp->Pod: Manda el contenido del fichero 
 end
 ----
 
-=== ...
+=== Show history of locations 
+Cuando accedemos al historial de ubicaciones, la WebApp obtiene estas del POD del usuario. Primero necesita saber el nombre de los diferntes ficheros de ubicaciones que se diferencian por día. Despues obtendrá las diferentes ubicaciones de todos los ficheros del POD.
+[plantuml,"Sequence diagram show locations",png]
+----
+actor User
+participant WebApp
+database Pod as "Pod del Usuario"
 
-=== <Runtime Scenario n>
+User->WebApp: Accede al historial de ubicaciones
+WebApp->Pod: Solicita el fichero ubicaciones.txt
+Pod->WebApp: Envia los nombres de los diferentes ficheros de ubicaciones
+loop Cada fichero de ubicaciones
+    WebApp->Pod: Solicita el fichero con el historial de ubicaciones de ese día
+    Pod->WebApp: Devuelve el JSON con el historial de ubicaciones de ese día
+end
+WebApp->WebApp: Genera una lista con el JSON de ubicaciones
+WebApp->User: Muestra la lista de ubicaciones
+----
+
+
+=== Remove a location
+Además de ver nuestras ubicaciones visitas también podremos eliminar las que queramos. Una vez el usuario elija una ubicación para eliminar, la webApp obtendrá el nombre del fichero JSON correspondiente a partir del ID. Solicitará al POD el fichero y una vez lo obtenga eliminará dicha ubicación y devolverá al POD el nuevo historial de ubicaciones. Una vez terminado el proceso se mostraran todas la ubicaciones de nuevo al usuario.
+
+[plantuml,"Sequence diagram remove location",png]
+----
+actor User
+participant WebApp
+database Pod as "Pod del Usuario"
+
+User->WebApp: Selecciona una ubicación de la lista
+WebApp->WebApp: A partir del ID de la ubicacion obtiene el nombre \ndel fichero JSON correspondiente
+WebApp->Pod: Solicita el JSON de ubicaciones
+Pod->WebApp: Devuelve el JSON de ubicaciones 
+WebApp->WebApp: Elimina la ubicación deseada
+WebApp->Pod: Manda el nuevo JSON de ubicaciones
+WebApp->User: Muestra la lista nueva de ubicaciones
+----
+
+
