@@ -96,4 +96,18 @@ end
 === Notifications
 En este apartado mostraremos el diagrama de secuencia utilizado para realizar las notificaaciones.
 
-Cada 20 segundos se envía una peticion a la restapi la cual nos retorna un objeto el cual contiene los amigos que han entrado en el radio establecido por el usuario. Con estos datos simplemente generamos la notificacion indicando que amigo es y a que distancia se encuentra del usuario.
+Cada 20 segundos se envía una peticion a la restapi la cual nos retorna un objeto el cual contiene los amigos que han entrado en el radio establecido por el usuario. Con estos datos simplemente generamos una notificacion indicando que amigo es y a que distancia se encuentra del usuario por cada amigo en el radio.
+
+[plantuml,"Sequence diagram notifications",png]
+----
+@startuml
+participant WebApp
+participant RestApi
+WebApp->WebApp: Solicita permiso para mandar notificaciones
+loop Cada 20 segundos
+    WebApp->RestApi: Solicita los amigos que hayan entrado en el radio del usuario
+    RestApi->WebApp: Retorna la lista de amigos
+    WebApp->WebApp: Genera una notificación por cada amigo
+end
+@enduml
+----
