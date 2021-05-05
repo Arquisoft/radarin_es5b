@@ -21,6 +21,34 @@
 	}
 }
 
+@media only screen and (hover: none) and (pointer: coarse) {
+	@media (orientation:landscape) {
+		.App-header {
+			padding: 10px !important;
+		}
+		
+		.App-logo, .App-header h1 {
+			display: none;
+		}
+	}
+	
+	#mapBlock {
+		font-size: 0.65em;
+	}
+	
+	#controls {
+		font-size: 0.95em;
+	}
+	
+	#radiusPanel {
+		margin-left: 5px !important;
+	}
+	
+	#bottomMenu {
+		font-size: 0.85em;
+	}
+}
+
 #root {
 	background-color: var(--dark_col);
 	height: 100vh;
@@ -269,7 +297,7 @@ h5 {
 }
 
 button {
-	font-size: 1.2em;
+	font-size: 1.1em;
 	background-color: var(--clear_col);
 	cursor: pointer;
 	color: white;
@@ -289,6 +317,7 @@ input {
 	font-size: 1.2em;
 	color: white;
 	background-color: var(--clear_col);
+	width: 7em;
 	
 	padding: 0.4em;
 	border-width: 0px;
@@ -301,7 +330,7 @@ input::placeholder {
 }
 
 #updateMapBt {
-	font-size: 1.8em;
+	font-size: 1.5em;
 	display: inline-block;
 }
 
