@@ -3,84 +3,26 @@
 
 == Deployment View
 
-[role="arc42help"]
-****
-.Content
-The deployment view describes:
+Como ya hemos visto, el radarín en ejecución se compone de 4 bloques de software que interacúan entre sí, la webapp, restapi, pod de SOLID y mongoDB. Aquí veremos el entorno de ejecución para estos componentes en desarollo y el despliegue.
 
- 1. the technical infrastructure used to execute your system, with infrastructure elements like geographical locations, environments, computers, processors, channels and net topologies as well as other infrastructure elements and
+La webapp, desarrollada con react, es una aplicación web que se ejecutar en el navegador del cliente, y accede al pod de SOLID y a la restapi mediante peticiones http. En producción usamos el servidor web express para enviar los archivos estáticos de la web al cliente, que habrán sido generados previamente con un build optimizado de la aplicación react.
 
-2. the mapping of (software) building blocks to that infrastructure elements.
+En cuanto al pod de SOLD no tenemos que preocuparnos en el despliegue, ya que usamos los pods de otros proveedores como "solidcommunity" o "inrupt".
 
-Often systems are executed in different environments, e.g. development environment, test environment, production environment. In such cases you should document all relevant environments.
+Para ejecutar la restapi simplemnte tenemos que lanzar el servidor express, que accederá a la base de datos mongo mediante el protocolo mongodb.
 
-Especially document the deployment view when your software is executed as distributed system with more then one computer, processor, server or container or when you design and construct your own hardware processors and chips.
+La base de datos de producción esta en mongo cloud, por lo que, una vez configurada, solo tenemos que añadir las credenciales de acceso a la restapi.
 
-From a software perspective it is sufficient to capture those elements of the infrastructure that are needed to show the deployment of your building blocks. Hardware architects can go beyond that and describe the infrastructure to any level of detail they need to capture.
+La elección de la base de datos mongo cloud se ha basado principalmente en el bajo coste (versión gratutía). Además mongo cloud nos ofrece una capacidad de almacenamiento de sobra para nuestras necesidades, y una muy buena estabilidad de rendimiento.
 
-.Motivation
-Software does not run without hardware.
-This underlying infrastructure can and will influence your system and/or some
-cross-cutting concepts. Therefore, you need to know the infrastructure.
+image::DeploymentDiagram.svg[DeploymentDiagram]
 
-.Form
+=== Deployment infrastructure
 
-Maybe the highest level deployment diagram is already contained in section 3.2. as
-technical context with your own infrastructure as ONE black box. In this section you will
-zoom into this black box using additional deployment diagrams:
+Visto esto, solo tenemos que preocuparnos por desplegar la webapp y restapi cada vez que actualicemos la versión de la aplicación. Estos dos bloques se despliegan en Heroku, cada uno en un Dyno (nombre que le da Heroku a cada máquina para ejecutar una aplicación). Para configurar cada aplicación (webapp y restapi) en Heroku usamos docker. De esta forma indicamos a Heroku como debe ejecutar cada aplicación, y en que entorno.
 
-* UML offers deployment diagrams to express that view. Use it, probably with nested diagrams,
-when your infrastructure is more complex.
-* When your (hardware) stakeholders prefer other kinds of diagrams rather than the deployment diagram, let them use any kind that is able to show nodes and channels of the infrastructure.
-****
+Hemos escogido Heroku como entorno para desplegar el sistema por su versión gratutía, que aunque nos ofrece unos recursos muy limitados, son suficientes para nuestra aplicación y el reducido número de usuarios que esperamos inicialmente.
 
-=== Infrastructure Level 1
+Además de lo anterior, también tenemos un sistema de monitorización con prometheus y grafana corriendo en una instancia en AWS. Este hace peticiones http a la restapi para pedir información sobre el estado del servidor. En esta máquina de AWS también tenemos un servidor web para que el administrador pueda consultar los datos de la monitorización de forma sencilla.
 
-[role="arc42help"]
-****
-Describe (usually in a combination of diagrams, tables, and text):
-
-*  the distribution of your system to multiple locations, environments, computers, processors, .. as well as the physical connections between them
-*  important justification or motivation for this deployment structure
-* Quality and/or performance features of the infrastructure
-*  the mapping of software artifacts to elements of the infrastructure
-
-For multiple environments or alternative deployments please copy that section of arc42 for all relevant environments.
-****
-
-_**<Overview Diagram>**_
-
-Motivation::
-
-_<explanation in text form>_
-
-Quality and/or Performance Features::
-
-_<explanation in text form>_
-
-Mapping of Building Blocks to Infrastructure::
-_<description of the mapping>_
-
-
-=== Infrastructure Level 2
-
-[role="arc42help"]
-****
-Here you can include the internal structure of (some) infrastructure elements from level 1.
-
-Please copy the structure from level 1 for each selected element.
-****
-
-==== _<Infrastructure Element 1>_
-
-_<diagram + explanation>_
-
-==== _<Infrastructure Element 2>_
-
-_<diagram + explanation>_
-
-...
-
-==== _<Infrastructure Element n>_
-
-_<diagram + explanation>_
+En este caso hemos elegido ejecutar la monitorización en AWS por simplicidad, ya que Heroku no nos permite lanzar más de una aplicación en cada Dyno. Nos resultaba mas sencillo usar AWS por la gran flexibilidad que nos ofrece en comparación a Heroku.
