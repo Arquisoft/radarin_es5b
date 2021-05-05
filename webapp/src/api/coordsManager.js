@@ -92,7 +92,7 @@ function calcularFicheroHoy(webId) {
 	const today = new Date(Date.now());
 	//	var nombreFichero = today.toLocaleDateString().replace("/", "").replace("/", "") + ".json" //El fichero tiene el nombre del dia de hoy
 	var nombreFichero = today.getDate() + "" + (today.getMonth() + 1) + "" + today.getFullYear() + ".json";
-	var urlFicheroHoy = url + "public/" + nombreFichero;
+	var urlFicheroHoy = url + "public/radarinES5B/ubicaciones/" + nombreFichero;
 
 	return urlFicheroHoy;
 }
@@ -128,23 +128,37 @@ async function addCoordToFile(coords) {
 	pod.updateFile(urlFicheroHoy, JSON.stringify(json));
 }
 
-
+function getLocationData(geocodeData) {
+	if (geocodeData.status === "OK" && geocodeData.results.length > 0) {
+		let address = {}
+		for (let component of geocodeData.results[0].address_components)
+			address[component.types[0]] = component.long_name
+		
+		console.log("nombre:" + address);
+		const getVal = (obj, name) => obj[name] == null ? "No disponible" : obj[name]
+		
+		return {
+			street: getVal(address, "route"),
+			city: getVal(address, "locality"),
+			region: getVal(address, "administrative_area_level_2"),
+			country: getVal(address, "country")
+		}
+	}
+	else {
+		return {
+				street: "No disponible",
+				city: "",
+				region: "",
+				country: "",
+			}
+	}
+}
 
 async function getLocation(lat,lon){
-	return Geocode.fromLatLng(lat, lon).then(
-		(response) => {
-			const address = response.results[0].address_components;
-			console.log("nombre:"+address);	
-			return {
-				street: address[1].long_name,
-				city: address[2].long_name,
-				region: address[3].long_name,
-				country: address[5].long_name,
-			}
-		},
+	return Geocode.fromLatLng(lat, lon).then(getLocationData,
 		(error) => {
 			return {
-				street: "Nombre no disponible",
+				street: "No disponible",
 				city: "",
 				region: "",
 				country: "",
@@ -167,7 +181,7 @@ async function removeLocation(id){
 	
 	var webId = (await auth.currentSession()).webId
 	var url =  webId.replace("profile/card#me", "");
-	url+="public/"+fichero
+	url+="public/radarinES5B/ubicaciones/"+fichero
 	var json = JSON.parse(await pod.getFile(url));
 	var ubicaciones = json.ubicaciones;
 	for(let i=0;i<ubicaciones.length;i++){
@@ -187,18 +201,18 @@ async function getLocations() {
 		return;
 	var webId = session.webId
 	var url = webId.replace("profile/card#me", "");
-	var ubicaciones = await pod.getFile(url + "public/ubicaciones.txt")
+	var ubicaciones = await pod.getFile(url + "public/radarinES5B/ubicaciones.txt")
 	
 	var ficheros = ubicaciones.split(" ")
 	console.log(ficheros);
 	var result = []
-	for(let i=0;i<ficheros.length;i++){
+	for (let i = ficheros.length - 1; i >= 0; i--) {
 		if(ficheros[i]==="" || ficheros[i]===" ")
 			break;
 		
-		var locations = JSON.parse(await pod.getFile(url + "public/" + ficheros[i]));
+		var locations = JSON.parse(await pod.getFile(url + "public/radarinES5B/ubicaciones/" + ficheros[i]));
 		var location = locations.ubicaciones
-		for(let j=0; j<location.length;j++){
+		for (let j = location.length - 1; j >= 0; j--) {
 			result.push(location[j]);
 		}
 		

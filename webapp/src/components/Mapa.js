@@ -162,7 +162,7 @@ class Mapa extends React.Component {
                 >
                   <InfoWindow    onClose={this.onInfoWindowClose} >
                                  <div>
-                                     <span className="marker">{user.webId}</span>
+                                     <span className="marker">{userDataManager.quitWebId(user.webId)}</span>
                                  </div>
                              </InfoWindow>
                  </Marker>
@@ -182,12 +182,14 @@ class Mapa extends React.Component {
             <button onClick={this.changeRadius.bind(this)}>Actualizar radio</button>
           </div>
         </div>
-        <MyMapComponent
-          googleMapURL={mapURL}
-          loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `100%` }} />}
-          mapElement={<div style={{ height: `100%` }} />}
-        ></MyMapComponent>
+        <div id="mapContainer">
+          <MyMapComponent
+            googleMapURL={mapURL}
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `100%` }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+          ></MyMapComponent>
+        </div>
         
       </div>
     );

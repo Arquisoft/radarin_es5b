@@ -40,7 +40,7 @@ class Principal extends React.Component {
     var notificaciones = await response.json();
 
     for (var n of notificaciones) {
-      var distancia = n.dist.toString().slice(0, 4);
+      var distancia = api.quitDecimals(n.dist);
       new Notification("El usuario " + n.webId + " esta a " + distancia + " kilómetros.");
     }
     

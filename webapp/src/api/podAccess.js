@@ -32,7 +32,7 @@ async function tripledoc(){
 	 // Get the root URL of the user's Pod:
 	 const storage = profile.getRef(space.storage);
 
-	 const ref = storage+'public/prueba.txt';
+	 const ref = storage+'public/radarinES5B/prueba.txt';
 	 const file = createDocument(ref);
 	 await file.save();
 }*/
@@ -52,7 +52,7 @@ async function fetchProfile () {
 
 async function checkTodayFileAndCreate(url,nombreFichero){
 	//Obtenemos los ficheros de ubicaciones.txt
-	var ficheros=await getFile(url+"public/ubicaciones.txt")
+	var ficheros=await getFile(url+"public/radarinES5B/ubicaciones.txt")
 	ficheros = ficheros.split(" ");
 	for(let i =0;i<ficheros.length;i++){
 		if(ficheros[i] === nombreFichero)
@@ -60,7 +60,7 @@ async function checkTodayFileAndCreate(url,nombreFichero){
 	}
 	
 	//Si no ha encontrado el fichero con el nombre de hoy hay que crearlo
-	await addToFile(url+"public/ubicaciones.txt"," "+nombreFichero);
+	await addToFile(url+"public/radarinES5B/ubicaciones.txt"," "+nombreFichero);
 	//Creamos el json para el fichero
 	var ubicaciones = [];
 	var objeto = {};
@@ -69,7 +69,7 @@ async function checkTodayFileAndCreate(url,nombreFichero){
 
 	var json = JSON.stringify(objeto)
 
-	await updateFile(url+"public/"+nombreFichero, json); //Creamos el fichero con las ubicaciones de hoy
+	await updateFile(url+"public/radarinES5B/ubicaciones/"+nombreFichero, json); //Creamos el fichero con las ubicaciones de hoy
 }
 
 

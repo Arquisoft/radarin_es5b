@@ -14,7 +14,7 @@ Nuestro proyecto consiste en una aplicación web denominada Radarin mediante la 
 
 Nuestra aplicación se basa en una aplicación web la cual tendrá la funcionalidad de un radar el cual mostrará todos los amigos conectados del usuario, la distancia hasta la cual podremos detectar amigos para recibir una notificación es definida por el usuario. Dichos amigos se muestran en un mapa pudiendo ver claramente su posicion respecto a donde nos encontramos. Para maximizar la privacidad utilizaremos PODs de SOLID, esto permite que cada usuraio tenga su propio almacenamiento prescindiendo así de almacenanmientos centralizados.
 
-|=========================================================
+|====
 | Elemento | Entrada | Salida
 
 | Usuario
@@ -36,6 +36,7 @@ Nuestra aplicación se basa en una aplicación web la cual tendrá la funcionali
 | MongoDB
 | Radio establecido por el usuario y usuario y contraseña de la restapi.
 | Radio establecido por el usuario y usuario y contraseña de la restapi.
+|====
 
 ****
 
