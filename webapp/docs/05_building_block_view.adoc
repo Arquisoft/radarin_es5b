@@ -21,78 +21,61 @@ El usuario es toda aquella persona que interactua con la aplicación, además de
 Radarin es la aplicación en sí, esta interactua con el usuario mostrandole las diversas ubicaciones de los usuarios y permitiendole realizar gestion de sus propias ubicaciones.
 Para finalizar el sistema general tenemos aquellos sitemas que nos permitiran guardar y recuperar datos para posteriormente ser tratados por radarin, estos elemenntos son el POD person del usuario y la base de datos mongo.
 
-
+.Descripcion de componentes de caja negra del sistema
 |====
 |**Nombre** |**Responsabilidad**
 |Usuario |Administrar su POD personal
 |Radarin |Gestionar las peticiones del usuario
 |POD y mongo |Guardar y recuperar datos para radarin
 |====
-.Descripcion de caja negra del sistema
 ****
 
 === Level 2
 
-[role="arc42help"]
 ****
-Here you can specify the inner structure of (some) building blocks from level 1 as white boxes.
+En el nivel dos nos encontramos con una subdivisión del componente radarin, este se divide en tres componentes que explicaremos a continuación.
 
-You have to decide which building blocks of your system are important enough to justify such a detailed description.
-Please prefer relevance over completeness. Specify important, surprising, risky, complex or volatile building blocks.
-Leave out normal, simple, boring or standardized parts of your system
+image:Diagrama_Doc_5.3.png["WhiteBox del nivel 2"]
+
+El frontend y la api se encuentran dentro del mismo componente porque ambos son parte de la webapp pero consideramos no añadir un nivel más simplemente para desglosarla.
+
+El frontend tiene como misión la interacción directa con el usuario lanzando notificaciones para informar al usuario y relacionandose con la api para obtener diversos datos como localizaciones, etc. La api es la encargada de proveer datos al frontend obteniendolos del POD del usuario y de la restapi, esta almacena las ubicaciones actuales de todos los usuarios, dichas ubicaciones las obtiene de la api cuando esta realiza peticiones a la restapi.
+
+.Descripcion de componentes de caja negra de radarin
+|====
+|**Nombre** |**Responsabilidad**
+|Frontend |Interactuar con el usuario
+|Api |Proveer de datos al frontend mediante el POD y la restapi
+|Restapi |Almacenar ubicaciones actuales de todos los usuarios y administrar la base de datos mongo
+|====
 ****
-
-==== White Box _<building block 1>_
-
-[role="arc42help"]
-****
-...describes the internal structure of _building block 1_.
-****
-
-_<white box template>_
-
-==== White Box _<building block 2>_
-
-
-_<white box template>_
-
-...
-
-==== White Box _<building block m>_
-
-
-_<white box template>_
-
-
 
 === Level 3
 
-[role="arc42help"]
 ****
-Here you can specify the inner structure of (some) building blocks from level 2 as white boxes.
+En el nivel tres nos enconramos una dvision más amplia que en los otros niveles. El login se encarga de iniciar sesion en SOLID, una vez iniciada sesión la lista de amigos los muestra en una lista, estos datos los obtiene mediante userdatamanager el cual envía una petición a podaccess quien es el encargado de interactuar con el POD, el mapa realiza la misma operación que la lista mostrando las localizaciones de los amigos, estas localizaciones son obtenidas de userdatamanager mediante apiconnection quien gestiona las peticiones con el controller de la apirest, este realiza peticiones a usermanager el cual es la base de aplicación, en este se guardan las localizaciones actuales de todos los usuarios así como la inmensa mayoría de la informacíon relevante de la aplicación, para finalizar databaseaccess es el encargado de comunicarse con la base de datos mongo.
 
-When you need more detailed levels of your architecture please copy this
-part of arc42 for additional levels.
+image:Diagrama_Doc_5.4.png["WhiteBox del nivel 3"]
+
+.Descripcion de componentes de caja negra de FrontEnd
+|====
+|**Nombre** |**Responsabilidad**
+|Login |Iniciar sesión en solid para porder acceder al POD del usuario
+|Lista de amigos |Mostrar la lista de todos los amigos
+|Mapa |Mostrar las ubicaciones de los amigos conectados
+|====
+
+.Descripcion de componentes de caja negra de Api
+|====
+|ApiConnection |Intermediario entre el controller de la apirest y la api
+|UserDataManager |Encargado de solicitar informacion mediante la apiconnection y el pod access
+|PodAccess |Intermediar entre el userdatamanager y el pod edl usuario
+|====
+
+.Descripcion de componentes de caja negra de Restapi
+|====
+|Controller |Tratar peticiones procedentes de la api
+|UserManager |Aportar y guardar datos de los usuarios
+|DataBaseAccess |Intermediar entre el usermanager y la basde de datos mongo
+|====
 ****
-
-
-==== White Box <_building block x.1_>
-
-[role="arc42help"]
-****
-Specifies the internal structure of _building block x.1_.
-****
-
-
-_<white box template>_
-
-
-==== White Box <_building block x.2_>
-
-_<white box template>_
-
-
-
-==== White Box <_building block y.1_>
-
-_<white box template>_
