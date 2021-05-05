@@ -88,7 +88,21 @@ RestApi->WebApp: Devuelve los amigos conectados y sus coordenadas
 WebApp->WebApp: Carga en el mapa las coordenadas de los amigos
 WebApp->User: Muestra el mapa
 ----
+=== Update list of friends
+Cada 5 segundos se actualiza la lista de amigos, mostrando además la distancia hacia ellos. La WebApp pide a la RestApi todos los datos.
+[plantuml,"Sequence diagram update list of friends",png]
+----
+actor Usuario
+participant WebApp
+participant RestApi
 
+loop Cada 5 segundos
+    WebApp->RestApi: Solicita amigos y sus cooordenadas
+    RestApi->WebApp: Devuelve los datos solicitados
+    WebApp->WebApp: Diferencia los amigos entre lejanos, \n cercanos y desconectados.
+    WebApp->Usuario: Muestra la lista de amigos
+end
+----
 === Update locations 
 Cada 10 segundos se comprueba la ubicación del usuario y si esta cambia, se actualiza en el servidor y se escribe en el historial de ubicaciones del POD.
 [plantuml,"Sequence diagram save locations",png]
