@@ -1,7 +1,7 @@
 [[section-deployment-view]]
 
 
-== Deployment View
+== Vista de despliegue
 
 Como ya hemos visto, el radarín en ejecución se compone de 4 bloques de software que interacúan entre sí, la webapp, restapi, pod de SOLID y mongoDB. Aquí veremos el entorno de ejecución para estos componentes en desarollo y el despliegue.
 
@@ -17,7 +17,7 @@ La elección de la base de datos mongo cloud se ha basado principalmente en el b
 
 image::DeploymentDiagram.svg[DeploymentDiagram]
 
-=== Deployment infrastructure
+=== Infraestructura de despliegue
 
 Visto esto, solo tenemos que preocuparnos por desplegar la webapp y restapi cada vez que actualicemos la versión de la aplicación. Estos dos bloques se despliegan en Heroku, cada uno en un Dyno (nombre que le da Heroku a cada máquina para ejecutar una aplicación). Para configurar cada aplicación (webapp y restapi) en Heroku usamos docker. De esta forma indicamos a Heroku como debe ejecutar cada aplicación, y en que entorno.
 

@@ -1,9 +1,9 @@
 [[section-runtime-view]]
-== Runtime View
+== Vista de ejecución
 
 
 
-=== Register
+=== Registro
 En este escenario se explicará el diagrama de secuencia cuando un usuario se registra. 
 En resumen la webApp nos mostrará un PopUp de Solid para iniciar sesión, obtendremos el WebId del usuario y con una petición a la restApi esta nos registrará y generará una contraseña necesaria para las demás peticiones a la api. Después esta contraseña se guardará en el POD y se inicializarán los ficheros necesarios para las ubicaciones.
 
@@ -73,7 +73,7 @@ WebApp->Usuario: Muestra el mapa con los amigos\n además de la lista de amigos.
 
 ----
 
-=== Update map
+=== Actualizar mapa
 Cuando el usuario lo desee podrá actualizar el mapa, la WebApp realizará una petición a la RestApi pidiendo su lista de amigos junto sus coordenadas, una vez obtenida la respuesta se cargaran en el mapa y se mostrará.
 [plantuml,"Sequence diagram update map",png]
 ----
@@ -88,7 +88,7 @@ RestApi->WebApp: Devuelve los amigos conectados y sus coordenadas
 WebApp->WebApp: Carga en el mapa las coordenadas de los amigos
 WebApp->User: Muestra el mapa
 ----
-=== Update list of friends
+=== Actualizar lista de amigos
 Cada 5 segundos se actualiza la lista de amigos, mostrando además la distancia hacia ellos. La WebApp pide a la RestApi todos los datos.
 [plantuml,"Sequence diagram update list of friends",png]
 ----
@@ -103,7 +103,7 @@ loop Cada 5 segundos
     WebApp->Usuario: Muestra la lista de amigos
 end
 ----
-=== Update locations 
+=== Actualizar ubicaciones
 Cada 10 segundos se comprueba la ubicación del usuario y si esta cambia, se actualiza en el servidor y se escribe en el historial de ubicaciones del POD.
 [plantuml,"Sequence diagram save locations",png]
 ----
@@ -124,7 +124,7 @@ alt La ubicacion no sigue siendo la misma
 end
 ----
 
-=== Show history of locations 
+=== Mostrar historial de ubicaciones 
 Cuando accedemos al historial de ubicaciones, la WebApp obtiene estas del POD del usuario. Primero necesita saber el nombre de los diferntes ficheros de ubicaciones que se diferencian por día. Despues obtendrá las diferentes ubicaciones de todos los ficheros del POD.
 [plantuml,"Sequence diagram show locations",png]
 ----
@@ -144,7 +144,7 @@ WebApp->User: Muestra la lista de ubicaciones
 ----
 
 
-=== Remove a location
+=== Eliminar una ubicación
 Además de ver nuestras ubicaciones visitas también podremos eliminar las que queramos. Una vez el usuario elija una ubicación para eliminar, la webApp obtendrá el nombre del fichero JSON correspondiente a partir del ID. Solicitará al POD el fichero y una vez lo obtenga eliminará dicha ubicación y devolverá al POD el nuevo historial de ubicaciones. Una vez terminado el proceso se mostraran todas la ubicaciones de nuevo al usuario.
 
 [plantuml,"Sequence diagram remove location",png]

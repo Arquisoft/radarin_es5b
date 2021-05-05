@@ -1,10 +1,11 @@
-== 10. Requisitos de calidad
+[[section-quality-requirements]]
+== Quality requirements
 
-=== Árbol de calidad
+=== Quality tree
 
-image::images/atributos_de_calidad.png[arbol de calidad]
+image::atributos_de_calidad.png[arbol de calidad]
 
-=== Escenarios de calidad
+=== Quality scenarios
 
 |===
 | *Objetivo de calidad* | *Descripción* | *Solución*
