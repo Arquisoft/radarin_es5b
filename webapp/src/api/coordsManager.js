@@ -108,13 +108,13 @@ async function addCoordToFile(coords) {
 	var webId = (await auth.currentSession()).webId
 	var urlFicheroHoy = calcularFicheroHoy(webId);
 
-	console.log("url fichero: " + urlFicheroHoy);
+	
 	var result = await pod.getFile(urlFicheroHoy);
-	console.log("resultado: " + result);
+
 	var json = JSON.parse(result);
 	var hoy = new Date(Date.now());
 	 var nombre = await getLocation(coords.lat,coords.lon)
-	console.log("ubicacion a meter:"+nombre);
+	
 	var id = generateId(); 
 	json.ubicaciones.push({
 		lat: coords.lat,
@@ -134,7 +134,7 @@ function getLocationData(geocodeData) {
 		for (let component of geocodeData.results[0].address_components)
 			address[component.types[0]] = component.long_name
 		
-		console.log("nombre:" + address);
+	
 		const getVal = (obj, name) => obj[name] == null ? "No disponible" : obj[name]
 		
 		return {
@@ -171,8 +171,7 @@ async function getLocation(lat,lon){
 
 function checkLastLocation(p1, p2) {
 	var result = new DistCalc(new Coords(p1), new Coords(p2)).getLinDist()
-	console.log("distancia: " + result);
-	return result > 1 //Cuando te mueves más de 1km
+	return result > 0.2 //Cuando te mueves más de 1km
 }
 
 async function removeLocation(id){
@@ -185,9 +184,9 @@ async function removeLocation(id){
 	var json = JSON.parse(await pod.getFile(url));
 	var ubicaciones = json.ubicaciones;
 	for(let i=0;i<ubicaciones.length;i++){
-		console.log("ID original:"+ubicaciones[i].id+"Id a borrar:"+id);
+	
 		if(ubicaciones[i].id === id){
-			console.log(ubicaciones.splice(i,1))
+			
 			break;
 		}
 	}
@@ -204,7 +203,7 @@ async function getLocations() {
 	var ubicaciones = await pod.getFile(url + "public/radarinES5B/ubicaciones.txt")
 	
 	var ficheros = ubicaciones.split(" ")
-	console.log(ficheros);
+
 	var result = []
 	for (let i = ficheros.length - 1; i >= 0; i--) {
 		if(ficheros[i]==="" || ficheros[i]===" ")
@@ -218,10 +217,7 @@ async function getLocations() {
 		
 		
 	}
-	return result;	
-//	console.log("resultado:"+result);
-
-//	console.log(JSON.stringify(result));
+	return result;
 }
 
 var toExport = {

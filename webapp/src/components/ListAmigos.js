@@ -19,7 +19,7 @@ class ListAmigos extends React.Component {
 
   async listarAmigos() {
     var result = await userDataManager.listarAmigos()
-   console.log("Resultado: "+result);
+ 
     if (result === -1) { //Esto quiere decir que el usuario se ha desconectado
       return;
     }

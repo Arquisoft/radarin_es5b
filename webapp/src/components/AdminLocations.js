@@ -27,11 +27,11 @@ class AdminLocations extends React.Component {
 
     async getLocations() {
         var locationsApi = (await coordsManager.getLocations());
-        console.log("Component" + locationsApi);
+      
 
         if (locationsApi == null) {
             setTimeout(this.getLocations.bind(this), 3000)
-            console.log("sin ubicaciones");
+          
             return;
         }
         this.setState({ ubicaciones: (locationsApi) })
