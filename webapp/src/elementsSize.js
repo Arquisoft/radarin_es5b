@@ -6,18 +6,16 @@ class MenuManager {
 	}
 	
 	updateWindowSize() {
-		let newMode = window.outerWidth < 1026
+		let newMode = window.innerWidth < 1026
 		if (this.mobileMode !== newMode) {
 			this.mobileMode = newMode
+			this.updateMenuBtsEnabled()
 			
 			if (this.menuVisible === newMode)
 				this.toogleMenu()
 			
-			else {
-				let map = document.getElementById("mapBlock")
-				if (map != null)
-					map.style.display = "inline-block"
-			}
+			else
+				document.getElementById("mapBlock").style.display = ""
 		}
 	}
 	
@@ -27,33 +25,46 @@ class MenuManager {
 		
 		if (menu != null) {
 			this.menuVisible = ! this.menuVisible
-			menu.style.display = this.menuVisible ? "inline-block" : "none"
+			menu.style.display = this.menuVisible ? "" : "none"
+			this.updateMenuBtsEnabled()
 			
 			if (this.mobileMode)
-				map.style.display = this.menuVisible ? "none" : "inline-block"
+				map.style.display = this.menuVisible ? "none" : ""
 			
 			updateSize()
 		}
+	}
+	
+	updateMenuBtsEnabled() {
+		let disabled = this.mobileMode && this.menuVisible
+		for (let child of document.getElementById("bottomMenu").children)
+			child.children[0].disabled = disabled
 	}
 }
 var menuManager = new MenuManager()
 
 function updateSize() {
-	
 	let map = document.getElementById("mapBlock")
 	let headerBounding = document.getElementsByClassName("App-header")[0].getBoundingClientRect()	
 	
 	if (map != null) {
-		let windowWidth = window.outerWidth
+		menuManager.updateWindowSize()
+		
+		let windowWidth = window.innerWidth
 		let windowHeight = window.innerHeight
 		
 		let bottomMenuBounding = document.getElementById("bottomMenu").getBoundingClientRect()
-		map.style.height = (windowHeight - headerBounding.height - bottomMenuBounding.height - 22) + "px"
-		
 		let friendsMenu = document.getElementById("Menu")
-		map.style.width = (windowWidth - friendsMenu.getBoundingClientRect().width - 50) + "px"
+		let controls = document.getElementById("controls")
 		
-		friendsMenu.style.height = (windowHeight - headerBounding.height - bottomMenuBounding.height - 50) + "px"
+		let mapHeight = windowHeight - headerBounding.height - bottomMenuBounding.height - 22
+		map.style.height = mapHeight + "px"
+		map.style.width = (windowWidth - friendsMenu.getBoundingClientRect().width - 20) + "px"
+		
+		if (controls != null)
+			document.getElementById("mapContainer").style.height = (mapHeight - controls.getBoundingClientRect().height) + "px"
+		
+		friendsMenu.style.height = (windowHeight - headerBounding.height - bottomMenuBounding.height - 10) + "px"
 	}
 	
 	let menu = document.getElementById("menuBt")
@@ -65,10 +76,7 @@ function updateMarkers() {
 		marker.parentNode.parentNode.parentNode.style.padding = "0.5em 1em"
 }
 
-window.onresize = () => {
-	menuManager.updateWindowSize()
-	updateSize()
-}
+window.onresize = updateSize
 
 var toExport = {
 	updateSize,

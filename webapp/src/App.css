@@ -111,14 +111,15 @@ h5 {
 }
 
 #controls {
-	margin: 0px 0px 12px;
+	padding: 0px 0px 12px;
+	margin: 0px 0px 0px;
 }
 
 #mapBlock {
 	display: inline-block;
 	overflow: scroll;
 	
-	padding: 15px 0px 0px;
+	padding: 15px 0px 0px 10px;
 	margin: 0px;
 }
 
@@ -190,15 +191,15 @@ h5 {
 	font-size: 1.1em;
 	font-weight: 600;
 	
-	width: var(--menu_width);
+	box-sizing: border-box;
+	width: min(var(--menu_width), 100%);
 	overflow: scroll;
 	
 	vertical-align: top;
 	display: inline-block;
-	background-color: var(--dark_col);
 	
 	padding: 10px 10px 0px 10px;
-	margin: 0px 15px 0px 0px;
+	margin: 0px;
 }
 
 ::-webkit-scrollbar {
@@ -279,6 +280,11 @@ button {
 	margin: 0.2em auto;
 }
 
+button:disabled {
+	cursor: not-allowed;
+	filter: brightness(0.6);
+}
+
 input {
 	font-size: 1.2em;
 	color: white;
@@ -308,7 +314,9 @@ input::placeholder {
 	position: absolute;
 	left: 0px;
 	bottom: 0px;
-	width: var(--menu_width);
+	
+	box-sizing: border-box;
+	width: min(var(--menu_width), 100%);
 	
 	padding: 1.3em 1em;
 	border-style: solid;
@@ -318,5 +326,6 @@ input::placeholder {
 }
 
 #bottomMenu button {
-	margin: 0em 0.3em;
+	font-size: 1.1em;
+	margin: 0em 0.2em;
 }

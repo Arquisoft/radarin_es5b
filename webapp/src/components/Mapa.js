@@ -182,12 +182,14 @@ class Mapa extends React.Component {
             <button onClick={this.changeRadius.bind(this)}>Actualizar radio</button>
           </div>
         </div>
-        <MyMapComponent
-          googleMapURL={mapURL}
-          loadingElement={<div style={{ height: `100%` }} />}
-          containerElement={<div style={{ height: `100%` }} />}
-          mapElement={<div style={{ height: `100%` }} />}
-        ></MyMapComponent>
+        <div id="mapContainer">
+          <MyMapComponent
+            googleMapURL={mapURL}
+            loadingElement={<div style={{ height: `100%` }} />}
+            containerElement={<div style={{ height: `100%` }} />}
+            mapElement={<div style={{ height: `100%` }} />}
+          ></MyMapComponent>
+        </div>
         
       </div>
     );
