@@ -18,7 +18,6 @@ export default  function Admin() {
         <div class="users">
             <div>
                 <h3>USUARIOS</h3>
-                <p> Por cada usuario </p>
                 <List src={["user1","user2","user3","user4"]}></List>
                 <table>
                     <tr>

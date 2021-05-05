@@ -41,7 +41,6 @@ class Principal extends React.Component{
             <div class="admin">
                 <Button onClick={this.administrar} class="boton"> Administrar usuarios (Prueba) </Button>
                 <p class="prueba">Texto de prueba</p>
-                <Admin></Admin>
             </div>
         </LoggedIn>);
     }
