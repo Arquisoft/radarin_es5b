@@ -12,7 +12,7 @@ async function getPass(webId) {
 	if (webId != null) {
 		//console.log("web id en getpass:" + webId);
 		var url = webId.replace("profile/card#me", "");
-		url = url + "public/password.txt";
+		url = url + "public/radarinES5B/password.txt";
 
 		var pass = await (pod.getFile(url));
 		console.log("Contraseña sacada" + pass);
@@ -75,9 +75,9 @@ async function initializePod(pass, url) { //Inicializamos el POD cuando nos regi
 	var nombreFichero = today.getDate() + "" + (today.getMonth() + 1) + "" + today.getFullYear() + ".json";
 
 
-	var urlUbicaciones = url + "public/ubicaciones.txt";
-	var urlFicheroHoy = url + "public/" + nombreFichero;
-	var urlPass = url + "public/password.txt";
+	var urlUbicaciones = url + "public/radarinES5B/ubicaciones.txt";
+	var urlFicheroHoy = url + "public/radarinES5B/ubicaciones/" + nombreFichero;
+	var urlPass = url + "public/radarinES5B/password.txt";
 
 	var ubicaciones = [];
 	var objeto = {};
@@ -173,6 +173,7 @@ async function listarAmigos() {
 	var listAmigos = await response.json();
 	for (var f of listAmigos.logged) {
 		f.webId = quitWebId(f.webId);
+		f.dist = quitDecimals(f.dist)
 
 		if (f.inAdviseDist) result.cercanos.push(f);
 		else result.lejanos.push(f);
@@ -193,6 +194,11 @@ function getRadius() {
 	return curRadius
 }
 
+function quitDecimals(num) {
+	let splitted = num.toString().split(".")
+	return splitted[0] + "." + splitted[1][0]
+}
+
 var toExport = {
 	connect,
 	update,
@@ -200,6 +206,7 @@ var toExport = {
 	disconnect,
 	getRadius,
 	listarAmigos,
-	quitWebId
+	quitWebId,
+	quitDecimals
 }
 export default toExport

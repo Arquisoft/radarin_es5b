@@ -92,7 +92,7 @@ function calcularFicheroHoy(webId) {
 	const today = new Date(Date.now());
 	//	var nombreFichero = today.toLocaleDateString().replace("/", "").replace("/", "") + ".json" //El fichero tiene el nombre del dia de hoy
 	var nombreFichero = today.getDate() + "" + (today.getMonth() + 1) + "" + today.getFullYear() + ".json";
-	var urlFicheroHoy = url + "public/" + nombreFichero;
+	var urlFicheroHoy = url + "public/radarinES5B/ubicaciones/" + nombreFichero;
 
 	return urlFicheroHoy;
 }
@@ -181,7 +181,7 @@ async function removeLocation(id){
 	
 	var webId = (await auth.currentSession()).webId
 	var url =  webId.replace("profile/card#me", "");
-	url+="public/"+fichero
+	url+="public/radarinES5B/ubicaciones/"+fichero
 	var json = JSON.parse(await pod.getFile(url));
 	var ubicaciones = json.ubicaciones;
 	for(let i=0;i<ubicaciones.length;i++){
@@ -201,7 +201,7 @@ async function getLocations() {
 		return;
 	var webId = session.webId
 	var url = webId.replace("profile/card#me", "");
-	var ubicaciones = await pod.getFile(url + "public/ubicaciones.txt")
+	var ubicaciones = await pod.getFile(url + "public/radarinES5B/ubicaciones.txt")
 	
 	var ficheros = ubicaciones.split(" ")
 	console.log(ficheros);
@@ -210,7 +210,7 @@ async function getLocations() {
 		if(ficheros[i]==="" || ficheros[i]===" ")
 			break;
 		
-		var locations = JSON.parse(await pod.getFile(url + "public/" + ficheros[i]));
+		var locations = JSON.parse(await pod.getFile(url + "public/radarinES5B/ubicaciones/" + ficheros[i]));
 		var location = locations.ubicaciones
 		for (let j = location.length - 1; j >= 0; j--) {
 			result.push(location[j]);
