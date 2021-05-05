@@ -21,81 +21,15 @@ El usuario es toda aquella persona que interactua con la aplicación, además de
 Radarin es la aplicación en sí, esta interactua con el usuario mostrandole las diversas ubicaciones de los usuarios y permitiendole realizar gestion de sus propias ubicaciones.
 Para finalizar el sistema general tenemos aquellos sitemas que nos permitiran guardar y recuperar datos para posteriormente ser tratados por radarin, estos elemenntos son el POD person del usuario y la base de datos mongo.
 
+
 |====
 |**Nombre** |**Responsabilidad**
 |Usuario |Administrar su POD personal
 |Radarin |Gestionar las peticiones del usuario
 |POD y mongo |Guardar y recuperar datos para radarin
 |====
+.Descripcion de caja negra del sistema
 ****
-
-****
-Insert your explanations of black boxes from level 1:
-
-If you use tabular form you will only describe your black boxes with name and
-responsibility according to the following schema:
-
-[cols="1,2" options="header"]
-|===
-| **Name** | **Responsibility**
-| _<black box 1>_ | _<Text>_
-| _<black box 2>_ | _<Text>_
-|===
-
-
-
-If you use a list of black box descriptions then you fill in a separate black box template for every important building block .
-Its headline is the name of the black box.
-****
-
-
-==== <Name black box 1>
-
-[role="arc42help"]
-****
-Here you describe <black box 1>
-according the the following black box template:
-
-* Purpose/Responsibility
-* Interface(s), when they are not extracted as separate paragraphs. This interfaces may include qualities and performance characteristics.
-* (Optional) Quality-/Performance characteristics of the black box, e.g.availability, run time behavior, ....
-* (Optional) directory/file location
-* (Optional) Fulfilled requirements (if you need traceability to requirements).
-* (Optional) Open issues/problems/risks
-
-****
-
-_<Purpose/Responsibility>_
-
-_<Interface(s)>_
-
-_<(Optional) Quality/Performance Characteristics>_
-
-_<(Optional) Directory/File Location>_
-
-_<(Optional) Fulfilled Requirements>_
-
-_<(optional) Open Issues/Problems/Risks>_
-
-
-
-
-==== <Name black box 2>
-
-_<black box template>_
-
-==== <Name black box n>
-
-_<black box template>_
-
-
-==== <Name interface 1>
-
-...
-
-==== <Name interface m>
-
-
 
 === Level 2
 
