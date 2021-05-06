@@ -1,20 +1,34 @@
 [[section-tests-and-monitoring]]
 === Pruebas y monitorización
 image::coverage.png[CodeCoverage]
+
 === RestApi Test
 Debido a la arquitectura de nuestra aplicación hemos decidido realizar más tests de la RestApi llegando así a casi un 87% de coverage
 
 === WebApp Test
 Poca cobertura de código (27,5%) esto es debido a la falta de tiempo y participantes en el equipo. Además nuestra aplicación depende fuertemente de SOLID con lo que no podiamos probar muchos de nuestro componentes componentes sin estar logeados en SOLID y sin la restApi.
 
+=== Test de aceptación
 Respecto a los test de aceptación, tras tener problemas durante el despliegue con los mismos y los problemas antes nombrados no hemos hecho ninguno que funcione, solo hay un intento que aparece documentado.
+
 === Test de carga
+Para los tests de carga hemos usado gatling, importando los datos de las peticiones a realizar desde un archivo .har previamente generado grabando un uso habitual de la aplicación mediante crhome.
+
+Primero realizamos un test de prueba con un usuario, todo salió como se esperaba, con un número reducido de peticiones y tiempos de respuesta bajos.
+
+image::GraphanaPrometheus.png[Test de carga 1 usuarios]
+
+Después probamos a estresar un poco más la aplicación con un test de 200 usuarios, ahora la aplicación si estaba más cargada. De todos modos parecía soportar la carga, aunque en este caso si que vemos que hay un porcentaje considerable de peticiones que han fallado.
+
+image::Gatling_200_graphs1.png[Test de carga 200 usuarios]
+image::Gatling_200_graphs2.png[Test de carga 200 usuarios]
+
+Para finalizar lanzamos una prueba un poco más dura, con 1000 usuarios. Es este caso la aplicación ya no aguantó, se cayó completamente, y no fue hasta pasados unos minutos que no volvió a funcionar. Esta prueba no se pudo completar porque incluso estaba saturando  la conexión de red a través de la que hacíamos las pruebas.
+
+Con estos resultados nos podemos hacer una idéa de que actualmente nuestro sistema puede llegar a soportar una cantidad máxima de usuarios simultaneos cercana a 200, antes de bajar considerablemente el rendimiento.
 
 === Graphana & Prometheus
 Utilizado Prometheus para monitorizar el numero de request a la RestApi a lo largo del tiempo así como el número de fallos y la duración de estas.
 Uso de Graphana  para visualizar los datos de monitorzación en la web de forma vistosa y sencilla.
 
 image::GraphanaPrometheus.png[Monitoring]
-
-
-
