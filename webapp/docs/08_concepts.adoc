@@ -1,33 +1,34 @@
 == 8. Conceptos
-
-=== Modelo de dominio
-
-Se implementará más adelante.
-
-
 === Conceptos transversales
 
-==== 8.1 Seguridad
+==== Seguridad
 ****
-_La seguridad en nuestra aplicación se basará en el uso de SOLID, por lo que cada usuario tendrá su propio POD y será él el que otorgue los permisos a las aplicaciones que él quiera._
+La seguridad en nuestra aplicación se basará en el uso de SOLID, por lo que cada usuario tendrá su propio POD y será él el que otorgue los permisos a las aplicaciones que él quiera.
+
+Cada usuario posee una contraseña propia para acceder a la restapi evitando asi que otros usuarios puedan suplantar su identidad pudiendo por ejemplo modificar y observar ubicaciones a las que no deben tener acceso.
+
+Para poder observar las ubicaciones de un usuario estos deben estar mutuamente agregados evitando que puedan observarse localizaciones usuarios a los que no se les ha permitido.
 ****
 
-==== 8.2 Persistencia
+==== Persistencia
 ****
-_Debido a la utilización de SOLID, no será necesario contar con una base de datos, sino que será el mismo usuario el que almacene sus datos._
+La persistencia de los datos se basa en una combinación de los POD privados de cada usuario y una base de datos mongo.
+
+En el POD del usuario se guardaran sus localizaciones mientras que en la base de datos de mongo se almacenarán el radio establecido por el usuario y las credenciales para iniciar sesión en la restapi.
+
+Además de los dos anteriores exite un tercer elemento clave para el almacenamiento de datos este es la restapi donde se almacenan las ubicacines actuales de todos los usuarios conectados, sin embargo, estos datos no se almacenan de manera persistente en la restapi.
 ****
 
-==== 8.3 Interfaz de usuario
+==== Interfaz de usuario
 ****
-_La aplicación contará con una interfaz de usuario para que el usuario sea capaz de utilizar toda la implementación de la misma. Dicha interfaz se desarrollará con React como complementación a JavaScript._
+Nuestra aplicación ofrece un interfaz sencilla y fácil de utilizar. Nada mas entrar se nos presenta una pantalla de inicio muy simple con unicamente un boton para iniciar sesión el cual servirá además para cerrar sesión y un botón para ocultar y desplegar la lista de amigos deshabilitado.
+
+Una vez iniciemos sesion se nos mostrará en la parte izquierda la lista de nuestro amigos mostrandonos aquellos cercanos y lejanos a la distancia que se encuentran y los desconectados. En la parte central observaremos un campo de texto para introducir el radio desde el cual queremos recibir notificaciones, para que se aplique el radio introducido debe pulsarse el botón de actualizar radio y un botón para actualizar el mapa. Debajo de estos botones encontraremos el mapa con las ubicaciones de nuestro amigos conectados.
+
+Debajo de la lista de usuarios tenemos un boton para volver a la vista del mapa y otro que nos mostrará una lista con las ubicaciones en las que estuvo el usuario permitiendonos eliminarlas.
 ****
 
-==== 8.4 Manejo de errores
+==== Pruebas
 ****
-_La aplicación informará al usuario de los errores que vayan ocurriendo._
-****
-
-==== 8.5 Pruebas
-****
-_La aplicación será sometida a casos de prueba para comprobar la eficiencia de la misma._
+Debido a que nuestra aplicación posee mucha depencia de la restapi hemos decidido realizar una mayor cantidad de pruebas a esta respecto a la aplicación, logrando tener una amplia cobertura de codigo en la restapi.
 ****

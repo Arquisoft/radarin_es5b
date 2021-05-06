@@ -48,7 +48,7 @@ Nuestra aplicación se basa en una aplicación web la cual tendrá la funcionali
 La aplicación se basa en un sistema descentralizado basandose para ello en SOLID, su idea principal es la inexistencia de almacenamiento centralizado de datos si no que cada usuario posea su propio almacenamiento personal, este almacenamiento personal se gestiona mediante SOLID POD el cual ofrece un almacenamiento privado para cada usuario al cual unicamente pueden acceder aquellas entidades o usuarios que autorice.
 
 .Diagrama del sistema
-image:Diagrama_Doc_3.png[Diagrama del sistema]
+image:Diagrama_Doc_3.png["Diagrama del sistema"]
 
 En el POD de cada usuario unicamente se guardan las ubicaciones de dicho usuario, es a traves de la restapi en la cual se guardan las ubicaciones actuales de todos los usuarios que han iniciado sesión desde donde se obtienen las ubicaciones de los demás usuarios.
 
