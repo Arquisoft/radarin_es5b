@@ -186,7 +186,7 @@ async function removeLocation(id){
 	for(let i=0;i<ubicaciones.length;i++){
 	
 		if(ubicaciones[i].id === id){
-			
+			ubicaciones.splice(i, 1)
 			break;
 		}
 	}

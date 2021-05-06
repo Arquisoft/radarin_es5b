@@ -8,11 +8,11 @@ defineFeature(feature, test => {
 		  setTimeout(resolve, time);
 		});
 	  }
-	
+	*/
 	  beforeEach(async () => {
 		await global.page.goto('http://localhost:3000')
 	  })
-*/
+
 	  
 	test("The user is not registered in the site", ({given, when, then}) => {/*
 		
@@ -30,6 +30,7 @@ defineFeature(feature, test => {
 		});
 		
 		when("I fill the data in the form and press submit", async () => {
+			await expect(page).toMatch("Radarin")
 			/*
 			//Capturamos el popup
 			//const newPagePromise = new Promise((x) =>  page.once(("targetcreated"), (target) => x(target.page())));	
