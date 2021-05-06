@@ -1,11 +1,11 @@
 [[section-introduction-and-goals]]
-== Introduction and Goals
+== Introducción y objetivos
 
 ****
 El objetivo de este proyecto es la creación de una aplicación en la que poder conectar con tus amigos que estén cercanos a ti, basado en un sistema de gestión de datos descentralizado (SOLID) y con tecnolgías como REACT. Además de poder tener un historial de las ubicaciones que hayamos ido visitando.
 ****
 
-=== Requirements Overview
+=== Requisitos básicos
 
 
 ****
@@ -17,7 +17,7 @@ El objetivo de este proyecto es la creación de una aplicación en la que poder 
 
 ****
 
-=== Quality Goals
+=== Objetivos de calidad
 
 
 |===

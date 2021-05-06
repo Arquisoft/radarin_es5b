@@ -1,7 +1,7 @@
 [[section-solution-strategy]]
-== Solution Strategy
+== Estrategia de solución
 
-=== Technology decisions
+=== Decisiones tecnológicas
 A la hora de crear la aplicación, la primera decisión que se tomó fue la de usar el lenguaje JavaScript, ya que es un lenguaje con una sintáxis fácil de entender
 para todos los integrantes del grupo y para así aprovechar el Framework React.js, lo que nos permitiría crear la aplicación web de una manera muy sencilla. Además,
 es una plataforma de código abierto con muchos tutoriales y facilidad para desarrollar el front-end de una app web.
@@ -10,7 +10,7 @@ Otro punto a destacar es el uso de la tecnología SOLID, ya que gracias a los PO
 
 De cara a otros elementos menos orientados a la app, usaremos Gir como sistema de control de versiones y el modelo Arc42 para documentar.
 
-==== Used technologies
+==== Tecnologias empleadas
 * JavaScript como lenguaje de programación de la aplicación.
 * React para facilitar el desarrollo del front-end.
 *  https://github.com/solid/react-components[solid-react] que nos permite realizar el Login.
@@ -27,7 +27,7 @@ De cara a otros elementos menos orientados a la app, usaremos Gir como sistema d
 
 
 
-=== Decisions related to quality goals
+=== Decisiones relacionadas con los objetivos de calidad
 Para cumplir diferentes objetivos de calidad hemos decidido realizar diferentes acciones.
 
 * *Privacidad:* Para cumplir este objetivo hemos decidido guardar la menor información posible del usuario en nuestro servidor, con esta premisa finalmente guardamos todas las ubicaciones del usuario en su propio POD estando éstas a en su poder.
@@ -40,7 +40,7 @@ Para cumplir diferentes objetivos de calidad hemos decidido realizar diferentes 
 * *Rendimiento:* Debido al lento (e inestable) acceso al POD, la última ubicación de los usuarios se guarda en la base de datos Mongo para hacer más rápido el acceso a estas. Además en el caso de que la ubicación no varíe en un número de metros, esta no será enviada ni al servidor ni al POD.
 * *Testeabilidad:* Disponemos de un gran numero de pruebas de la restApi para asegurarnos de su correcto funcionamiento, por otro lado, las pruebas de la webApp no han sido tan exahustivas debido a la dependencia que tenemos de SOLID en los distintos componentes.
 
-=== Organization
-Matenemos reuniones semanales para hablar de los problemas y metas para la siguiente semana. 
-La implementación de la aplicación se realizará
+=== Organización
+Mantenemos reuniones semanales para hablar de los problemas y metas para la siguiente semana creando un acta de la reunión. 
+Punto importante que afectará al proyecto debido a ser solo 3 personas las que desarrollan la aplicación.
 

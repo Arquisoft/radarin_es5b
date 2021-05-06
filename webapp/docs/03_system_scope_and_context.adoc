@@ -8,7 +8,7 @@ Nuestro proyecto consiste en una aplicación web denominada Radarin mediante la 
 ****
 
 
-=== Business Context
+=== Contexto de negocio
 
 ****
 
@@ -41,7 +41,7 @@ Nuestra aplicación se basa en una aplicación web la cual tendrá la funcionali
 ****
 
 
-=== Technical Context
+=== Contexto técnico
 
 ****
 

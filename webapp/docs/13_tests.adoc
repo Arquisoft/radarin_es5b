@@ -1,0 +1,20 @@
+[[section-tests-and-monitoring]]
+=== Pruebas y monitorización
+image::coverage.png[CodeCoverage]
+=== RestApi Test
+Debido a la arquitectura de nuestra aplicación hemos decidido realizar más tests de la RestApi llegando así a casi un 87% de coverage
+
+=== WebApp Test
+Poca cobertura de código (27,5%) esto es debido a la falta de tiempo y participantes en el equipo. Además nuestra aplicación depende fuertemente de SOLID con lo que no podiamos probar muchos de nuestro componentes componentes sin estar logeados en SOLID y sin la restApi.
+
+Respecto a los test de aceptación, tras tener problemas durante el despliegue con los mismos y los problemas antes nombrados no hemos hecho ninguno que funcione, solo hay un intento que aparece documentado.
+=== Test de carga
+
+=== Graphana & Prometheus
+Utilizado Prometheus para monitorizar el numero de request a la RestApi a lo largo del tiempo así como el número de fallos y la duración de estas.
+Uso de Graphana  para visualizar los datos de monitorzación en la web de forma vistosa y sencilla.
+
+image::GraphanaPrometheus.png[Monitoring]
+
+
+

@@ -46,7 +46,7 @@ class Mapa extends React.Component {
     
     var response = await restapi.getFriendsCoords()
     if(response.status !== 200){
-      console.log("update");
+    
       setTimeout(this.updateFriendsPos.bind(this), 3000)
       return;
     }
@@ -67,7 +67,7 @@ class Mapa extends React.Component {
       result.push({"lat": friend.coords.lat, "lng": friend.coords.lon,"webId":friend.webId});
     }
     
-    console.log(result);
+   
     this.setState({
       users: result,
     });
@@ -155,7 +155,7 @@ class Mapa extends React.Component {
                 />
           {this.state.users.map((user, i) =>{
            
-            console.log(user);
+           
               return(
                 <Marker position={{ lat: user.lat, lng: user.lng }} 
                 icon= 'http://maps.google.com/mapfiles/ms/icons/red-dot.png'

@@ -1,5 +1,5 @@
 [[section-technical-risks]]
-== Risks and Technical Debts
+== Riesgos y dedudas técnicas
 
 El principal problema al que nos vamos a enfrentar es trabajar en equipo. Coordinarnos para conseguir una velocidad de desarrollo y calidad del software a la altura de las posibilidades del equipo.
 
@@ -12,9 +12,16 @@ El principal problema al que nos vamos a enfrentar es trabajar en equipo. Coordi
 | Trabajos fuera de la asignatura que puedan surgir a los desarrolladores y que les impidan continuar con el desarrollo. | Intentar prever esos trabajos que puedan surgir y planificar el desarrollo teniendo en cuenta esos retrasos.
 | Desarrollar código o hacer diseños de baja calidad, con el objetivo de tener las partes iniciales del sistema funcionando cuanto antes. Ya que a largo plazo nos dificultará añadir más funcionalidad al sistema. | Revisar periódicamente el diseño y calidad del código para poder soportar nueva funcionalidad sin un excesivo trabajo. 
 | Problemas de rendimiento en el despliegue de la aplicación, al depender de un servicio de computación en la nube en su versión gratuita, que nos ofrece unos recursos bastante reducidos. | Reducir al máximo posible los requerimientos de hardware necesarios para ejecutar la aplicación en el servidor.
+
 |===
 
 === Deudas técnicas
+|===
+| *Riesgo* | *Posible solución*
+|Limitación de rendimiento en del acceso a los datos de SOLD, al ser un sistema ajeno a nuestro control y relativamente nuevo y poco usado. | Hacer que la aplicación funcione con normalidad, haciendo las operaciones más lentas en segundo plano
+|Usar una aplicación web para la versión móvil, que nos limitará en gran medida las opciones del teléfono a las que podremos acceder | Utilizar React Native o CORDOVA para adaptar nuestra aplicación.
+| Alta dependencia de SOLID, además de los continuos fallos relativos a los permisos y a la autorización. | Conseguir que la aplicación funcione sin SOLID aunque con una funcionalidad reducida.
+| Falta de robustez debido a la poca experiencia con REACT y falta de participación | Realización de más tests y realizacion de pruebas reales con usuarios.
 
-* Limitación de rendimiento en del acceso a los datos de SOLD, al ser un sistema ajeno a nuestro control y relativamente nuevo y poco usado.
-* Usar una aplicación web para la versión móvil, que nos limitará en gran medida las opciones del teléfono a las que podremos acceder.
+|===
+

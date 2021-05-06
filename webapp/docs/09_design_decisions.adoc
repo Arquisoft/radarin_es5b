@@ -1,10 +1,15 @@
 [[section-design-decisions]]
 == Design Decisions
 
-****
-* Los datos de los usuarios se guardarán en sus pods SOLID, por lo que nuestra persistencia privada en el servidor se reducirá al mínimo, solo los datos necesarios de transacciones que estén a la espera de ser actualizados en los pods de los usuarios. Esto servirá para proporcionar a nuestros usuarios el control de sus datos de la aplicación.
-* Optimizar, en la medida de lo posible, el número y tamaño de las peticiones al servidor, y así estar preparados para soportar un gran número de usuarios conectados simultáneamente.
-* Crear una interfáz web sencilla, para facilitar el uso a los usuarios. Seguiremos las convenciones en interfaces gráficas actuales de aplicaciones de mapas y mensajería, para simplificar el uso de la web y facilizar su aprendizaje a usuarios nuevos.
-* Buscaremos crear una aplicación muy responsiva. Para conseguir este objetivo usaremos React, por sus capacidades de trabajar con páginas dinámicas, actualizando los datos desde un servidor sin necesidad de recargar la página, a diferencia de una aplicación web tradicional.
-* La misma interfáz web será compatible con PC y movil. Esto nos permitirá facilitar el desarrollo, ya que nos evitará tener que desarrollar dos interfaces independientes. Por otro lado podría limitarnos el desarrollo en el entorno móvil al no ser una aplicación nativa.
-****
+
+
+
+|===
+| *Decisión* | *Ventajas* | *Desventajas*
+|Uso de React | Gran comunidad y uso en incremento con lo que hay diversos tutoriales y ayudas. | Tecnología desconocida para nosotros con lo que emplearemos mucho tiempo en dominarla. Debido al desconocimiento no hemos empleado esta tecnología la forma más óptima.
+| Utilizar una contraseña a modo de TOKEN que se guardará en el POD para acceder a la RestApi| Solo el propio usuario tiene acceso a su token. Solo el propio usuario podrá realizar peticiones a la RestApi en su nombre. | Alta dependecia de SOLID, ya que sin esa contraseña no funcionaría la aplicación puesto que no se pueden hacer llamadas a la RestApi.
+| Utiliziar los PODS para guardar el historial de ubicaciones de los usuarios y los amigos | Descentralización de los datos. El control de los datos los tiene el usuario. No guardamos datos privados de los usuarios. Empleo del potencial de SOLID | Alta dependendecia de SOLID. Lentitud en las peticiones al POD. Problemas con los permisos.
+| Guardar en servidor la ultima ubicación de los usuarios | Tener a un alcance rápido la ubicación del usuario. Al ser en memoria no guardaremos los datos de la ubicación de forma persisente. | Dependencia del servidor para el funcionamiento de la aplicación.
+| No realizar aplicación móvil | Más tiempo para desarrollar la aplicación web. Disponible para cualquier dispositivo con acceso a internet | Limitarnos la utilización de características del móvil al no ser una aplicación nativa. Problemas con las notificaciones y el acceso a los sensores.
+| Uso de la API de Google Maps | Al ser de Google nos aseguramos de su correcto funcionamiento. Extensiva documentación. Buen rendimiento. Interfaz amigable y familiar. | Es de pago al superar ciertas peticiones.
+|===
